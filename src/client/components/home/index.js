@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AppBar, Card, CardContent, Toolbar } from "@mui/material";
+import Flow from "../flow";
 
 const theme = createTheme();
 
@@ -44,7 +45,9 @@ export default class SignIn extends React.Component {
             }}
           >
             <Card variant="outlined" sx={{ mt: 1, minWidth: "70%" }}>
-              <CardContent>Hello World!</CardContent>
+              <CardContent sx={{ height: "80vh", width: "100%" }}>
+                <Flow />
+              </CardContent>
             </Card>
           </Box>
         </Container>
