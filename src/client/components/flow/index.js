@@ -6,6 +6,7 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
+  MarkerType,
 } from "reactflow";
 import Block from "../shapes/block";
 import Diamond from "../shapes/diamond";
@@ -34,7 +35,7 @@ const initialNodes = [
   },
   {
     id: "Q1",
-    position: { x: 500, y: 160 },
+    position: { x: 510, y: 165 },
     data: { label: "Did the request come from a standard UI edit page ?" },
     type: "diamond",
   },
@@ -58,19 +59,64 @@ const initialNodes = [
   },
 ];
 const initialEdges = [
-  { id: "e1-2", source: "1", target: "2" },
-  { id: "e2-Q1", source: "2", target: "Q1" },
+  {
+    id: "e1-2",
+    source: "1",
+    target: "2",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: "#413978",
+    },
+    style: {
+      strokeWidth: 2,
+      stroke: "#413978",
+    },
+  },
+  {
+    id: "e2-Q1",
+    source: "2",
+    target: "Q1",
+    type: "smoothstep",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: "#413978",
+    },
+    style: {
+      strokeWidth: 2,
+      stroke: "#413978",
+    },
+  },
   {
     id: "eQ1-2A",
     source: "Q1",
     target: "2A",
     sourceHandle: "top",
+    label: "Yes",
+    type: "smoothstep",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: "#12977e",
+    },
+    style: {
+      strokeWidth: 2,
+      stroke: "#12977e",
+    },
   },
   {
     id: "eQ1-2B",
     source: "Q1",
     target: "2B",
     sourceHandle: "bottom",
+    type: "smoothstep",
+    label: "No",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: "#ca2936",
+    },
+    style: {
+      strokeWidth: 2,
+      stroke: "#ca2936",
+    },
   },
 ];
 
