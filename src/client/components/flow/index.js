@@ -7,12 +7,14 @@ import ReactFlow, {
   useEdgesState,
   addEdge,
 } from "reactflow";
-import CustomNode from "../custom-node";
+import Block from "../shapes/block";
+import Diamond from "../shapes/diamond";
 
 import "reactflow/dist/style.css";
 
 const nodeTypes = {
-  custom: CustomNode,
+  block: Block,
+  diamond: Diamond,
 };
 
 console.log("nodeTypes", nodeTypes);
@@ -22,13 +24,13 @@ const initialNodes = [
     id: "1",
     position: { x: 10, y: 10 },
     data: { label: "1. Loads the original Record" },
-    type: "custom",
+    type: "block",
   },
   {
     id: "2",
     position: { x: 250, y: 10 },
     data: { label: "2. Loads the new record values" },
-    type: "custom",
+    type: "diamond",
   },
 ];
 const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];

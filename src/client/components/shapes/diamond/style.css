@@ -1,0 +1,28 @@
+.diamond {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+    text-align: center;
+    margin: 10px 40px;
+  }
+  .diamond:before {
+    position: absolute;
+    content: '';
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    transform: rotateX(45deg) rotateZ(45deg);
+    box-shadow: 0px 0px 12px gray;
+  }
+  .diamond:after {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    content: '';
+    height: calc(100% - 22px);  /* -22px is 2 * 10px gap on either side - 2px border on either side */
+    width: calc(100% - 22px);  /* -22px is 2 * 10px gap on either side - 2px border on either side */
+    border: 1px solid orange;
+    transform: rotateX(45deg) rotateZ(45deg);
+  }

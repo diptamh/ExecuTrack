@@ -1,19 +1,18 @@
 import React, { memo } from "react";
 
 import { Handle, Position } from "reactflow";
-import { style } from "./style";
 import { Card, CardContent, Typography } from "@mui/material";
 
 const Node = ({ data, selected }) => {
-  let customTitle = { ...style.title };
+  let customTitle = {};
   customTitle.backgroundColor = "#08c9bd";
 
   return (
     <div className="text-updater-node">
-      <Card sx={{ minHeight: 150 }}>
+      <Card sx={{ minHeight: 150, boxShadow: 2 }}>
         <Typography
           sx={{
-            fontSize: 10,
+            fontSize: 12,
             borderBottom: "1px solid #eaeaea",
             padding: 1,
             fontWeight: "bold",
