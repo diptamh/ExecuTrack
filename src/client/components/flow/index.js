@@ -23,13 +23,13 @@ const initialNodes = [
   {
     id: "1",
     position: { x: 10, y: 200 },
-    data: { label: "1. Loads the original Record" },
+    data: { label: "1. Loads the original Record", variant: "warn" },
     type: "block",
   },
   {
     id: "2",
     position: { x: 250, y: 200 },
-    data: { label: "2. Loads the new record values" },
+    data: { label: "2. Loads the new record values", variant: "warn" },
     type: "block",
   },
   {
@@ -41,13 +41,19 @@ const initialNodes = [
   {
     id: "2A",
     position: { x: 900, y: 50 },
-    data: { label: "Salesforce validates only the foreign keys" },
+    data: {
+      label: "Salesforce validates only the foreign keys",
+      variant: "info",
+    },
     type: "block",
   },
   {
     id: "2B",
     position: { x: 900, y: 400 },
-    data: { label: "2B. Runs system validation to check for:" },
+    data: {
+      label: "2B. Runs system validation to check for:",
+      variant: "info",
+    },
     type: "block",
   },
 ];

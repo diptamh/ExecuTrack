@@ -1,19 +1,32 @@
 import React, { memo } from "react";
 
 import { Handle, Position } from "reactflow";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
+import "./style.css";
 
 const Node = ({ data, selected }) => {
-  let customTitle = {};
-  customTitle.backgroundColor = "#08c9bd";
+  function getVariant(variant = "info") {
+    if (selected) {
+      return "outlined";
+    }
+    return "elevation";
+  }
 
   return (
-    <div className="text-updater-node">
-      <Card sx={{ minHeight: 150, boxShadow: 2 }}>
+    <div>
+      <Box
+        sx={{
+          minHeight: 150,
+          boxShadow: 4,
+          borderRadius: 3,
+          padding: 1,
+        }}
+        className={data.variant || "info"}
+      >
         <Typography
           sx={{
             fontSize: 12,
-            borderBottom: "1px solid #eaeaea",
+
             padding: 1,
             fontWeight: "bold",
           }}
@@ -22,8 +35,7 @@ const Node = ({ data, selected }) => {
         >
           {data.label}
         </Typography>
-        <CardContent></CardContent>
-      </Card>
+      </Box>
       <Handle type="source" position={Position.Right} id="b" />
       <Handle type="target" position={Position.Left} id="a" />
     </div>
