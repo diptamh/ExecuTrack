@@ -44,11 +44,7 @@ export default class SignIn extends React.Component {
               alignItems: "center",
             }}
           >
-            <Card variant="outlined" sx={{ mt: 1, minWidth: "70%" }}>
-              <CardContent sx={{ height: "80vh", width: "100%" }}>
-                <Flow />
-              </CardContent>
-            </Card>
+            <Flow />
           </Box>
         </Container>
       </ThemeProvider>

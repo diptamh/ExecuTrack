@@ -7,7 +7,7 @@ import "./style.css";
 const Node = ({ data, selected }) => {
   return (
     <div className="diamond">
-      <div style={{ lineHeight: 1, paddingTop: "40%" }}>
+      <div style={{ lineHeight: 1, paddingTop: "35%" }}>
         <Typography
           sx={{
             fontSize: 12,
