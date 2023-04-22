@@ -39,9 +39,15 @@ const initialNodes = [
     type: "diamond",
   },
   {
+    id: "2A",
+    position: { x: 900, y: 50 },
+    data: { label: "Salesforce validates only the foreign keys" },
+    type: "block",
+  },
+  {
     id: "2B",
     position: { x: 900, y: 400 },
-    data: { label: "Salesforce validates only the foreign keys" },
+    data: { label: "2B. Runs system validation to check for:" },
     type: "block",
   },
 ];
@@ -49,10 +55,16 @@ const initialEdges = [
   { id: "e1-2", source: "1", target: "2" },
   { id: "e2-Q1", source: "2", target: "Q1" },
   {
+    id: "eQ1-2A",
+    source: "Q1",
+    target: "2A",
+    sourceHandle: "top",
+  },
+  {
     id: "eQ1-2B",
     source: "Q1",
     target: "2B",
-    sourceHandle: "c",
+    sourceHandle: "bottom",
   },
 ];
 
