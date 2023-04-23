@@ -40,22 +40,37 @@ const initialNodes = [
     type: "diamond",
   },
   {
-    id: "2A",
-    position: { x: 900, y: 50 },
+    id: "2B",
+    position: { x: 510, y: 5 },
     data: {
-      label: "Salesforce validates only the foreign keys",
+      label: "2B. Salesforce validates only the foreign keys",
       variant: "info",
     },
     type: "block",
   },
   {
-    id: "2B",
+    id: "2A",
     position: { x: 900, y: 400 },
     data: {
-      label: "2B. Runs system validation to check for:",
+      label: "2A. Runs system validation to check for:",
       variant: "info",
     },
     type: "block",
+  },
+  {
+    id: "2C",
+    position: { x: 900, y: 5 },
+    data: {
+      label: "2C. Before Executing a trigger",
+      variant: "info",
+    },
+    type: "block",
+  },
+  {
+    id: "Q2",
+    position: { x: 1200, y: 5 },
+    data: { label: "Were multi-line items created ?" },
+    type: "diamond",
   },
 ];
 const initialEdges = [
@@ -89,8 +104,9 @@ const initialEdges = [
   {
     id: "eQ1-2A",
     source: "Q1",
-    target: "2A",
+    target: "2B",
     sourceHandle: "top",
+    targetHandle: "bottom", // Not working need to fix this
     label: "Yes",
     type: "smoothstep",
     markerEnd: {
@@ -105,7 +121,7 @@ const initialEdges = [
   {
     id: "eQ1-2B",
     source: "Q1",
-    target: "2B",
+    target: "2A",
     sourceHandle: "bottom",
     type: "smoothstep",
     label: "No",
@@ -116,6 +132,33 @@ const initialEdges = [
     style: {
       strokeWidth: 2,
       stroke: "#ca2936",
+    },
+  },
+  {
+    id: "e2B-2C",
+    source: "2B",
+    target: "2C",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: "#413978",
+    },
+    style: {
+      strokeWidth: 2,
+      stroke: "#413978",
+    },
+  },
+  {
+    id: "e2C-Q2",
+    source: "2C",
+    target: "Q2",
+    type: "smoothstep",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: "#413978",
+    },
+    style: {
+      strokeWidth: 2,
+      stroke: "#413978",
     },
   },
 ];
