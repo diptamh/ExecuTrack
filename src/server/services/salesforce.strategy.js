@@ -8,8 +8,29 @@ passport.use(
       clientSecret: process.env.CLIENT_SECRET,
       scope: ["id", "chatter_api", "api"],
       callbackURL: `/api/v1/auth/callback`,
-      authorizationURL: process.env.SF_AUTHORIZATION_URL,
-      tokenURL: process.env.TOKEN_URL,
+      authorizationURL: process.env.PRODUCTION_AUTHORIZATION_URL,
+      tokenURL: process.env.PRODUCTION_TOKEN_URL,
+    },
+    function verify(token, refreshToken, profile, done) {
+      profile.oauth = {
+        refreshToken,
+        accessToken: token,
+      };
+      return done(null, profile);
+    }
+  )
+);
+
+passport.use(
+  "forcedotcom-sandbox",
+  new ForceDotComStrategy(
+    {
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      scope: ["id", "chatter_api", "api"],
+      callbackURL: `/api/v1/auth/callback`,
+      authorizationURL: process.env.SANDBOX_AUTHORIZATION_URL,
+      tokenURL: process.env.PSANDBOX_TOKEN_URL,
     },
     function verify(token, refreshToken, profile, done) {
       profile.oauth = {
