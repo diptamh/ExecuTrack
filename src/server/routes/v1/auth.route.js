@@ -7,7 +7,7 @@ router.get(
   "/callback",
   passport.authenticate("forcedotcom", { failureRedirect: "/error" }),
   async (req, res) => {
-    res.redirect("/");
+    res.redirect("/home");
   }
 );
 
