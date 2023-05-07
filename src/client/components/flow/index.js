@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -10,6 +10,7 @@ import ReactFlow, {
 } from "reactflow";
 import Block from "../shapes/block";
 import Diamond from "../shapes/diamond";
+import axios from "axios";
 
 import "reactflow/dist/style.css";
 
@@ -171,6 +172,14 @@ export default function App() {
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
+
+  // call on component mount
+  useEffect(() => {
+    // /api/v1/salesforce/query
+    axios.get("/api/v1/salesforce/query").then((res) => {
+      console.log("sample query response", res);
+    });
+  }, []);
 
   return (
     <div style={{ width: "100%", height: "100vh" }}>
