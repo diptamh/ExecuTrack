@@ -1,5 +1,6 @@
-import passport from "passport";
-import { Strategy as ForceDotComStrategy } from "passport-forcedotcom";
+const passport = require("passport");
+const ForceDotComStrategy = require("passport-forcedotcom").Strategy;
+require("dotenv").config();
 
 passport.use(
   new ForceDotComStrategy(
@@ -30,7 +31,7 @@ passport.use(
       scope: ["id", "chatter_api", "api"],
       callbackURL: `/api/v1/auth/callback`,
       authorizationURL: process.env.SANDBOX_AUTHORIZATION_URL,
-      tokenURL: process.env.PSANDBOX_TOKEN_URL,
+      tokenURL: process.env.SANDBOX_TOKEN_URL,
     },
     function verify(token, refreshToken, profile, done) {
       profile.oauth = {
@@ -50,4 +51,4 @@ passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 
-export default passport;
+module.exports = passport;

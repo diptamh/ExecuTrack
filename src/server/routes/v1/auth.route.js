@@ -1,0 +1,19 @@
+const express = require("express");
+const passport = require("../../services/salesforce.strategy");
+
+const router = express.Router();
+
+router.get(
+  "/callback",
+  passport.authenticate("forcedotcom", { failureRedirect: "/error" }),
+  async (req, res) => {
+    res.redirect("/");
+  }
+);
+
+// /api/v1/auth/session
+router.get("/session", (req, res) => {
+  res.json(req.user || {});
+});
+
+module.exports = router;
