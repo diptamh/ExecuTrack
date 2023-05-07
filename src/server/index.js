@@ -21,9 +21,13 @@ app.use(express.static("dist"));
 app.use("/api/v1", routes);
 app.use(errors());
 
-app.get("/auth/forcedotcom", passport.authenticate("forcedotcom"), console.log);
 app.get(
-  "/auth/forcedotcom/sandbox",
+  "/auth/salesforce/production",
+  passport.authenticate("forcedotcom"),
+  console.log
+);
+app.get(
+  "/auth/salesforce/sandbox",
   passport.authenticate("forcedotcom-sandbox"),
   console.log
 );
@@ -38,6 +42,7 @@ app.post("/auth/forcedotcom/logout", function (req, res) {
 });
 
 app.get("/", (req, res) => {
+  console.log("req.user", req.user);
   res.redirect("http://localhost:3000");
 });
 
