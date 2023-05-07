@@ -1,5 +1,3 @@
-import jsforce from "jsforce";
-
 class Salesforce {
   constructor(conn) {
     // jsforce.Connection
@@ -19,6 +17,19 @@ class Salesforce {
       WHERE EntityDefinitionId = '${objectName}'`
     );
   }
+
+  async getObjects() {
+    const objects = await this.conn.describeGlobal();
+    // check if object is accessible , creatable, updateable, deletable
+    return objects.sobjects.filter(
+      (object) =>
+        object.createable &&
+        object.updateable &&
+        object.deletable &&
+        object.custom &&
+        object.keyPrefix
+    );
+  }
 }
 
-export default Salesforce;
+module.exports = Salesforce;

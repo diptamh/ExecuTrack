@@ -8,9 +8,11 @@ import ReactFlow, {
   addEdge,
   MarkerType,
 } from "reactflow";
+import { Box } from "@mui/material";
 import Block from "../shapes/block";
 import Diamond from "../shapes/diamond";
 import axios from "axios";
+import ObjectSelector from "../objectSelector/index.js";
 
 import "reactflow/dist/style.css";
 
@@ -69,9 +71,18 @@ const initialNodes = [
   },
   {
     id: "Q2",
-    position: { x: 1200, y: 5 },
+    position: { x: 1200, y: 100 },
     data: { label: "Were multi-line items created ?" },
     type: "diamond",
+  },
+  {
+    id: "2D",
+    position: { x: 1600, y: 5 },
+    data: {
+      label: "2D. Run custom validation rules",
+      variant: "info",
+    },
+    type: "block",
   },
 ];
 const initialEdges = [
@@ -162,6 +173,20 @@ const initialEdges = [
       stroke: "#413978",
     },
   },
+  {
+    id: "eQ2-2D",
+    source: "Q2",
+    target: "2D",
+    type: "smoothstep",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: "#413978",
+    },
+    style: {
+      strokeWidth: 2,
+      stroke: "#413978",
+    },
+  },
 ];
 
 export default function App() {
@@ -182,7 +207,10 @@ export default function App() {
   }, []);
 
   return (
-    <div style={{ width: "100%", height: "100vh" }}>
+    <div style={{ width: "100vw", height: "100vh" }}>
+      <Box width={400}>
+        <ObjectSelector />
+      </Box>
       <ReactFlow
         nodes={nodes}
         edges={edges}
