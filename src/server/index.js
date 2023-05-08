@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
   session({
-    secret: "my rsm sfdc",
+    secret: process.env.SESSION_SECRET,
   })
 );
 // use passport
