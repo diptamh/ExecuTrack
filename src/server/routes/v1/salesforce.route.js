@@ -16,8 +16,15 @@ router.get("/query", async (req, res) => {
       accessToken: token.access_token,
       instanceUrl: token.instance_url,
     });
-
-    res.json(await conn.query("SELECT Id, Name FROM Account LIMIT 10"));
+    const salesforce = new Salesforce(conn);
+    await salesforce.initMap();
+    const validation = await salesforce.getValidationRules(req?.query?.name);
+    res.json(validation);
+    // console.log("result", result);
+    // .getValidationRules(req?.query?.name)
+    // .then((result) => {
+    //   res.json(result);
+    // });
   }
 });
 
