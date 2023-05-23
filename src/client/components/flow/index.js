@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -192,24 +192,30 @@ const initialEdges = [
 export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [selectedObject, setSelectedObject] = useState(null);
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
 
+  // This is used to get the selected object from the child component and set it to the state
+  const handleObjectSelection = (selected) => {
+    setSelectedObject(selected);
+  };
+
   // call on component mount
   useEffect(() => {
-    // /api/v1/salesforce/query
-    axios.get("/api/v1/salesforce/query").then((res) => {
-      console.log("sample query response", res);
+    axios.get("/api/v1/salesforce/query?name=" + selectedObject).then((res) => {
+      console.log("sample query response", res?.data?.records);
     });
-  }, []);
+  }, [selectedObject]);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <Box width={400}>
-        <ObjectSelector />
+        {/* THis is used to select the object and get the object from the child object */}
+        <ObjectSelector OnObjectSelection={handleObjectSelection} />
       </Box>
       <ReactFlow
         nodes={nodes}

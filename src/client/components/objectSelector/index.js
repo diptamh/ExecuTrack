@@ -26,12 +26,22 @@ const theme = createTheme();
 class ObjectSelector extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectedObject: "",
+    };
   }
+
+  handleSelect = (event) => {
+    const selected = event.target.value;
+    this.setState({ selectedObject: selected });
+
+    // this is used to pass the selected object to the parent component
+    this.props.OnObjectSelection(selected);
+  };
 
   componentDidMount() {
     axios.get("/api/v1/salesforce/objects").then((response) => {
-      console.log("objects", response.data);
+      console.log("objects->", response.data);
       this.setState({ objects: response.data });
     });
   }
@@ -43,9 +53,9 @@ class ObjectSelector extends Component {
         <Select
           labelId="object-selector-label"
           id="object-selector"
-          value={this.state.object}
+          value={this.state.selectedObject}
           label="Object"
-          onChange={(e) => this.setState({ object: e.target.value })}
+          onChange={this.handleSelect}
         >
           {this.state.objects?.map((object) => (
             <MenuItem value={object.name} key={object.name}>
