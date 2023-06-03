@@ -21,17 +21,6 @@ app.use(express.static("dist"));
 app.use("/api/v1", routes);
 app.use(errors());
 
-app.get(
-  "/auth/salesforce/production",
-  passport.authenticate("forcedotcom"),
-  console.log
-);
-app.get(
-  "/auth/salesforce/sandbox",
-  passport.authenticate("forcedotcom-sandbox"),
-  console.log
-);
-
 app.post("/auth/forcedotcom/logout", function (req, res) {
   req.logout(function (err) {
     if (err) {
@@ -40,14 +29,6 @@ app.post("/auth/forcedotcom/logout", function (req, res) {
     res.send({ success: true });
   });
 });
-
-app.get("/", (req, res) => {
-  console.log("req.user", req.user);
-  res.redirect("http://localhost:3000");
-});
-
-// need this for react router to work
-app.get("*", (req, res) => res.sendFile(path.resolve("dist", "index.html")));
 
 app.listen(process.env.PORT || 8080, () =>
   console.log(`✅ listening on port ${process.env.PORT || 8080}!`)
