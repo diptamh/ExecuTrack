@@ -21,6 +21,11 @@ app.use(express.static("dist"));
 app.use("/api/v1", routes);
 app.use(errors());
 
+// need this for holding the session for /home
+app.get("/home", passport.authenticate("session"), function (req, res, next) {
+  /* ... */
+});
+
 app.post("/auth/forcedotcom/logout", function (req, res) {
   req.logout(function (err) {
     if (err) {
