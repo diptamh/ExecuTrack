@@ -26,12 +26,7 @@ class Salesforce {
   }
 
   async getValidationRules(objectName) {
-    console.log(
-      "objectName",
-      this.objectMap.has(objectName)
-        ? this.objectMap.get(objectName)
-        : objectName
-    );
+    console.log("objectName", objectName);
     return await this.conn.tooling.query(
       `SELECT Id, ValidationName, Active, Description, NamespacePrefix, 
         ManageableState, CreatedById, CreatedDate, LastModifiedById, 

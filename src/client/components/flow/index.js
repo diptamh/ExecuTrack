@@ -13,6 +13,7 @@ import Block from "../shapes/block";
 import Diamond from "../shapes/diamond";
 import axios from "axios";
 import ObjectSelector from "../objectSelector/index.js";
+import APIService from "../../service/APIService.js";
 
 import "reactflow/dist/style.css";
 
@@ -81,6 +82,26 @@ const initialNodes = [
     data: {
       label: "2D. Run custom validation rules",
       variant: "info",
+      // table: {
+      //   columns: [
+      //     { field: "name", headerName: "Name", width: 130 },
+      //     { field: "calories", headerName: "Calories", width: 130 },
+      //     { field: "fat", headerName: "Fat", width: 130 },
+      //     { field: "carbs", headerName: "Carbs", width: 130 },
+      //   ],
+      //   rows: [
+      //     { id: 1, name: "Frozen yoghurt", calories: 159, fat: 6.0, carbs: 24 },
+      //     {
+      //       id: 2,
+      //       name: "Ice cream sandwich",
+      //       calories: 237,
+      //       fat: 9.0,
+      //       carbs: 37,
+      //     },
+      //     { id: 3, name: "Eclair", calories: 262, fat: 16.0, carbs: 24 },
+      //     { id: 4, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67 },
+      //   ],
+      // },
     },
     type: "block",
   },
@@ -200,16 +221,37 @@ export default function App() {
   );
 
   // This is used to get the selected object from the child component and set it to the state
-  const handleObjectSelection = (selected) => {
+  const handleObjectSelection = async (selected) => {
     setSelectedObject(selected);
-  };
+    const validationRules = await APIService.getValidations(selected);
+    console.log("validationRules->", validationRules.data.records);
+    // const newNodes = validationRules.data.records.map((record, index) => {
+    //   return {
+    //     id: index,
+    //     position: { x: 10, y: 200 },
+    //     data: { label: record.Name, variant: "warn" },
+    //     type: "block",
+    //   };
+    // });
+    // setNodes(newNodes);
 
-  // call on component mount
-  useEffect(() => {
-    axios.get("/api/v1/salesforce/query?name=" + selectedObject).then((res) => {
-      console.log("sample query response", res?.data?.records);
-    });
-  }, [selectedObject]);
+    // const newEdges = validationRules.data.records.map((record, index) => {
+    //   return {
+    //     id: index,
+    //     source: index,
+    //     target: index + 1,
+    //     markerEnd: {
+    //       type: MarkerType.ArrowClosed,
+    //       color: "#413978",
+    //     },
+    //     style: {
+    //       strokeWidth: 2,
+    //       stroke: "#413978",
+    //     },
+    //   };
+    // });
+    // setEdges(newEdges);
+  };
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
