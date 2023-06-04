@@ -29,9 +29,9 @@ class Login extends Component {
 
   handleLogin = (type) => {
     if (type == "production") {
-      window.location.href = "api/v1/auth/salesforce/production";
+      window.location.href = "api/v1/auth/production";
     } else if (type == "sandbox") {
-      window.location.href = "api/v1/auth/salesforce/sandbox";
+      window.location.href = "api/v1/auth/sandbox";
     }
   };
 
