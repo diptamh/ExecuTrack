@@ -4,8 +4,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AppBar, Card, CardContent, Toolbar } from "@mui/material";
+import { AppBar, Card, CardContent, Toolbar, Button } from "@mui/material";
 import Flow from "../flow";
+import "./index.css";
 
 const theme = createTheme();
 
@@ -32,6 +33,11 @@ export default class SignIn extends React.Component {
             <Typography variant="h6" color="inherit" noWrap>
               ExecuTrack
             </Typography>
+            <div className="logout">
+              <Button variant="contained" href="/logout">
+                Logout
+              </Button>
+            </div>
           </Toolbar>
         </AppBar>
         <Container component="main" maxWidth="xl">
