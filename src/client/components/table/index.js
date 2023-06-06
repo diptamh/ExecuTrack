@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useCallback } from "react";
+import { Handle, Position } from "reactflow";
 import {
   Table,
   TableBody,
@@ -8,56 +9,83 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import axios from "axios";
+const handleStyle = { left: 10 };
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
+class TextUpdaterNode extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log("props", props);
+    this.rows = [];
+    this.isConnectable = true;
+  }
+
+  updateData = (data) => {
+    for (const dataKey in data) {
+      this.rows.push(this.createData(dataKey));
+    }
+  };
+
+  createData(name) {
+    return { name };
+  }
+
+  render() {
+    return (
+      <div className="text-updater-node">
+        <Handle
+          type="target"
+          position={Position.Top}
+          isConnectable={this.isConnectable}
+        />
+        <div>
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left">Name</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.rows.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.calories}</TableCell>
+                    <TableCell align="right">{row.fat}</TableCell>
+                    <TableCell align="right">{row.carbs}</TableCell>
+                    <TableCell align="right">{row.protein}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          id="a"
+          style={handleStyle}
+          isConnectable={this.isConnectable}
+        />
+        <Handle
+          type="source"
+          position={Position.Left}
+          id="b"
+          isConnectable={this.isConnectable}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          id="c"
+          isConnectable={this.isConnectable}
+        />
+      </div>
+    );
+  }
 }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-export default function BasicTable() {
-  return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-}
+export default TextUpdaterNode;
