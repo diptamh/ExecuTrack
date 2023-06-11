@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import APIService from "../../service/APIService.js";
 import axios from "axios";
 
 const theme = createTheme();
@@ -22,7 +23,8 @@ class ObjectSelector extends Component {
   };
 
   componentDidMount() {
-    axios.get("/api/v1/salesforce/objects").then((response) => {
+    // this is used to get the objects from the salesforce
+    APIService.getObjects().then((response) => {
       console.log("objects->", response.data);
       this.setState({ objects: response.data });
     });

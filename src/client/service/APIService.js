@@ -18,6 +18,11 @@ class APIService extends React.Component {
     return data;
   }
 
+  async getObjects() {
+    const data = await this.requestHandler("GET", `/api/v1/salesforce/objects`);
+    return data;
+  }
+
   requestHandler = async (method, url, data) => {
     const record = await axios({
       method,
