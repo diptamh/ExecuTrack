@@ -7,6 +7,8 @@ import ReactFlow, {
   useEdgesState,
   addEdge,
   MarkerType,
+  applyEdgeChanges,
+  applyNodeChanges,
 } from "reactflow";
 import { Box } from "@mui/material";
 import Block from "../shapes/block";
@@ -18,20 +20,25 @@ import ObjectSelector from "../objectSelector/index.js";
 import APIService from "../../service/APIService.js";
 import "reactflow/dist/style.css";
 
-const nodeTypes = {
-  block: Block,
-  diamond: Diamond,
-  table: Table,
-};
-
-console.log("nodeTypes", nodeTypes);
-
 export default function App() {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [data, setData] = useState(["Pizza", "Burger", "Sandwich"]);
+  const [nodes, setNodes] = useNodesState([]);
+  const [edges, setEdges] = useEdgesState([]);
+  const [VRdata, setVRdata] = useState([null]);
+  const [nodeTypes, setNodeTypes] = useState({
+    block: Block,
+    diamond: Diamond,
+    table: Table,
+  });
 
   useEffect(() => {
+    setNodeTypes(() => {
+      return {
+        block: Block,
+        diamond: Diamond,
+        table: Table,
+      };
+    });
+
     setNodes([
       {
         id: "1",
@@ -49,7 +56,7 @@ export default function App() {
       {
         id: "3",
         position: { x: 500, y: 200 },
-        data: { data: data },
+        data: { data: VRdata },
         type: "table",
       },
     ]);
@@ -83,19 +90,22 @@ export default function App() {
         },
       },
     ]);
-  }, []);
-
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
+  }, [VRdata]);
 
   // This is used to get the selected object from the child component and set it to the state
   const handleObjectSelection = async (selected) => {
     const validationRules = await APIService.getValidations(selected);
-    setData(["Like", "Share", "Sub"]);
 
-    console.log("data->", data);
+    const VRdata = validationRules.data.records.map((record) => {
+      return record.ValidationName;
+    });
+
+    // Validation Set is the object name
+    setVRdata(() => {
+      return VRdata;
+    });
+
+    console.log("VRdata->", VRdata);
     // updated the table component aftet the data is set
   };
 
@@ -109,9 +119,6 @@ export default function App() {
         nodesDraggable={false}
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
         nodeTypes={nodeTypes}
       >
         <Controls />
