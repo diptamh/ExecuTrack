@@ -12,6 +12,7 @@ import {
 const handleStyle = { left: 10 };
 
 const Node = ({ data, selected }) => {
+  console.log("dataAll->", data);
   const rows = [];
   for (const dataKey in data.data) {
     rows.push(data.data[dataKey]);
@@ -30,7 +31,7 @@ const Node = ({ data, selected }) => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">Name</TableCell>
+                <TableCell align="left">{data.label}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

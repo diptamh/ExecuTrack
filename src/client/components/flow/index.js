@@ -46,7 +46,6 @@ export default function App() {
         data: { label: "1. Loads the original Record", variant: "warn" },
         type: "block",
       },
-      ,
       {
         id: "2",
         position: { x: 250, y: 200 },
@@ -54,9 +53,48 @@ export default function App() {
         type: "block",
       },
       {
-        id: "3",
-        position: { x: 500, y: 200 },
-        data: { data: VRdata },
+        id: "Q1",
+        position: { x: 510, y: 165 },
+        data: { label: "Did the request come from a standard UI edit page ?" },
+        type: "diamond",
+      },
+      {
+        id: "2B",
+        position: { x: 510, y: 5 },
+        data: {
+          label: "2B. Salesforce validates only the foreign keys",
+          variant: "info",
+        },
+        type: "block",
+      },
+      {
+        id: "2A",
+        position: { x: 900, y: 400 },
+        data: {
+          label: "2A. Runs system validation to check for:",
+          variant: "info",
+        },
+        type: "block",
+      },
+      {
+        id: "2C",
+        position: { x: 900, y: 5 },
+        data: {
+          label: "2C. Before Executing a trigger",
+          variant: "info",
+        },
+        type: "block",
+      },
+      {
+        id: "Q2",
+        position: { x: 1200, y: 100 },
+        data: { label: "Were multi-line items created ?" },
+        type: "diamond",
+      },
+      {
+        id: "2D",
+        position: { x: 1600, y: 5 },
+        data: { data: VRdata, label: "2D. Executes all the triggers" },
         type: "table",
       },
     ]);
@@ -78,7 +116,81 @@ export default function App() {
       {
         id: "e2-Q1",
         source: "2",
-        target: "3",
+        target: "Q1",
+        type: "smoothstep",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
+      {
+        id: "eQ1-2A",
+        source: "Q1",
+        target: "2B",
+        sourceHandle: "top",
+        targetHandle: "bottom", // Not working need to fix this
+        label: "Yes",
+        type: "smoothstep",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "eQ1-2B",
+        source: "Q1",
+        target: "2A",
+        sourceHandle: "bottom",
+        type: "smoothstep",
+        label: "No",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#ca2936",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#ca2936",
+        },
+      },
+      {
+        id: "e2B-2C",
+        source: "2B",
+        target: "2C",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
+      {
+        id: "e2C-Q2",
+        source: "2C",
+        target: "Q2",
+        type: "smoothstep",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
+      {
+        id: "eQ2-2D",
+        source: "Q2",
+        target: "2D",
         type: "smoothstep",
         markerEnd: {
           type: MarkerType.ArrowClosed,
