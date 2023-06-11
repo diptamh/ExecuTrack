@@ -23,6 +23,18 @@ class APIService extends React.Component {
     return data;
   }
 
+  async getBeforeTrigger(selectedObject) {
+    const dataJSON = {
+      name: selectedObject,
+    };
+    const data = await this.requestHandler(
+      "POST",
+      `/api/v1/salesforce/beforetrigger`,
+      dataJSON
+    );
+    return data;
+  }
+
   requestHandler = async (method, url, data) => {
     const record = await axios({
       method,

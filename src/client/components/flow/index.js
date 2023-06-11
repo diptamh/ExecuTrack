@@ -24,6 +24,7 @@ export default function App() {
   const [nodes, setNodes] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
   const [VRdata, setVRdata] = useState([null]);
+  const [BTdata, setBTdata] = useState([null]);
   const [nodeTypes, setNodeTypes] = useState({
     block: Block,
     diamond: Diamond,
@@ -79,11 +80,8 @@ export default function App() {
       {
         id: "2C",
         position: { x: 900, y: 5 },
-        data: {
-          label: "2C. Before Executing a trigger",
-          variant: "info",
-        },
-        type: "block",
+        data: { data: BTdata, label: "2C. Before Executing a trigger" },
+        type: "table",
       },
       {
         id: "Q2",
@@ -94,7 +92,7 @@ export default function App() {
       {
         id: "2D",
         position: { x: 1600, y: 5 },
-        data: { data: VRdata, label: "2D. Executes all the triggers" },
+        data: { data: VRdata, label: "2D. Run custom validation rules" },
         type: "table",
       },
     ]);
@@ -211,14 +209,22 @@ export default function App() {
     const VRdata = validationRules.data.records.map((record) => {
       return record.ValidationName;
     });
+    const BeforeTrigger = await APIService.getBeforeTrigger(selected);
+
+    const BTdata = BeforeTrigger.data.records.map((record) => {
+      return record.Name;
+    });
 
     // Validation Set is the object name
     setVRdata(() => {
       return VRdata;
     });
+    console.log("BTdata--->", VRdata);
 
-    console.log("VRdata->", VRdata);
-    // updated the table component aftet the data is set
+    setBTdata(() => {
+      return BTdata;
+    });
+    console.log("BTdata--->", BTdata);
   };
 
   return (

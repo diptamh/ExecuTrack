@@ -52,6 +52,18 @@ class Salesforce {
         object.keyPrefix
     );
   }
+
+  async getBeforeTrigger(objectName) {
+    return await this.conn.tooling.query(
+      `SELECT Name
+      FROM ApexTrigger 
+      WHERE (TableEnumOrId = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR TableEnumOrId = '${objectName}') AND (UsageBeforeDelete = true OR UsageBeforeUpdate  = true OR UsageBeforeInsert = true) AND Status = 'Active' `
+    );
+  }
 }
 
 module.exports = Salesforce;

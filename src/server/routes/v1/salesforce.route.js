@@ -22,6 +22,23 @@ router.post("/validations", async (req, res) => {
   }
 });
 
+router.post("/beforetrigger", async (req, res) => {
+  const token = req.user?.oauth?.accessToken.params;
+  if (!token) {
+    return res.status(401).send("Unauthorized");
+  } else {
+    const conn = new jsforce.Connection({
+      accessToken: token.access_token,
+      instanceUrl: token.instance_url,
+    });
+    const salesforce = new Salesforce(conn);
+    await salesforce.initMap();
+    const beforeTrigger = await salesforce.getBeforeTrigger(req?.body?.name);
+    console.log("beforeTrigger 1->", beforeTrigger);
+    res.json(beforeTrigger);
+  }
+});
+
 router.get("/objects", async (req, res) => {
   const token = req.user?.oauth?.accessToken.params;
   if (!token) {
