@@ -1,24 +1,6 @@
 import React, { Component } from "react";
-import {
-  Dialog,
-  Button,
-  TextField,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
-} from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Link from "@mui/material/Link";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
+import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { SiSalesforce } from "react-icons/si";
 import axios from "axios";
 
 const theme = createTheme();

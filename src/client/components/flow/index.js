@@ -29,7 +29,7 @@ console.log("nodeTypes", nodeTypes);
 export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(["Pizza", "Burger", "Sandwich"]);
 
   useEffect(() => {
     setNodes([
@@ -93,10 +93,9 @@ export default function App() {
   // This is used to get the selected object from the child component and set it to the state
   const handleObjectSelection = async (selected) => {
     const validationRules = await APIService.getValidations(selected);
-    setData(validationRules.data.records);
-    const table = new Table();
-    table.updateData("Pizza");
+    setData(["Like", "Share", "Sub"]);
 
+    console.log("data->", data);
     // updated the table component aftet the data is set
   };
 
