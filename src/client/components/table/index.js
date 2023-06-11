@@ -31,7 +31,7 @@ const Node = ({ data, selected }) => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">{data.label}</TableCell>
+                <TableCell align="left">{data.lable}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
