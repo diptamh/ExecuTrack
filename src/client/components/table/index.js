@@ -14,14 +14,15 @@ const handleStyle = { left: 10 };
 class TextUpdaterNode extends React.Component {
   constructor(props) {
     super(props);
-    console.log("props", props);
+    console.log("props->", props.data);
     this.rows = [];
     this.isConnectable = true;
+    this.updateData(props.data.data);
   }
 
   updateData = (data) => {
     for (const dataKey in data) {
-      this.rows.push(this.createData(dataKey));
+      this.rows.push(this.createData(data[dataKey]));
     }
   };
 
