@@ -66,18 +66,6 @@ class Salesforce {
   }
 
   async getBeforeFlow(objectName) {
-    console.log("objectName Tooling");
-    await this.conn.query(
-      `SELECT ApiName,TriggerType,TriggerObjectOrEventId
-      FROM FlowDefinitionView  
-      WHERE (TriggerObjectOrEventId  = '${
-        this.objectMap.has(objectName)
-          ? this.objectMap.get(objectName)
-          : objectName
-      }' OR TriggerObjectOrEventId  = '${objectName}') AND TriggerType = 'RecordBeforeSave'`
-    );
-    console.log("objectName");
-
     return await this.conn.query(
       `SELECT ApiName,TriggerType,TriggerObjectOrEventId
       FROM FlowDefinitionView  
@@ -86,6 +74,17 @@ class Salesforce {
           ? this.objectMap.get(objectName)
           : objectName
       }' OR TriggerObjectOrEventId  = '${objectName}') AND TriggerType = 'RecordBeforeSave'`
+    );
+  }
+
+  async getDuplicateRules(objectName) {
+    return await this.conn.query(
+      `SELECT SobjectType, DeveloperName,  MasterLabel, IsActive from DuplicateRule 
+      WHERE SobjectType = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR SobjectType = '${objectName}'`
     );
   }
 }

@@ -27,6 +27,7 @@ export default function App() {
   const [VRdata, setVRdata] = useState([null]);
   const [BTdata, setBTdata] = useState([null]);
   const [BFdata, setBFdata] = useState([null]);
+  const [DRdata, setDRdata] = useState([null]);
   const [nodeTypes, setNodeTypes] = useState({
     block: Block,
     diamond: Diamond,
@@ -82,8 +83,8 @@ export default function App() {
       {
         id: "2C",
         position: { x: 900, y: 5 },
-        data: { data: BTdata, label: "2C. Before Executing a trigger" },
-        type: "table",
+        data: { label: "2C. Before Executing a trigger", variant: "info" },
+        type: "block",
       },
       {
         id: "Q2",
@@ -106,6 +107,54 @@ export default function App() {
           label: "3. Executes 'before Save' record-triggered flow",
         },
         type: "table",
+      },
+      {
+        id: "4",
+        position: { x: 2000, y: 150 },
+        data: {
+          // position: Position.Left,
+          data: BTdata,
+          label: "4. Executes all before triggers",
+        },
+        type: "table",
+      },
+      {
+        id: "5",
+        position: { x: 2400, y: 150 },
+        data: {
+          // position: Position.Left,
+          // data: BTdata,
+          label: "5. Runs most system validation steps again",
+        },
+        type: "block",
+      },
+      {
+        id: "6",
+        position: { x: 2400, y: 500 },
+        data: {
+          // position: Position.Left,
+          data: DRdata,
+          label: "6. Executes duplicate rules",
+        },
+        type: "table",
+      },
+      {
+        id: "Q3",
+        position: { x: 2000, y: 500 },
+        data: { label: "Duplicate record Identified and uses block action" },
+        type: "diamond",
+      },
+      {
+        id: "7",
+        position: { x: 1600, y: 300 },
+        data: { label: "7. Saves the record to the database" },
+        type: "block",
+      },
+      {
+        id: "STOP",
+        position: { x: 1600, y: 700 },
+        data: { label: "STOP" },
+        type: "block",
       },
     ]);
 
@@ -140,9 +189,9 @@ export default function App() {
       {
         id: "eQ1-2A",
         source: "Q1",
-        target: "2B",
-        sourceHandle: "top",
-        targetHandle: "bottom", // Not working need to fix this
+        target: "2A",
+        sourceHandle: "bottom",
+        // targetHandle: "top", // Not working need to fix this
         label: "Yes",
         type: "smoothstep",
         markerEnd: {
@@ -155,10 +204,27 @@ export default function App() {
         },
       },
       {
+        id: "e2A-Q2",
+        source: "2A",
+        target: "Q2",
+        sourceHandle: "right",
+        // targetHandle: "bottom", // Not working need to fix this
+        type: "smoothstep",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
+      {
         id: "eQ1-2B",
         source: "Q1",
-        target: "2A",
-        sourceHandle: "bottom",
+        target: "2B",
+        sourceHandle: "top",
+        // targetHandle: "left",
         type: "smoothstep",
         label: "No",
         markerEnd: {
@@ -202,13 +268,14 @@ export default function App() {
         source: "Q2",
         target: "2D",
         type: "smoothstep",
+        label: "Yes",
         markerEnd: {
           type: MarkerType.ArrowClosed,
-          color: "#413978",
+          color: "#12977e",
         },
         style: {
           strokeWidth: 2,
-          stroke: "#413978",
+          stroke: "#12977e",
         },
       },
       {
@@ -216,17 +283,18 @@ export default function App() {
         source: "Q2",
         target: "3",
         type: "smoothstep",
+        label: "No",
         markerEnd: {
           type: MarkerType.ArrowClosed,
-          color: "#413978",
+          color: "#ca2936",
         },
         style: {
           strokeWidth: 2,
-          stroke: "#413978",
+          stroke: "#ca2936",
         },
       },
       {
-        id: "2D-3",
+        id: "e2D-3",
         source: "2D",
         target: "3",
         type: "smoothstep",
@@ -237,6 +305,104 @@ export default function App() {
         style: {
           strokeWidth: 2,
           stroke: "#413978",
+        },
+      },
+      {
+        id: "e3-4",
+        source: "3",
+        target: "4",
+        type: "smoothstep",
+        // sourceHandle: "right",
+        // targetHandle: "left",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
+      {
+        id: "e4-5",
+        source: "4",
+        target: "5",
+        type: "smoothstep",
+        // sourceHandle: "right",
+        // targetHandle: "left",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
+      {
+        id: "e5-6",
+        source: "5",
+        target: "6",
+        type: "smoothstep",
+        // sourceHandle: "right",
+        // targetHandle: "left",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
+      {
+        id: "e6-Q3",
+        source: "6",
+        target: "Q3",
+        type: "smoothstep",
+        // sourceHandle: "right",
+        // targetHandle: "left",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
+      {
+        id: "eQ3-7",
+        source: "Q3",
+        target: "7",
+        type: "smoothstep",
+        label: "No",
+        // sourceHandle: "right",
+        // targetHandle: "left",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#ca2936",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#ca2936",
+        },
+      },
+      {
+        id: "eQ3-STOP",
+        source: "Q3",
+        target: "STOP",
+        type: "smoothstep",
+        label: "Yes",
+        // sourceHandle: "right",
+        // targetHandle: "left",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
         },
       },
     ]);
@@ -269,6 +435,14 @@ export default function App() {
 
     setBFdata(() => {
       return BFdata;
+    });
+
+    // Duplicate Rule
+    const DRdata = automationData.data.duplicateRule.records.map((record) => {
+      return record.DeveloperName;
+    });
+    setDRdata(() => {
+      return DRdata;
     });
   };
 

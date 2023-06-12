@@ -22,10 +22,13 @@ router.post("/automations", async (req, res) => {
     console.log("beforeTrigger 1->", beforeTrigger);
     const beforeFlow = await salesforce.getBeforeFlow(req?.body?.name);
     console.log("beforeFlow 1->", beforeFlow);
+    const duplicateRule = await salesforce.getDuplicateRules(req?.body?.name);
+    console.log("duplicateRule 1->", duplicateRule);
     res.json({
       validation: validation,
       beforeTrigger: beforeTrigger,
       beforeFlow: beforeFlow,
+      duplicateRule: duplicateRule,
     });
   }
 });
