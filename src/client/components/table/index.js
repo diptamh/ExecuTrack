@@ -72,30 +72,4 @@ const Node = ({ data, selected }) => {
   );
 };
 
-// class TextUpdaterNode extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     console.log("props->", props.data);
-//     this.rows = [];
-//     this.isConnectable = true;
-//     this.updateData(props.data.data);
-//   }
-
-//   updateData = (data) => {
-//     for (const dataKey in data) {
-//       this.rows.push(this.createData(data[dataKey]));
-//     }
-//   };
-
-//   createData(name) {
-//     return { name };
-//   }
-
-//   render() {
-//     return (
-
-//     );
-//   }
-// }
-
 export default memo(Node);
