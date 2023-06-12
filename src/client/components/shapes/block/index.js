@@ -36,8 +36,10 @@ const Node = ({ data, selected }) => {
           {data.label}
         </Typography>
       </Box>
-      <Handle type="source" position={Position.Right} id="b" />
-      <Handle type="target" position={Position.Left} id="a" />
+      <Handle type="source" position={Position.Right} id="right" />
+      <Handle type="target" position={Position.Left} id="left" />
+      <Handle type="source" position={Position.Bottom} id="bottom" />
+      <Handle type="target" position={Position.Top} id="top" />
     </div>
   );
 };

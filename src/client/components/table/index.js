@@ -21,11 +21,6 @@ const Node = ({ data, selected }) => {
 
   return (
     <div className="text-updater-node">
-      <Handle
-        type="target"
-        position={Position.Top}
-        isConnectable={isConnectable}
-      />
       <div>
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
@@ -49,25 +44,10 @@ const Node = ({ data, selected }) => {
           </Table>
         </TableContainer>
       </div>
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        id="a"
-        style={handleStyle}
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
-        position={Position.Left}
-        id="b"
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
-        position={Position.Right}
-        id="c"
-        isConnectable={isConnectable}
-      />
+      <Handle type="source" position={Position.Right} id="right" />
+      <Handle type="target" position={Position.Left} id="left" />
+      <Handle type="source" position={Position.Bottom} id="bottom" />
+      <Handle type="target" position={Position.Top} id="top" />
     </div>
   );
 };

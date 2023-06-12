@@ -46,25 +46,25 @@ export default function App() {
     setNodes([
       {
         id: "1",
-        position: { x: 10, y: 200 },
+        position: { x: 10, y: 300 },
         data: { label: "1. Loads the original Record", variant: "warn" },
         type: "block",
       },
       {
         id: "2",
-        position: { x: 250, y: 200 },
+        position: { x: 310, y: 300 },
         data: { label: "2. Loads the new record values", variant: "warn" },
         type: "block",
       },
       {
         id: "Q1",
-        position: { x: 510, y: 165 },
+        position: { x: 610, y: 265 },
         data: { label: "Did the request come from a standard UI edit page ?" },
         type: "diamond",
       },
       {
         id: "2B",
-        position: { x: 510, y: 5 },
+        position: { x: 610, y: 550 },
         data: {
           label: "2B. Salesforce validates only the foreign keys",
           variant: "info",
@@ -73,7 +73,7 @@ export default function App() {
       },
       {
         id: "2A",
-        position: { x: 900, y: 400 },
+        position: { x: 950, y: 300 },
         data: {
           label: "2A. Runs system validation to check for:",
           variant: "info",
@@ -82,25 +82,25 @@ export default function App() {
       },
       {
         id: "2C",
-        position: { x: 900, y: 5 },
+        position: { x: 950, y: 550 },
         data: { label: "2C. Before Executing a trigger", variant: "info" },
         type: "block",
       },
       {
         id: "Q2",
-        position: { x: 1200, y: 100 },
+        position: { x: 1250, y: 265 },
         data: { label: "Were multi-line items created ?" },
         type: "diamond",
       },
       {
         id: "2D",
-        position: { x: 1600, y: 5 },
+        position: { x: 1650, y: 300 },
         data: { data: VRdata, label: "2D. Run custom validation rules" },
         type: "table",
       },
       {
         id: "3",
-        position: { x: 1600, y: 150 },
+        position: { x: 1650, y: 450 },
         data: {
           // position: Position.Left,
           data: BFdata,
@@ -110,7 +110,7 @@ export default function App() {
       },
       {
         id: "4",
-        position: { x: 2000, y: 150 },
+        position: { x: 2100, y: 450 },
         data: {
           // position: Position.Left,
           data: BTdata,
@@ -120,7 +120,7 @@ export default function App() {
       },
       {
         id: "5",
-        position: { x: 2400, y: 150 },
+        position: { x: 2400, y: 420 },
         data: {
           // position: Position.Left,
           // data: BTdata,
@@ -130,7 +130,7 @@ export default function App() {
       },
       {
         id: "6",
-        position: { x: 2400, y: 500 },
+        position: { x: 2436, y: 700 },
         data: {
           // position: Position.Left,
           data: DRdata,
@@ -140,19 +140,19 @@ export default function App() {
       },
       {
         id: "Q3",
-        position: { x: 2000, y: 500 },
+        position: { x: 2000, y: 750 },
         data: { label: "Duplicate record Identified and uses block action" },
         type: "diamond",
       },
       {
         id: "7",
-        position: { x: 1600, y: 300 },
+        position: { x: 1750, y: 700 },
         data: { label: "7. Saves the record to the database" },
         type: "block",
       },
       {
         id: "STOP",
-        position: { x: 1600, y: 700 },
+        position: { x: 1800, y: 900 },
         data: { label: "STOP" },
         type: "block",
       },
@@ -177,6 +177,8 @@ export default function App() {
         source: "2",
         target: "Q1",
         type: "smoothstep",
+        sourceHandle: "right",
+        targetHandle: "left",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -190,8 +192,8 @@ export default function App() {
         id: "eQ1-2A",
         source: "Q1",
         target: "2A",
-        sourceHandle: "bottom",
-        // targetHandle: "top", // Not working need to fix this
+        sourceHandle: "top",
+        targetHandle: "top",
         label: "Yes",
         type: "smoothstep",
         markerEnd: {
@@ -208,7 +210,7 @@ export default function App() {
         source: "2A",
         target: "Q2",
         sourceHandle: "right",
-        // targetHandle: "bottom", // Not working need to fix this
+        targetHandle: "left",
         type: "smoothstep",
         markerEnd: {
           type: MarkerType.ArrowClosed,
@@ -223,8 +225,8 @@ export default function App() {
         id: "eQ1-2B",
         source: "Q1",
         target: "2B",
-        sourceHandle: "top",
-        // targetHandle: "left",
+        sourceHandle: "right",
+        targetHandle: "top",
         type: "smoothstep",
         label: "No",
         markerEnd: {
@@ -253,6 +255,8 @@ export default function App() {
         id: "e2C-Q2",
         source: "2C",
         target: "Q2",
+        sourceHandle: "right",
+        targetHandle: "bottom",
         type: "smoothstep",
         markerEnd: {
           type: MarkerType.ArrowClosed,
@@ -268,6 +272,8 @@ export default function App() {
         source: "Q2",
         target: "2D",
         type: "smoothstep",
+        sourceHandle: "top",
+        targetHandle: "top",
         label: "Yes",
         markerEnd: {
           type: MarkerType.ArrowClosed,
@@ -283,6 +289,8 @@ export default function App() {
         source: "Q2",
         target: "3",
         type: "smoothstep",
+        sourceHandle: "right",
+        targetHandle: "left",
         label: "No",
         markerEnd: {
           type: MarkerType.ArrowClosed,
@@ -298,6 +306,8 @@ export default function App() {
         source: "2D",
         target: "3",
         type: "smoothstep",
+        sourceHandle: "bottom",
+        targetHandle: "top",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -312,8 +322,8 @@ export default function App() {
         source: "3",
         target: "4",
         type: "smoothstep",
-        // sourceHandle: "right",
-        // targetHandle: "left",
+        sourceHandle: "right",
+        targetHandle: "left",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -344,8 +354,8 @@ export default function App() {
         source: "5",
         target: "6",
         type: "smoothstep",
-        // sourceHandle: "right",
-        // targetHandle: "left",
+        sourceHandle: "bottom",
+        targetHandle: "top",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -360,8 +370,8 @@ export default function App() {
         source: "6",
         target: "Q3",
         type: "smoothstep",
-        // sourceHandle: "right",
-        // targetHandle: "left",
+        sourceHandle: "bottom",
+        targetHandle: "bottom",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -377,8 +387,8 @@ export default function App() {
         target: "7",
         type: "smoothstep",
         label: "No",
-        // sourceHandle: "right",
-        // targetHandle: "left",
+        sourceHandle: "top",
+        targetHandle: "top",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#ca2936",
@@ -394,8 +404,8 @@ export default function App() {
         target: "STOP",
         type: "smoothstep",
         label: "Yes",
-        // sourceHandle: "right",
-        // targetHandle: "left",
+        sourceHandle: "right",
+        targetHandle: "top",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#12977e",
@@ -453,7 +463,7 @@ export default function App() {
         <ObjectSelector OnObjectSelection={handleObjectSelection} />
       </Box>
       <ReactFlow
-        nodesDraggable={true}
+        // nodesDraggable={true}
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
