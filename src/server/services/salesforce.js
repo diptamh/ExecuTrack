@@ -64,6 +64,30 @@ class Salesforce {
       }' OR TableEnumOrId = '${objectName}') AND (UsageBeforeDelete = true OR UsageBeforeUpdate  = true OR UsageBeforeInsert = true) AND Status = 'Active' `
     );
   }
+
+  async getBeforeFlow(objectName) {
+    console.log("objectName Tooling");
+    await this.conn.query(
+      `SELECT ApiName,TriggerType,TriggerObjectOrEventId
+      FROM FlowDefinitionView  
+      WHERE (TriggerObjectOrEventId  = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR TriggerObjectOrEventId  = '${objectName}') AND TriggerType = 'RecordBeforeSave'`
+    );
+    console.log("objectName");
+
+    return await this.conn.query(
+      `SELECT ApiName,TriggerType,TriggerObjectOrEventId
+      FROM FlowDefinitionView  
+      WHERE (TriggerObjectOrEventId  = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR TriggerObjectOrEventId  = '${objectName}') AND TriggerType = 'RecordBeforeSave'`
+    );
+  }
 }
 
 module.exports = Salesforce;

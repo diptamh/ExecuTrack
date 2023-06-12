@@ -6,6 +6,18 @@ class APIService extends React.Component {
     super();
   }
 
+  async getAllAutomation(selectedObject) {
+    const dataJSON = {
+      name: selectedObject,
+    };
+    const data = await this.requestHandler(
+      "POST",
+      `/api/v1/salesforce/automations`,
+      dataJSON
+    );
+    return data;
+  }
+
   async getValidations(selectedObject) {
     const dataJSON = {
       name: selectedObject,
@@ -30,6 +42,18 @@ class APIService extends React.Component {
     const data = await this.requestHandler(
       "POST",
       `/api/v1/salesforce/beforetrigger`,
+      dataJSON
+    );
+    return data;
+  }
+
+  async getBeforeFlow(selectedObject) {
+    const dataJSON = {
+      name: selectedObject,
+    };
+    const data = await this.requestHandler(
+      "POST",
+      `/api/v1/salesforce/beforeflow`,
       dataJSON
     );
     return data;

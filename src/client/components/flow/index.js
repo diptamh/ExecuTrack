@@ -7,6 +7,7 @@ import ReactFlow, {
   useEdgesState,
   addEdge,
   MarkerType,
+  Position,
   applyEdgeChanges,
   applyNodeChanges,
 } from "reactflow";
@@ -25,6 +26,7 @@ export default function App() {
   const [edges, setEdges] = useEdgesState([]);
   const [VRdata, setVRdata] = useState([null]);
   const [BTdata, setBTdata] = useState([null]);
+  const [BFdata, setBFdata] = useState([null]);
   const [nodeTypes, setNodeTypes] = useState({
     block: Block,
     diamond: Diamond,
@@ -93,6 +95,16 @@ export default function App() {
         id: "2D",
         position: { x: 1600, y: 5 },
         data: { data: VRdata, label: "2D. Run custom validation rules" },
+        type: "table",
+      },
+      {
+        id: "3",
+        position: { x: 1600, y: 150 },
+        data: {
+          // position: Position.Left,
+          data: BFdata,
+          label: "3. Executes 'before Save' record-triggered flow",
+        },
         type: "table",
       },
     ]);
@@ -199,32 +211,65 @@ export default function App() {
           stroke: "#413978",
         },
       },
+      {
+        id: "eQ2-3",
+        source: "Q2",
+        target: "3",
+        type: "smoothstep",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
+      {
+        id: "2D-3",
+        source: "2D",
+        target: "3",
+        type: "smoothstep",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
     ]);
   }, [VRdata]);
 
   // This is used to get the selected object from the child component and set it to the state
   const handleObjectSelection = async (selected) => {
-    const validationRules = await APIService.getValidations(selected);
+    const automationData = await APIService.getAllAutomation(selected);
 
-    const VRdata = validationRules.data.records.map((record) => {
+    // Validation Rule
+    const VRdata = automationData.data.validation.records.map((record) => {
       return record.ValidationName;
     });
-    const BeforeTrigger = await APIService.getBeforeTrigger(selected);
-
-    const BTdata = BeforeTrigger.data.records.map((record) => {
-      return record.Name;
-    });
-
-    // Validation Set is the object name
     setVRdata(() => {
       return VRdata;
     });
-    console.log("BTdata--->", VRdata);
 
+    // Before Trigger
+    const BTdata = automationData.data.beforeTrigger.records.map((record) => {
+      return record.Name;
+    });
     setBTdata(() => {
       return BTdata;
     });
-    console.log("BTdata--->", BTdata);
+
+    // Before Flow
+    const BFdata = automationData.data.beforeFlow.records.map((record) => {
+      return record.ApiName;
+    });
+
+    setBFdata(() => {
+      return BFdata;
+    });
   };
 
   return (
@@ -234,7 +279,7 @@ export default function App() {
         <ObjectSelector OnObjectSelection={handleObjectSelection} />
       </Box>
       <ReactFlow
-        nodesDraggable={false}
+        nodesDraggable={true}
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
