@@ -53,15 +53,59 @@ class Salesforce {
     );
   }
 
+  // async getAllTrigger(objectName) {
+  //   this.getAfterTriggerName = [];
+  //   this.getBeforeTriggerName = [];
+  //   const triggerData = await this.conn.tooling.query(
+  //     `SELECT Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
+  //     FROM ApexTrigger
+  //     WHERE (TableEnumOrId = '${
+  //       this.objectMap.has(objectName)
+  //         ? this.objectMap.get(objectName)
+  //         : objectName
+  //     }' OR TableEnumOrId = '${objectName}')  AND Status = 'Active' `
+  //   );
+  //   const afterRecords = [];
+  //   const beforeRecords = [];
+  //   for (const trigger of triggerData.records) {
+  //     if (
+  //       trigger.UsageAfterDelete ||
+  //       trigger.UsageAfterUpdate ||
+  //       trigger.UsageAfterInsert ||
+  //       trigger.UsageAfterUndelete
+  //     ) {
+  //       afterRecords.push(trigger);
+  //     } else if (
+  //       trigger.UsageBeforeDelete ||
+  //       trigger.UsageBeforeUpdate ||
+  //       trigger.UsageBeforeInsert
+  //     ) {
+  //       this.getBeforeTriggerName.push(trigger);
+  //     }
+  //   }
+  // }
+
   async getBeforeTrigger(objectName) {
     return await this.conn.tooling.query(
-      `SELECT Name
-      FROM ApexTrigger 
+      `SELECT Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
+      FROM ApexTrigger
       WHERE (TableEnumOrId = '${
         this.objectMap.has(objectName)
           ? this.objectMap.get(objectName)
           : objectName
-      }' OR TableEnumOrId = '${objectName}') AND (UsageBeforeDelete = true OR UsageBeforeUpdate  = true OR UsageBeforeInsert = true) AND Status = 'Active' `
+      }' OR TableEnumOrId = '${objectName}')  AND Status = 'Active'  AND (UsageBeforeDelete = true OR UsageBeforeUpdate = true OR UsageBeforeInsert = true)`
+    );
+  }
+
+  async getAfterTrigger(objectName) {
+    return await this.conn.tooling.query(
+      `SELECT Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
+      FROM ApexTrigger
+      WHERE (TableEnumOrId = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR TableEnumOrId = '${objectName}')  AND Status = 'Active'  AND (UsageAfterDelete = true OR UsageAfterUpdate = true OR UsageAfterInsert = true)`
     );
   }
 

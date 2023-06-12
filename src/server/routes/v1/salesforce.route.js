@@ -18,17 +18,21 @@ router.post("/automations", async (req, res) => {
     await salesforce.initMap();
     const validation = await salesforce.getValidationRules(req?.body?.name);
     console.log("validation->", validation);
+    // await salesforce.getAllTrigger(req?.body?.name);
     const beforeTrigger = await salesforce.getBeforeTrigger(req?.body?.name);
     console.log("beforeTrigger 1->", beforeTrigger);
     const beforeFlow = await salesforce.getBeforeFlow(req?.body?.name);
     console.log("beforeFlow 1->", beforeFlow);
     const duplicateRule = await salesforce.getDuplicateRules(req?.body?.name);
     console.log("duplicateRule 1->", duplicateRule);
+    const afterTrigger = await salesforce.getAfterTrigger(req?.body?.name);
+    console.log("afterTrigger 1->", afterTrigger);
     res.json({
       validation: validation,
       beforeTrigger: beforeTrigger,
       beforeFlow: beforeFlow,
       duplicateRule: duplicateRule,
+      afterTrigger: afterTrigger,
     });
   }
 });

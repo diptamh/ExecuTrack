@@ -28,6 +28,7 @@ export default function App() {
   const [BTdata, setBTdata] = useState([null]);
   const [BFdata, setBFdata] = useState([null]);
   const [DRdata, setDRdata] = useState([null]);
+  const [ATdata, setATdata] = useState([null]);
   const [nodeTypes, setNodeTypes] = useState({
     block: Block,
     diamond: Diamond,
@@ -110,7 +111,7 @@ export default function App() {
       },
       {
         id: "4",
-        position: { x: 2100, y: 450 },
+        position: { x: 2100, y: 300 },
         data: {
           // position: Position.Left,
           data: BTdata,
@@ -120,7 +121,7 @@ export default function App() {
       },
       {
         id: "5",
-        position: { x: 2400, y: 420 },
+        position: { x: 2400, y: 270 },
         data: {
           // position: Position.Left,
           // data: BTdata,
@@ -155,6 +156,12 @@ export default function App() {
         position: { x: 1800, y: 900 },
         data: { label: "STOP" },
         type: "block",
+      },
+      {
+        id: "8",
+        position: { x: 1450, y: 700 },
+        data: { label: "8. Executes all after triggers", data: ATdata },
+        type: "table",
       },
     ]);
 
@@ -415,6 +422,22 @@ export default function App() {
           stroke: "#12977e",
         },
       },
+      {
+        id: "e7-8",
+        source: "7",
+        target: "8",
+        type: "smoothstep",
+        sourceHandle: "bottom",
+        targetHandle: "top",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#413978",
+        },
+      },
     ]);
   }, [VRdata]);
 
@@ -454,6 +477,14 @@ export default function App() {
     setDRdata(() => {
       return DRdata;
     });
+
+    // After Trigger
+    const ATdata = automationData.data.afterTrigger.records.map((record) => {
+      return record.Name;
+    });
+    setATdata(() => {
+      return ATdata;
+    });
   };
 
   return (
@@ -464,6 +495,7 @@ export default function App() {
       </Box>
       <ReactFlow
         // nodesDraggable={true}
+        fitView="true"
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
