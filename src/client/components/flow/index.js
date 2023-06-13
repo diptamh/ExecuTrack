@@ -48,13 +48,21 @@ export default function App() {
       {
         id: "1",
         position: { x: 10, y: 300 },
-        data: { label: "1. Loads the original Record", variant: "warn" },
+        data: {
+          label: "1. Loads the original Record",
+          variant: "warn",
+          body: "Loads the original record values from the database or initializes the record for an upsert statement.",
+        },
         type: "block",
       },
       {
         id: "2",
         position: { x: 310, y: 300 },
-        data: { label: "2. Loads the new record values", variant: "warn" },
+        data: {
+          label: "2. Loads the new record values",
+          variant: "warn",
+          body: "Loads the new record field values from the request and overwrites the old values.",
+        },
         type: "block",
       },
       {
@@ -78,25 +86,37 @@ export default function App() {
         data: {
           label: "2A. Runs system validation to check for:",
           variant: "info",
+          body: "Compliance with layout-specific rules, Required values at the layout level, Valid field formats, Maximum field length",
         },
         type: "block",
       },
       {
         id: "2C",
         position: { x: 950, y: 550 },
-        data: { label: "2C. Before Executing a trigger", variant: "info" },
+        data: {
+          label: "2C. Before Executing a trigger",
+          variant: "info",
+          body: "Salesforce verifies that any custom foreign keys do not refer to the object itself.",
+        },
         type: "block",
       },
       {
         id: "Q2",
         position: { x: 1250, y: 265 },
-        data: { label: "Were multi-line items created ?" },
+        data: {
+          label:
+            "Were multi-line items created, or is the request from a User Object on a standard UI edit page ?",
+        },
         type: "diamond",
       },
       {
         id: "2D",
-        position: { x: 1650, y: 300 },
-        data: { data: VRdata, label: "2D. Run custom validation rules" },
+        position: { x: 1650, y: 200 },
+        data: {
+          data: VRdata,
+          label: "2D. Run custom validation rules",
+          variant: "success",
+        },
         type: "table",
       },
       {
@@ -106,6 +126,7 @@ export default function App() {
           // position: Position.Left,
           data: BFdata,
           label: "3. Executes 'before Save' record-triggered flow",
+          variant: "success",
         },
         type: "table",
       },
@@ -116,6 +137,7 @@ export default function App() {
           // position: Position.Left,
           data: BTdata,
           label: "4. Executes all before triggers",
+          variant: "success",
         },
         type: "table",
       },
@@ -123,9 +145,8 @@ export default function App() {
         id: "5",
         position: { x: 2400, y: 270 },
         data: {
-          // position: Position.Left,
-          // data: BTdata,
           label: "5. Runs most system validation steps again",
+          body: "Such a verifying that all required fields have a non-null value, Runs any custom validation rules, Does NOT run layout-specific rules if the request comes from a standard UI edit page",
         },
         type: "block",
       },
@@ -136,6 +157,7 @@ export default function App() {
           // position: Position.Left,
           data: DRdata,
           label: "6. Executes duplicate rules",
+          variant: "success",
         },
         type: "table",
       },
@@ -154,14 +176,28 @@ export default function App() {
       {
         id: "STOP",
         position: { x: 1800, y: 900 },
-        data: { label: "STOP" },
+        data: {
+          label: "The record is NOT Saved",
+          body: "No further steps such as after triggers and workflow rules are taken. ",
+          variant: "danger",
+        },
         type: "block",
       },
       {
         id: "8",
         position: { x: 1450, y: 700 },
-        data: { label: "8. Executes all after triggers", data: ATdata },
+        data: {
+          label: "8. Executes all after triggers",
+          data: ATdata,
+          variant: "success",
+        },
         type: "table",
+      },
+      {
+        id: "Q4",
+        position: { x: 1250, y: 750 },
+        data: { label: "Is this a recursive save ?" },
+        type: "diamond",
       },
     ]);
 
@@ -436,6 +472,23 @@ export default function App() {
         style: {
           strokeWidth: 2,
           stroke: "#413978",
+        },
+      },
+      {
+        id: "e8-Q4",
+        source: "8",
+        target: "Q4",
+        type: "smoothstep",
+        sourceHandle: "bottom",
+        targetHandle: "bottom",
+
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
         },
       },
     ]);

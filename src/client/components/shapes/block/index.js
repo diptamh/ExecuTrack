@@ -16,6 +16,7 @@ const Node = ({ data, selected }) => {
     <div>
       <Box
         sx={{
+          maxWidth: 200,
           minHeight: 150,
           boxShadow: 4,
           borderRadius: 3,
@@ -34,6 +35,9 @@ const Node = ({ data, selected }) => {
           gutterBottom
         >
           {data.label}
+        </Typography>
+        <Typography variant="caption" display="block" gutterBottom>
+          {data.body}
         </Typography>
       </Box>
       <Handle type="source" position={Position.Right} id="right" />

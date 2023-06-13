@@ -25,3 +25,14 @@
 .success p {
     border-bottom: 1px solid #66b0a1;
 }
+
+.danger {
+    border: 2px solid #d12121;
+    background: #fbfbfb;
+    color: #d12121;
+}
+.danger p{
+    border: 2px solid #d12121;
+    background: #fbfbfb;
+    color: #d12121;
+}
