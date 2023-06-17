@@ -5,7 +5,6 @@ const passport = require("./services/salesforce.strategy");
 const session = require("express-session");
 require("dotenv").config();
 const path = require("path");
-const meteredMiddleware = require("./middleware/metered.js");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -20,7 +19,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(meteredMiddleware.handle);
 // use passport
 app.use(passport.initialize());
 app.use(passport.session());
