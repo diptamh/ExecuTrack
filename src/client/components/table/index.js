@@ -11,7 +11,6 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-const handleStyle = { left: 10 };
 
 const Node = ({ data, selected }) => {
   console.log("dataAll->", data);
@@ -27,7 +26,7 @@ const Node = ({ data, selected }) => {
         <Box
           sx={{
             maxWidth: 300,
-            minHeight: 150,
+            minWidth: 250,
             minHeight: 150,
             boxShadow: 4,
             borderRadius: 3,
@@ -38,7 +37,6 @@ const Node = ({ data, selected }) => {
           <Typography
             sx={{
               fontSize: 12,
-
               padding: 1,
               fontWeight: "bold",
             }}
@@ -52,13 +50,8 @@ const Node = ({ data, selected }) => {
             <Table aria-label="simple table">
               <TableBody>
                 {rows.map((row) => (
-                  <TableRow
-                    key={row}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row}
-                    </TableCell>
+                  <TableRow key={row} className="success">
+                    {row}
                   </TableRow>
                 ))}
               </TableBody>

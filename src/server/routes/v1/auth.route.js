@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get(
   "/callback",
+  // console.log("callback"),
   passport.authenticate("forcedotcom", { failureRedirect: "/error" }),
   async (req, res) => {
     res.redirect("/home");
