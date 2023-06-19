@@ -1,15 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactFlow, {
   MiniMap,
   Controls,
   Background,
   useNodesState,
   useEdgesState,
-  addEdge,
   MarkerType,
-  Position,
-  applyEdgeChanges,
-  applyNodeChanges,
 } from "reactflow";
 import { Box } from "@mui/material";
 import Block from "../shapes/block";
@@ -47,7 +43,7 @@ export default function App() {
     setNodes([
       {
         id: "1",
-        position: { x: 10, y: 300 },
+        position: { x: 10, y: -300 },
         data: {
           label: "1. Loads the original Record",
           variant: "warn",
@@ -57,7 +53,7 @@ export default function App() {
       },
       {
         id: "2",
-        position: { x: 310, y: 300 },
+        position: { x: 310, y: -300 },
         data: {
           label: "2. Loads the new record values",
           variant: "warn",
@@ -67,13 +63,13 @@ export default function App() {
       },
       {
         id: "Q1",
-        position: { x: 610, y: 265 },
+        position: { x: 610, y: -335 },
         data: { label: "Did the request come from a standard UI edit page ?" },
         type: "diamond",
       },
       {
         id: "2B",
-        position: { x: 610, y: 550 },
+        position: { x: 650, y: -50 },
         data: {
           label: "2B. Salesforce validates only the foreign keys",
           variant: "info",
@@ -82,7 +78,7 @@ export default function App() {
       },
       {
         id: "2A",
-        position: { x: 950, y: 300 },
+        position: { x: 950, y: -500 },
         data: {
           label: "2A. Runs system validation to check for:",
           variant: "info",
@@ -92,7 +88,7 @@ export default function App() {
       },
       {
         id: "2C",
-        position: { x: 950, y: 550 },
+        position: { x: 950, y: -50 },
         data: {
           label: "2C. Before Executing a trigger",
           variant: "info",
@@ -102,7 +98,7 @@ export default function App() {
       },
       {
         id: "Q2",
-        position: { x: 1250, y: 265 },
+        position: { x: 1250, y: -335 },
         data: {
           label:
             "Were multi-line items created, or is the request from a User Object on a standard UI edit page ?",
@@ -111,7 +107,7 @@ export default function App() {
       },
       {
         id: "2D",
-        position: { x: 1650, y: 200 },
+        position: { x: 1650, y: -500 },
         data: {
           data: VRdata,
           label: "2D. Run custom validation rules",
@@ -121,9 +117,8 @@ export default function App() {
       },
       {
         id: "3",
-        position: { x: 1650, y: 450 },
+        position: { x: 1650, y: -200 },
         data: {
-          // position: Position.Left,
           data: BFdata,
           label: "3. Executes 'before Save' record-triggered flow",
           variant: "success",
@@ -132,9 +127,8 @@ export default function App() {
       },
       {
         id: "4",
-        position: { x: 2100, y: 300 },
+        position: { x: 2100, y: -200 },
         data: {
-          // position: Position.Left,
           data: BTdata,
           label: "4. Executes all before triggers",
           variant: "success",
@@ -143,7 +137,7 @@ export default function App() {
       },
       {
         id: "5",
-        position: { x: 2400, y: 270 },
+        position: { x: 2400, y: -250 },
         data: {
           label: "5. Runs most system validation steps again",
           body: "Such a verifying that all required fields have a non-null value, Runs any custom validation rules, Does NOT run layout-specific rules if the request comes from a standard UI edit page",
@@ -152,9 +146,8 @@ export default function App() {
       },
       {
         id: "6",
-        position: { x: 2436, y: 700 },
+        position: { x: 2436, y: 300 },
         data: {
-          // position: Position.Left,
           data: DRdata,
           label: "6. Executes duplicate rules",
           variant: "success",
@@ -163,19 +156,19 @@ export default function App() {
       },
       {
         id: "Q3",
-        position: { x: 2000, y: 750 },
+        position: { x: 2000, y: 265 },
         data: { label: "Duplicate record Identified and uses block action" },
         type: "diamond",
       },
       {
         id: "7",
-        position: { x: 1750, y: 700 },
+        position: { x: 1750, y: 200 },
         data: { label: "7. Saves the record to the database" },
         type: "block",
       },
       {
         id: "STOP",
-        position: { x: 1800, y: 900 },
+        position: { x: 1800, y: 450 },
         data: {
           label: "The record is NOT Saved",
           body: "No further steps such as after triggers and workflow rules are taken. ",
@@ -185,7 +178,7 @@ export default function App() {
       },
       {
         id: "8",
-        position: { x: 1450, y: 700 },
+        position: { x: 1450, y: 200 },
         data: {
           label: "8. Executes all after triggers",
           data: ATdata,
@@ -195,7 +188,7 @@ export default function App() {
       },
       {
         id: "Q4",
-        position: { x: 1250, y: 750 },
+        position: { x: 1250, y: 400 },
         data: { label: "Is this a recursive save ?" },
         type: "diamond",
       },
@@ -206,6 +199,9 @@ export default function App() {
         id: "e1-2",
         source: "1",
         target: "2",
+        type: "smoothstep",
+        sourceHandle: "sright",
+        targetHandle: "tleft",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -268,7 +264,7 @@ export default function App() {
         id: "eQ1-2B",
         source: "Q1",
         target: "2B",
-        sourceHandle: "sright",
+        sourceHandle: "sbottom",
         targetHandle: "ttop",
         type: "smoothstep",
         label: "No",
@@ -413,7 +409,7 @@ export default function App() {
         source: "6",
         target: "Q3",
         type: "smoothstep",
-        sourceHandle: "sbottom",
+        sourceHandle: "sleft",
         targetHandle: "tright",
         markerEnd: {
           type: MarkerType.ArrowClosed,
