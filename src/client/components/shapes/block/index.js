@@ -49,10 +49,14 @@ const Node = ({ data, selected }) => {
           ))}
         </Typography>
       </Box>
-      <Handle type="source" position={Position.Right} id="right" />
-      <Handle type="target" position={Position.Left} id="left" />
-      <Handle type="source" position={Position.Bottom} id="bottom" />
-      <Handle type="target" position={Position.Top} id="top" />
+      <Handle type="source" position={Position.Right} id="sright" />
+      <Handle type="target" position={Position.Right} id="tright" />
+      <Handle type="target" position={Position.Left} id="tleft" />
+      <Handle type="source" position={Position.Left} id="sleft" />
+      <Handle type="source" position={Position.Bottom} id="sbottom" />
+      <Handle type="target" position={Position.Bottom} id="tbottom" />
+      <Handle type="target" position={Position.Top} id="ttop" />
+      <Handle type="source" position={Position.Top} id="stop" />
     </div>
   );
 };
