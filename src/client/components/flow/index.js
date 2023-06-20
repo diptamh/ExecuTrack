@@ -192,6 +192,133 @@ export default function App() {
         data: { label: "Is this a recursive save ?" },
         type: "diamond",
       },
+      {
+        id: "9",
+        position: { x: 900, y: 440 },
+        data: {
+          label: "9. Executes Assignment Rules",
+          variant: "success",
+        },
+        type: "table",
+      },
+      {
+        id: "10",
+        position: { x: 900, y: 200 },
+        data: {
+          label: "10. Executes auto-response rules",
+          variant: "success",
+        },
+        type: "table",
+      },
+      {
+        id: "11",
+        position: { x: 600, y: 200 },
+        data: {
+          label: "11. Executes workflow rules",
+          variant: "success",
+        },
+        type: "table",
+      },
+      {
+        id: "Q5",
+        position: { x: 200, y: 165 },
+        data: { label: "Are there any workflow field updates?" },
+        type: "diamond",
+      },
+      {
+        id: "11A",
+        position: { x: 0, y: 600 },
+        data: {
+          label: "11A. If there are workflow field updates:",
+          variant: "info",
+          body: "Updates the record again, Runs system validations again, Custom validation rules flows duplicate rules processes and escalation rules are NOT run again, Executes before update triggers and after update triggers regardless of the record operation (insert or update) one more time (and only one more time)",
+        },
+        type: "block",
+      },
+      {
+        id: "12",
+        position: { x: 600, y: 440 },
+        data: {
+          label: "12. Executes processes",
+          variant: "success",
+        },
+        type: "table",
+      },
+      {
+        id: "13",
+        position: { x: 625, y: 650 },
+        data: {
+          label: "13. Executes Flow automations in no perticular order",
+          variant: "info",
+          body: "Processes, Flows launched by processes, Flows launched by workflow rules",
+        },
+        type: "block",
+      },
+      {
+        id: "14",
+        position: { x: 900, y: 650 },
+        data: {
+          label: "14. Executes 'after save' record-triggered flow",
+          variant: "success",
+        },
+        type: "table",
+      },
+      {
+        id: "15",
+        position: { x: 900, y: 850 },
+        data: {
+          label: "14. Executes Entitlement Rules",
+          variant: "success",
+        },
+        type: "table",
+      },
+      {
+        id: "Q6",
+        position: { x: 900, y: 1050 },
+        data: { label: "Does the record contain roll-up summary fields" },
+        type: "diamond",
+      },
+      {
+        id: "16",
+        position: { x: 1000, y: 1350 },
+        data: {
+          label: "16. Calculates the roll-up summary field on parent records",
+          variant: "info",
+          // body: "If there are workflow field updates:",
+        },
+        type: "block",
+      },
+      {
+        id: "17",
+        position: { x: 1400, y: 1350 },
+        data: {
+          label:
+            "17. Calculates the roll-up summary fields on grand-parent records",
+          variant: "info",
+          // body: "If there are workflow field updates:",
+        },
+        type: "block",
+      },
+      {
+        id: "18",
+        position: { x: 1300, y: 1050 },
+        data: {
+          label: "18. Executes Criteria Based Sharing rules",
+          variant: "success",
+          // body: "If there are workflow field updates:",
+        },
+        type: "table",
+      },
+      {
+        id: "19",
+        position: { x: 1600, y: 1050 },
+        data: {
+          label: "19. Commits all DML operations to the database",
+          variant: "success",
+          // body: "If there are workflow field updates:",
+        },
+        type: "block",
+      },
     ]);
 
     setEdges([
@@ -485,6 +612,185 @@ export default function App() {
         style: {
           strokeWidth: 2,
           stroke: "#12977e",
+        },
+      },
+      {
+        id: "eQ4-9",
+        source: "Q4",
+        target: "9",
+        type: "smoothstep",
+        label: "No",
+        sourceHandle: "sleft",
+        targetHandle: "tright",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#ca2936",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#ca2936",
+        },
+      },
+      {
+        id: "e9-10",
+        source: "9",
+        target: "10",
+        type: "smoothstep",
+        sourceHandle: "stop",
+        targetHandle: "tbottom",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#413978",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "e10-11",
+        source: "10",
+        target: "11",
+        type: "smoothstep",
+        sourceHandle: "sleft",
+        targetHandle: "tright",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "e11-Q5",
+        source: "11",
+        target: "Q5",
+        type: "smoothstep",
+        sourceHandle: "sleft",
+        targetHandle: "tright",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "eQ5-11A",
+        source: "Q5",
+        target: "11A",
+        type: "smoothstep",
+        label: "Yes",
+        sourceHandle: "sleft",
+        targetHandle: "ttop",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "eQ5-12",
+        source: "Q5",
+        target: "12",
+        type: "smoothstep",
+        label: "No",
+        sourceHandle: "sbottom",
+        targetHandle: "ttop",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#ca2936",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#ca2936",
+        },
+      },
+      {
+        id: "e11A-12",
+        source: "11A",
+        target: "12",
+        type: "smoothstep",
+        sourceHandle: "sright",
+        targetHandle: "tleft",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "e12-13",
+        source: "12",
+        target: "13",
+        type: "smoothstep",
+        sourceHandle: "sbottom",
+        targetHandle: "ttop",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "e13-14",
+        source: "13",
+        target: "14",
+        type: "smoothstep",
+        sourceHandle: "sright",
+        targetHandle: "tleft",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "e14-15",
+        source: "14",
+        target: "15",
+        type: "smoothstep",
+        sourceHandle: "sbottom",
+        targetHandle: "ttop",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "e15-Q6",
+        source: "15",
+        target: "Q6",
+        type: "smoothstep",
+        sourceHandle: "sbottom",
+        targetHandle: "ttop",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#ca2936",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#ca2936",
         },
       },
     ]);
