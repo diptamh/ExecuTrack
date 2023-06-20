@@ -27,12 +27,34 @@ router.post("/automations", async (req, res) => {
     console.log("duplicateRule 1->", duplicateRule);
     const afterTrigger = await salesforce.getAfterTrigger(req?.body?.name);
     console.log("afterTrigger 1->", afterTrigger);
+    const assignmentRule = await salesforce.getAssignmentRules(req?.body?.name);
+    console.log("assignmentRule 1->", assignmentRule);
+    const autoResponseRule = await salesforce.getAutoResponseRules(
+      req?.body?.name
+    );
+    console.log("autoResponseRule 1->", autoResponseRule);
+    const workflowRules = await salesforce.getWorkflowRules(req?.body?.name);
+    console.log("workflowRules 1->", workflowRules);
+    const afterSaveTrigger = await salesforce.getAfterSaveTrigger(
+      req?.body?.name
+    );
+    console.log("afterSaveTrigger 1->", afterSaveTrigger);
+    const entitlementProcess = await salesforce.getEntitlementProcess(
+      req?.body?.name
+    );
+    console.log("entitlementProcess 1->", entitlementProcess);
+
     res.json({
       validation: validation,
       beforeTrigger: beforeTrigger,
       beforeFlow: beforeFlow,
       duplicateRule: duplicateRule,
       afterTrigger: afterTrigger,
+      assignmentRule: assignmentRule,
+      autoResponseRule: autoResponseRule,
+      workflowRules: workflowRules,
+      afterSaveTrigger: afterSaveTrigger,
+      entitlementProcess: entitlementProcess,
     });
   }
 });

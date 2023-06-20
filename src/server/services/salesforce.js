@@ -16,10 +16,7 @@ class Salesforce {
         obj.Id.substring(0, 15)
       );
     });
-    // return this.conn;
   }
-
-  // this.map = new Map();
 
   async query(query) {
     return await this.conn.query(query);
@@ -52,38 +49,6 @@ class Salesforce {
         object.keyPrefix
     );
   }
-
-  // async getAllTrigger(objectName) {
-  //   this.getAfterTriggerName = [];
-  //   this.getBeforeTriggerName = [];
-  //   const triggerData = await this.conn.tooling.query(
-  //     `SELECT Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
-  //     FROM ApexTrigger
-  //     WHERE (TableEnumOrId = '${
-  //       this.objectMap.has(objectName)
-  //         ? this.objectMap.get(objectName)
-  //         : objectName
-  //     }' OR TableEnumOrId = '${objectName}')  AND Status = 'Active' `
-  //   );
-  //   const afterRecords = [];
-  //   const beforeRecords = [];
-  //   for (const trigger of triggerData.records) {
-  //     if (
-  //       trigger.UsageAfterDelete ||
-  //       trigger.UsageAfterUpdate ||
-  //       trigger.UsageAfterInsert ||
-  //       trigger.UsageAfterUndelete
-  //     ) {
-  //       afterRecords.push(trigger);
-  //     } else if (
-  //       trigger.UsageBeforeDelete ||
-  //       trigger.UsageBeforeUpdate ||
-  //       trigger.UsageBeforeInsert
-  //     ) {
-  //       this.getBeforeTriggerName.push(trigger);
-  //     }
-  //   }
-  // }
 
   async getBeforeTrigger(objectName) {
     return await this.conn.tooling.query(
@@ -131,6 +96,81 @@ class Salesforce {
       }' OR SobjectType = '${objectName}'`
     );
   }
+
+  async getAssignmentRules(objectName) {
+    return await this.conn.query(
+      `SELECT id,Name,SobjectType from AssignmentRule
+      WHERE SobjectType = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR SobjectType = '${objectName}'`
+    );
+  }
+
+  async getAutoResponseRules(objectName) {
+    return await this.conn.tooling.query(
+      `SELECT id,Name,EntityDefinitionId from AutoResponseRule
+      WHERE EntityDefinitionId  = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR EntityDefinitionId  = '${objectName}'`
+    );
+  }
+
+  async getWorkflowRules(objectName) {
+    return await this.conn.tooling.query(
+      `SELECT id,Name,TableEnumOrId from WorkflowRule
+      WHERE TableEnumOrId  = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR TableEnumOrId  = '${objectName}'`
+    );
+  }
+
+  // To do : Escalation Rules 12.
+
+  // To do : Figure Out how to get the Executes flow automations in no perticular order 13
+
+  async getAfterSaveTrigger(objectName) {
+    return await this.conn.query(
+      `SELECT Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
+      FROM ApexTrigger
+      WHERE (TableEnumOrId = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR TableEnumOrId = '${objectName}')  AND Status = 'Active'  AND (UsageAfterDelete = true OR UsageAfterUpdate = true OR UsageAfterInsert = true)`
+    );
+  }
+
+  async getEntitlementProcess(objectName) {
+    return await this.conn.query(
+      `SELECT id,Name,SobjectType from SlaProcess
+      WHERE SobjectType = '${
+        this.objectMap.has(objectName)
+          ? this.objectMap.get(objectName)
+          : objectName
+      }' OR SobjectType = '${objectName}'`
+    );
+  }
+
+  // async calculateRollupSummary(objectName) {
+  //   return await this.conn.query(
+  //     `SELECT id,Name,SobjectType from RollupSummaryField
+  //     WHERE SobjectType = '${
+  //       this.objectMap.has(objectName)
+  //         ? this.objectMap.get(objectName)
+  //         : objectName
+  //     }' OR SobjectType = '${objectName}'`
+  //   );
+  // }
+
+  // To do : Figure Oyut how to get the Roll up Summary Fields in no perticular order 17
+
+  // Retrive Sharing Rules -> https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_retrieve.htm
 }
 
 module.exports = Salesforce;
