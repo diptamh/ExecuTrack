@@ -267,24 +267,23 @@ export default function App() {
         id: "15",
         position: { x: 900, y: 850 },
         data: {
-          label: "14. Executes Entitlement Rules",
+          label: "15. Executes Entitlement Rules",
           variant: "success",
         },
         type: "table",
       },
       {
         id: "Q6",
-        position: { x: 900, y: 1050 },
+        position: { x: 890, y: 1050 },
         data: { label: "Does the record contain roll-up summary fields" },
         type: "diamond",
       },
       {
         id: "16",
-        position: { x: 1000, y: 1350 },
+        position: { x: 930, y: 1350 },
         data: {
           label: "16. Calculates the roll-up summary field on parent records",
           variant: "info",
-          // body: "If there are workflow field updates:",
         },
         type: "block",
       },
@@ -301,7 +300,7 @@ export default function App() {
       },
       {
         id: "18",
-        position: { x: 1300, y: 1050 },
+        position: { x: 1650, y: 1080 },
         data: {
           label: "18. Executes Criteria Based Sharing rules",
           variant: "success",
@@ -311,11 +310,21 @@ export default function App() {
       },
       {
         id: "19",
-        position: { x: 1600, y: 1050 },
+        position: { x: 1950, y: 1080 },
         data: {
           label: "19. Commits all DML operations to the database",
           variant: "success",
           // body: "If there are workflow field updates:",
+        },
+        type: "block",
+      },
+      {
+        id: "20",
+        position: { x: 2250, y: 1080 },
+        data: {
+          label: "20. Executes Post-Commit logic",
+          variant: "info",
+          body: "Sending email, Executing enqueued asynchronous Apex jobs including queueable jobs and future methods, Asynchronous paths in record-triggered flows",
         },
         type: "block",
       },
@@ -784,6 +793,121 @@ export default function App() {
         type: "smoothstep",
         sourceHandle: "sbottom",
         targetHandle: "ttop",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#ca2936",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#ca2936",
+        },
+      },
+      {
+        id: "eQ6-16",
+        source: "Q6",
+        target: "16",
+        type: "smoothstep",
+        label: "Yes",
+        sourceHandle: "sbottom",
+        targetHandle: "ttop",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "eQ6-18",
+        source: "Q6",
+        target: "18",
+        type: "smoothstep",
+        label: "No",
+        sourceHandle: "sright",
+        targetHandle: "tleft",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#ca2936",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#ca2936",
+        },
+      },
+      {
+        id: "e16-17",
+        source: "16",
+        target: "17",
+        type: "smoothstep",
+        sourceHandle: "sright",
+        targetHandle: "tleft",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "e17-18",
+        source: "17",
+        target: "18",
+        type: "smoothstep",
+        sourceHandle: "stop",
+        targetHandle: "tbottom",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "e18-19",
+        source: "18",
+        target: "19",
+        type: "smoothstep",
+        sourceHandle: "sright",
+        targetHandle: "tleft",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#ca2936",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#ca2936",
+        },
+      },
+      {
+        id: "eq4-18",
+        source: "Q4",
+        target: "18",
+        type: "smoothstep",
+        label: "Yes",
+        sourceHandle: "sbottom",
+        targetHandle: "ttop",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: "#12977e",
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#12977e",
+        },
+      },
+      {
+        id: "e19-20",
+        source: "19",
+        target: "20",
+        type: "smoothstep",
+        sourceHandle: "sright",
+        targetHandle: "tleft",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#ca2936",
