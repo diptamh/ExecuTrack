@@ -35,10 +35,8 @@ router.post("/automations", async (req, res) => {
     console.log("autoResponseRule 1->", autoResponseRule);
     const workflowRules = await salesforce.getWorkflowRules(req?.body?.name);
     console.log("workflowRules 1->", workflowRules);
-    const afterSaveTrigger = await salesforce.getAfterSaveTrigger(
-      req?.body?.name
-    );
-    console.log("afterSaveTrigger 1->", afterSaveTrigger);
+    const afterFlow = await salesforce.getAfterFlow(req?.body?.name);
+    console.log("afterFlow 1->", afterFlow);
     const entitlementProcess = await salesforce.getEntitlementProcess(
       req?.body?.name
     );
@@ -53,7 +51,7 @@ router.post("/automations", async (req, res) => {
       assignmentRule: assignmentRule,
       autoResponseRule: autoResponseRule,
       workflowRules: workflowRules,
-      afterSaveTrigger: afterSaveTrigger,
+      afterFlow: afterFlow,
       entitlementProcess: entitlementProcess,
     });
   }

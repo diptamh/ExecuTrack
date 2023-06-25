@@ -134,15 +134,15 @@ class Salesforce {
 
   // To do : Figure Out how to get the Executes flow automations in no perticular order 13
 
-  async getAfterSaveTrigger(objectName) {
+  async getAfterFlow(objectName) {
     return await this.conn.query(
-      `SELECT Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
-      FROM ApexTrigger
-      WHERE (TableEnumOrId = '${
+      `SELECT ApiName,TriggerType,TriggerObjectOrEventId
+      FROM FlowDefinitionView  
+      WHERE (TriggerObjectOrEventId  = '${
         this.objectMap.has(objectName)
           ? this.objectMap.get(objectName)
           : objectName
-      }' OR TableEnumOrId = '${objectName}')  AND Status = 'Active'  AND (UsageAfterDelete = true OR UsageAfterUpdate = true OR UsageAfterInsert = true)`
+      }' OR TriggerObjectOrEventId  = '${objectName}') AND TriggerType = 'RecordAfterSave'`
     );
   }
 

@@ -25,6 +25,11 @@ export default function App() {
   const [BFdata, setBFdata] = useState([null]);
   const [DRdata, setDRdata] = useState([null]);
   const [ATdata, setATdata] = useState([null]);
+  const [ARdata, setARdata] = useState([null]);
+  const [AResdata, setAResdata] = useState([null]);
+  const [WFdata, setWFdata] = useState([null]);
+  const [AFdata, setAFdata] = useState([null]);
+  const [EPdata, setEPdata] = useState([null]);
   const [nodeTypes, setNodeTypes] = useState({
     block: Block,
     diamond: Diamond,
@@ -198,6 +203,7 @@ export default function App() {
         data: {
           label: "9. Executes Assignment Rules",
           variant: "success",
+          data: ARdata,
         },
         type: "table",
       },
@@ -207,6 +213,7 @@ export default function App() {
         data: {
           label: "10. Executes auto-response rules",
           variant: "success",
+          data: AResdata,
         },
         type: "table",
       },
@@ -216,6 +223,7 @@ export default function App() {
         data: {
           label: "11. Executes workflow rules",
           variant: "success",
+          data: WFdata,
         },
         type: "table",
       },
@@ -260,6 +268,7 @@ export default function App() {
         data: {
           label: "14. Executes 'after save' record-triggered flow",
           variant: "success",
+          data: AFdata,
         },
         type: "table",
       },
@@ -269,6 +278,7 @@ export default function App() {
         data: {
           label: "15. Executes Entitlement Rules",
           variant: "success",
+          data: EPdata,
         },
         type: "table",
       },
@@ -963,6 +973,56 @@ export default function App() {
     });
     setATdata(() => {
       return ATdata;
+    });
+
+    // Execute Assignment Rule
+    const ARdata = automationData.data.assignmentRule.records.map((record) => {
+      return record.Name;
+    });
+    setARdata(() => {
+      return ARdata;
+    });
+
+    // Execute Auto Response Rule
+    const AResdata = automationData.data.autoResponseRule.records.map(
+      (record) => {
+        return record.Name;
+      }
+    );
+
+    setAResdata(() => {
+      return AResdata;
+    });
+
+    console.log("All Automation---------->", automationData.data);
+
+    // Execute Workflow Rule
+    const WFdata = automationData.data.workflowRules.records.map((record) => {
+      return record.Name;
+    });
+
+    setWFdata(() => {
+      return WFdata;
+    });
+
+    // Execute After Save Trigger
+    const AFdata = automationData.data.afterFlow.records.map((record) => {
+      return record.ApiName;
+    });
+
+    setAFdata(() => {
+      return AFdata;
+    });
+
+    // Execute Entitlement Process
+    const EPdata = automationData.data.entitlementProcess.records.map(
+      (record) => {
+        return record.Name;
+      }
+    );
+
+    setEPdata(() => {
+      return EPdata;
     });
   };
 
