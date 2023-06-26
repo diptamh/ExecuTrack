@@ -30,10 +30,6 @@ class Salesforce {
     });
   }
 
-  // async query(query) {
-  //   return await this.conn.query(query);
-  // }
-
   async getValidationRules() {
     console.log("getValidationRules->", this.conn.object);
     return await this.conn.tooling.query(
@@ -51,7 +47,6 @@ class Salesforce {
 
   async getObjects() {
     const objects = await this.conn.describeGlobal();
-    // check if object is accessible , creatable, updateable, deletable
     return objects.sobjects.filter(
       (object) =>
         object.createable &&
