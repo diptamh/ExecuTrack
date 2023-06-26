@@ -14,45 +14,78 @@ router.post("/automations", async (req, res) => {
       instanceUrl: token.instance_url,
       version: "54.0",
     });
+    conn.object = req?.body?.name;
     const salesforce = new Salesforce(conn);
     await salesforce.initMap();
-    const validation = await salesforce.getValidationRules(req?.body?.name);
-    console.log("validation->", validation);
-    // await salesforce.getAllTrigger(req?.body?.name);
-    const beforeTrigger = await salesforce.getBeforeTrigger(req?.body?.name);
-    console.log("beforeTrigger 1->", beforeTrigger);
-    const beforeFlow = await salesforce.getBeforeFlow(req?.body?.name);
-    console.log("beforeFlow 1->", beforeFlow);
-    const duplicateRule = await salesforce.getDuplicateRules(req?.body?.name);
-    console.log("duplicateRule 1->", duplicateRule);
-    const afterTrigger = await salesforce.getAfterTrigger(req?.body?.name);
-    console.log("afterTrigger 1->", afterTrigger);
-    const assignmentRule = await salesforce.getAssignmentRules(req?.body?.name);
-    console.log("assignmentRule 1->", assignmentRule);
-    const autoResponseRule = await salesforce.getAutoResponseRules(
-      req?.body?.name
-    );
-    console.log("autoResponseRule 1->", autoResponseRule);
-    const workflowRules = await salesforce.getWorkflowRules(req?.body?.name);
-    console.log("workflowRules 1->", workflowRules);
-    const afterFlow = await salesforce.getAfterFlow(req?.body?.name);
-    console.log("afterFlow 1->", afterFlow);
-    const entitlementProcess = await salesforce.getEntitlementProcess(
-      req?.body?.name
-    );
-    console.log("entitlementProcess 1->", entitlementProcess);
+
+    const results = await Promise.all([
+      salesforce.getValidationRules(),
+      salesforce.getAllTrigger(),
+      salesforce.getAllFlow(),
+      salesforce.getDuplicateRules(),
+      salesforce.getAssignmentRules(),
+      salesforce.getAutoResponseRules(),
+      salesforce.getWorkflowRules(),
+      salesforce.getEntitlementProcess(),
+      salesforce.getSharingRules(),
+    ]);
+
+    const validation = results[0];
+    const allTrigger = results[1];
+    const allFlow = results[2];
+    const duplicateRule = results[3];
+    const assignmentRule = results[4];
+    const autoResponseRule = results[5];
+    const workflowRules = results[6];
+    const entitlementProcess = results[7];
+    const sharingRules = results[8];
+
+    const beforeTrigger = {
+      records: allTrigger.records.filter(
+        (trigger) =>
+          trigger.UsageBeforeDelete ||
+          trigger.UsageBeforeUpdate ||
+          trigger.UsageBeforeInsert
+      ),
+    };
+
+    const beforeFlow = {
+      records: allFlow.records.filter((flow) => {
+        return flow.TriggerType == "RecordBeforeSave";
+      }),
+    };
+
+    const afterTrigger = {
+      records: allTrigger.records.filter(
+        (trigger) =>
+          trigger.UsageAfterDelete ||
+          trigger.UsageAfterUpdate ||
+          trigger.UsageAfterInsert ||
+          trigger.UsageAfterUndelete
+      ),
+    };
+
+    const afterFlow = {
+      records: allFlow.records.filter(
+        (flow) => flow.TriggerType == "RecordAfterSave"
+      ),
+    };
 
     res.json({
-      validation: validation,
-      beforeTrigger: beforeTrigger,
-      beforeFlow: beforeFlow,
-      duplicateRule: duplicateRule,
-      afterTrigger: afterTrigger,
-      assignmentRule: assignmentRule,
-      autoResponseRule: autoResponseRule,
-      workflowRules: workflowRules,
-      afterFlow: afterFlow,
-      entitlementProcess: entitlementProcess,
+      validation: validation, // 2D
+      beforeTrigger: beforeTrigger, // 3
+      beforeFlow: beforeFlow, // 4
+      duplicateRule: duplicateRule, // 6
+      afterTrigger: afterTrigger, // 8
+      assignmentRule: assignmentRule, // 9
+      autoResponseRule: autoResponseRule, // 10
+      workflowRules: workflowRules, // 11
+      //12. Escalation Process
+      afterFlow: afterFlow, // 14
+      entitlementProcess: entitlementProcess, // 15
+      // 16. Roll-Up Summary Fields on parent records
+      // 17. Roll-Up Summary Fields on grand parent records
+      // 18. Sharing Rules
     });
   }
 });
