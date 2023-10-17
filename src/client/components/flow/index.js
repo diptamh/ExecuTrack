@@ -47,34 +47,8 @@ export default function App() {
 
     setNodes([
       {
-        id: "1",
-        position: { x: 10, y: -300 },
-        data: {
-          label: "1. Loads the original Record",
-          variant: "warn",
-          body: "Loads the original record values from the database or initializes the record for an upsert statement.",
-        },
-        type: "block",
-      },
-      {
-        id: "2",
-        position: { x: 310, y: -300 },
-        data: {
-          label: "2. Loads the new record values",
-          variant: "warn",
-          body: "Loads the new record field values from the request and overwrites the old values.",
-        },
-        type: "block",
-      },
-      {
-        id: "Q1",
-        position: { x: 610, y: -335 },
-        data: { label: "Did the request come from a standard UI edit page ?" },
-        type: "diamond",
-      },
-      {
         id: "2B",
-        position: { x: 650, y: -50 },
+        position: { x: 0, y: 0 },
         data: {
           label: "2B. Salesforce validates only the foreign keys",
           variant: "info",
@@ -82,37 +56,8 @@ export default function App() {
         type: "block",
       },
       {
-        id: "2A",
-        position: { x: 950, y: -500 },
-        data: {
-          label: "2A. Runs system validation to check for:",
-          variant: "info",
-          body: "Compliance with layout-specific rules, Required values at the layout level, Valid field formats, Maximum field length",
-        },
-        type: "block",
-      },
-      {
-        id: "2C",
-        position: { x: 950, y: -50 },
-        data: {
-          label: "2C. Before Executing a trigger",
-          variant: "info",
-          body: "Salesforce verifies that any custom foreign keys do not refer to the object itself.",
-        },
-        type: "block",
-      },
-      {
-        id: "Q2",
-        position: { x: 1250, y: -335 },
-        data: {
-          label:
-            "Were multi-line items created, or is the request from a User Object on a standard UI edit page ?",
-        },
-        type: "diamond",
-      },
-      {
         id: "2D",
-        position: { x: 1650, y: -500 },
+        position: { x: 400, y: 0 },
         data: {
           data: VRdata,
           label: "2D. Run custom validation rules",
@@ -122,7 +67,7 @@ export default function App() {
       },
       {
         id: "3",
-        position: { x: 1650, y: -200 },
+        position: { x: 800, y: 0 },
         data: {
           data: BFdata,
           label: "3. Executes 'before Save' record-triggered flow",
@@ -132,7 +77,7 @@ export default function App() {
       },
       {
         id: "4",
-        position: { x: 2100, y: -200 },
+        position: { x: 1200, y: 0 },
         data: {
           data: BTdata,
           label: "4. Executes all before triggers",
@@ -141,17 +86,8 @@ export default function App() {
         type: "table",
       },
       {
-        id: "5",
-        position: { x: 2400, y: -250 },
-        data: {
-          label: "5. Runs most system validation steps again",
-          body: "Such a verifying that all required fields have a non-null value, Runs any custom validation rules, Does NOT run layout-specific rules if the request comes from a standard UI edit page",
-        },
-        type: "block",
-      },
-      {
         id: "6",
-        position: { x: 2436, y: 300 },
+        position: { x: 1600, y: 0 },
         data: {
           data: DRdata,
           label: "6. Executes duplicate rules",
@@ -160,46 +96,18 @@ export default function App() {
         type: "table",
       },
       {
-        id: "Q3",
-        position: { x: 2000, y: 265 },
-        data: { label: "Duplicate record Identified and uses block action" },
-        type: "diamond",
-      },
-      {
-        id: "7",
-        position: { x: 1750, y: 200 },
-        data: { label: "7. Saves the record to the database" },
-        type: "block",
-      },
-      {
-        id: "STOP",
-        position: { x: 1800, y: 450 },
-        data: {
-          label: "The record is NOT Saved",
-          body: "No further steps such as after triggers and workflow rules are taken. ",
-          variant: "danger",
-        },
-        type: "block",
-      },
-      {
         id: "8",
-        position: { x: 1450, y: 200 },
+        position: { x: 2000, y: 0 },
         data: {
           label: "8. Executes all after triggers",
           data: ATdata,
           variant: "success",
         },
         type: "table",
-      },
-      {
-        id: "Q4",
-        position: { x: 1250, y: 400 },
-        data: { label: "Is this a recursive save ?" },
-        type: "diamond",
-      },
+      },    
       {
         id: "9",
-        position: { x: 900, y: 440 },
+        position: { x: 2400, y: 0 },
         data: {
           label: "9. Executes Assignment Rules",
           variant: "success",
@@ -209,7 +117,7 @@ export default function App() {
       },
       {
         id: "10",
-        position: { x: 900, y: 200 },
+        position: { x: 2400, y: 400 },
         data: {
           label: "10. Executes auto-response rules",
           variant: "success",
@@ -219,7 +127,7 @@ export default function App() {
       },
       {
         id: "11",
-        position: { x: 600, y: 200 },
+        position: { x: 2000, y: 400 },
         data: {
           label: "11. Executes workflow rules",
           variant: "success",
@@ -228,43 +136,18 @@ export default function App() {
         type: "table",
       },
       {
-        id: "Q5",
-        position: { x: 200, y: 165 },
-        data: { label: "Are there any workflow field updates?" },
-        type: "diamond",
-      },
-      {
-        id: "11A",
-        position: { x: 0, y: 600 },
-        data: {
-          label: "11A. If there are workflow field updates:",
-          variant: "info",
-          body: "Updates the record again, Runs system validations again, Custom validation rules flows duplicate rules processes and escalation rules are NOT run again, Executes before update triggers and after update triggers regardless of the record operation (insert or update) one more time (and only one more time)",
-        },
-        type: "block",
-      },
-      {
         id: "12",
-        position: { x: 600, y: 440 },
+        position: { x: 1600, y: 400 },
         data: {
           label: "12. Executes processes",
           variant: "success",
         },
         type: "table",
       },
-      {
-        id: "13",
-        position: { x: 625, y: 650 },
-        data: {
-          label: "13. Executes Flow automations in no perticular order",
-          variant: "info",
-          body: "Processes, Flows launched by processes, Flows launched by workflow rules",
-        },
-        type: "block",
-      },
+      
       {
         id: "14",
-        position: { x: 900, y: 650 },
+        position: { x: 1200, y: 400 },
         data: {
           label: "14. Executes 'after save' record-triggered flow",
           variant: "success",
@@ -274,7 +157,7 @@ export default function App() {
       },
       {
         id: "15",
-        position: { x: 900, y: 850 },
+        position: { x: 800, y: 400 },
         data: {
           label: "15. Executes Entitlement Rules",
           variant: "success",
@@ -282,35 +165,10 @@ export default function App() {
         },
         type: "table",
       },
-      {
-        id: "Q6",
-        position: { x: 890, y: 1050 },
-        data: { label: "Does the record contain roll-up summary fields" },
-        type: "diamond",
-      },
-      {
-        id: "16",
-        position: { x: 930, y: 1350 },
-        data: {
-          label: "16. Calculates the roll-up summary field on parent records",
-          variant: "info",
-        },
-        type: "block",
-      },
-      {
-        id: "17",
-        position: { x: 1400, y: 1350 },
-        data: {
-          label:
-            "17. Calculates the roll-up summary fields on grand-parent records",
-          variant: "info",
-          // body: "If there are workflow field updates:",
-        },
-        type: "block",
-      },
+      
       {
         id: "18",
-        position: { x: 1650, y: 1080 },
+        position: { x: 400, y: 400 },
         data: {
           label: "18. Executes Criteria Based Sharing rules",
           variant: "success",
@@ -318,181 +176,32 @@ export default function App() {
         },
         type: "table",
       },
-      {
-        id: "19",
-        position: { x: 1950, y: 1080 },
-        data: {
-          label: "19. Commits all DML operations to the database",
-          variant: "success",
-          // body: "If there are workflow field updates:",
-        },
-        type: "block",
-      },
-      {
-        id: "20",
-        position: { x: 2250, y: 1080 },
-        data: {
-          label: "20. Executes Post-Commit logic",
-          variant: "info",
-          body: "Sending email, Executing enqueued asynchronous Apex jobs including queueable jobs and future methods, Asynchronous paths in record-triggered flows",
-        },
-        type: "block",
-      },
     ]);
 
     setEdges([
       {
-        id: "e1-2",
-        source: "1",
-        target: "2",
-        type: "smoothstep",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#413978",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#413978",
-        },
-      },
-      {
-        id: "e2-Q1",
-        source: "2",
-        target: "Q1",
-        type: "smoothstep",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#413978",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#413978",
-        },
-      },
-      {
-        id: "eQ1-2A",
-        source: "Q1",
-        target: "2A",
-        sourceHandle: "stop",
-        targetHandle: "tleft",
-        label: "Yes",
-        type: "smoothstep",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "e2A-Q2",
-        source: "2A",
-        target: "Q2",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
-        type: "smoothstep",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#413978",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#413978",
-        },
-      },
-      {
-        id: "eQ1-2B",
-        source: "Q1",
-        target: "2B",
-        sourceHandle: "sbottom",
-        targetHandle: "ttop",
-        type: "smoothstep",
-        label: "No",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#ca2936",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#ca2936",
-        },
-      },
-      {
-        id: "e2B-2C",
+        id: "2b-2d",
         source: "2B",
-        target: "2C",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#413978",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#413978",
-        },
-      },
-      {
-        id: "e2C-Q2",
-        source: "2C",
-        target: "Q2",
-        sourceHandle: "sright",
-        targetHandle: "tbottom",
-        type: "smoothstep",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#413978",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#413978",
-        },
-      },
-      {
-        id: "eQ2-2D",
-        source: "Q2",
         target: "2D",
         type: "smoothstep",
-        sourceHandle: "stop",
-        targetHandle: "tleft",
-        label: "Yes",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "eQ2-3",
-        source: "Q2",
-        target: "3",
-        type: "smoothstep",
         sourceHandle: "sright",
         targetHandle: "tleft",
-        label: "No",
         markerEnd: {
           type: MarkerType.ArrowClosed,
-          color: "#ca2936",
+          color: "#413978",
         },
         style: {
           strokeWidth: 2,
-          stroke: "#ca2936",
+          stroke: "#413978",
         },
       },
       {
-        id: "e2D-3",
+        id: "2d-3",
         source: "2D",
         target: "3",
         type: "smoothstep",
-        sourceHandle: "sbottom",
-        targetHandle: "ttop",
+        sourceHandle: "sright",
+        targetHandle: "tleft",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -519,9 +228,9 @@ export default function App() {
         },
       },
       {
-        id: "e4-5",
+        id: "e4-6",
         source: "4",
-        target: "5",
+        target: "6",
         type: "smoothstep",
         sourceHandle: "sright",
         targetHandle: "tleft",
@@ -535,78 +244,12 @@ export default function App() {
         },
       },
       {
-        id: "e5-6",
-        source: "5",
-        target: "6",
-        type: "smoothstep",
-        sourceHandle: "sbottom",
-        targetHandle: "ttop",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#413978",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#413978",
-        },
-      },
-      {
-        id: "e6-Q3",
+        id: "e6-8",
         source: "6",
-        target: "Q3",
-        type: "smoothstep",
-        sourceHandle: "sleft",
-        targetHandle: "tright",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#413978",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#413978",
-        },
-      },
-      {
-        id: "eQ3-7",
-        source: "Q3",
-        target: "7",
-        type: "smoothstep",
-        label: "No",
-        sourceHandle: "stop",
-        targetHandle: "ttop",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#ca2936",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#ca2936",
-        },
-      },
-      {
-        id: "eQ3-STOP",
-        source: "Q3",
-        target: "STOP",
-        type: "smoothstep",
-        label: "Yes",
-        sourceHandle: "sbottom",
-        targetHandle: "tright",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "e7-8",
-        source: "7",
         target: "8",
         type: "smoothstep",
-        sourceHandle: "sleft",
-        targetHandle: "tright",
+        sourceHandle: "sright",
+        targetHandle: "tleft",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -617,37 +260,19 @@ export default function App() {
         },
       },
       {
-        id: "e8-Q4",
+        id: "e8-Q9",
         source: "8",
-        target: "Q4",
+        target: "9",
         type: "smoothstep",
-        sourceHandle: "sleft",
-        targetHandle: "ttop",
-
+        sourceHandle: "sright",
+        targetHandle: "tleft",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
         },
         style: {
           strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "eQ4-9",
-        source: "Q4",
-        target: "9",
-        type: "smoothstep",
-        label: "No",
-        sourceHandle: "sleft",
-        targetHandle: "tright",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#ca2936",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#ca2936",
+          stroke: "#413978",
         },
       },
       {
@@ -655,8 +280,8 @@ export default function App() {
         source: "9",
         target: "10",
         type: "smoothstep",
-        sourceHandle: "stop",
-        targetHandle: "tbottom",
+        sourceHandle: "sbottom",
+        targetHandle: "ttop",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -683,9 +308,9 @@ export default function App() {
         },
       },
       {
-        id: "e11-Q5",
+        id: "e11-12",
         source: "11",
-        target: "Q5",
+        target: "12",
         type: "smoothstep",
         sourceHandle: "sleft",
         targetHandle: "tright",
@@ -699,78 +324,13 @@ export default function App() {
         },
       },
       {
-        id: "eQ5-11A",
-        source: "Q5",
-        target: "11A",
+        id: "e12-14",
+        source: "12",
+        target: "14",
         type: "smoothstep",
         label: "Yes",
         sourceHandle: "sleft",
-        targetHandle: "ttop",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "eQ5-12",
-        source: "Q5",
-        target: "12",
-        type: "smoothstep",
-        label: "No",
-        sourceHandle: "sbottom",
-        targetHandle: "ttop",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#ca2936",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#ca2936",
-        },
-      },
-      {
-        id: "e11A-12",
-        source: "11A",
-        target: "12",
-        type: "smoothstep",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "e12-13",
-        source: "12",
-        target: "13",
-        type: "smoothstep",
-        sourceHandle: "sbottom",
-        targetHandle: "ttop",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "e13-14",
-        source: "13",
-        target: "14",
-        type: "smoothstep",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
+        targetHandle: "tright",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#12977e",
@@ -785,58 +345,9 @@ export default function App() {
         source: "14",
         target: "15",
         type: "smoothstep",
-        sourceHandle: "sbottom",
-        targetHandle: "ttop",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "e15-Q6",
-        source: "15",
-        target: "Q6",
-        type: "smoothstep",
-        sourceHandle: "sbottom",
-        targetHandle: "ttop",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#ca2936",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#ca2936",
-        },
-      },
-      {
-        id: "eQ6-16",
-        source: "Q6",
-        target: "16",
-        type: "smoothstep",
-        label: "Yes",
-        sourceHandle: "sbottom",
-        targetHandle: "ttop",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "eQ6-18",
-        source: "Q6",
-        target: "18",
-        type: "smoothstep",
         label: "No",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
+        sourceHandle: "sleft",
+        targetHandle: "tright",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#ca2936",
@@ -847,77 +358,12 @@ export default function App() {
         },
       },
       {
-        id: "e16-17",
-        source: "16",
-        target: "17",
-        type: "smoothstep",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "e17-18",
-        source: "17",
+        id: "e15-18",
+        source: "15",
         target: "18",
         type: "smoothstep",
-        sourceHandle: "stop",
-        targetHandle: "tbottom",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "e18-19",
-        source: "18",
-        target: "19",
-        type: "smoothstep",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#ca2936",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#ca2936",
-        },
-      },
-      {
-        id: "eq4-18",
-        source: "Q4",
-        target: "18",
-        type: "smoothstep",
-        label: "Yes",
-        sourceHandle: "sbottom",
-        targetHandle: "ttop",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#12977e",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#12977e",
-        },
-      },
-      {
-        id: "e19-20",
-        source: "19",
-        target: "20",
-        type: "smoothstep",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
+        sourceHandle: "sleft",
+        targetHandle: "tright",
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#ca2936",

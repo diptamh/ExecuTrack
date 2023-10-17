@@ -6,8 +6,9 @@ const router = express.Router();
 router.get(
   "/callback",
   // console.log("callback"),
-  passport.authenticate("forcedotcom", { failureRedirect: "/error" }),
+  passport.authenticate("forcedotcom-prod", { failureRedirect: "/error" }),
   async (req, res) => {
+    console.log('callback');
     res.redirect("/home");
   }
 );
@@ -25,7 +26,7 @@ router.get("/session", (req, res) => {
   res.json(req.user || {});
 });
 
-router.get("/production", passport.authenticate("forcedotcom"), console.log);
+router.get("/production", passport.authenticate("forcedotcom-prod"), console.log);
 router.get(
   "/sandbox",
   passport.authenticate("forcedotcom-sandbox"),

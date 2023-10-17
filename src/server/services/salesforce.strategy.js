@@ -3,6 +3,7 @@ const ForceDotComStrategy = require("passport-forcedotcom").Strategy;
 require("dotenv").config();
 
 passport.use(
+  "forcedotcom-prod",
   new ForceDotComStrategy(
     {
       clientID: process.env.CLIENT_ID,
