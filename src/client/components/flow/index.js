@@ -7,6 +7,7 @@ import ReactFlow, {
   useEdgesState,
   MarkerType,
 } from "reactflow";
+const proOptions = { hideAttribution: true };
 import { Box } from "@mui/material";
 import Block from "../shapes/block";
 import Diamond from "../shapes/diamond";
@@ -473,21 +474,21 @@ export default function App() {
   };
 
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div style={{ width: "100vw", height: "88vh", background:"#1a192b"}}>
       <Box width={400}>
         {/* This is used to select the object and get the object from the child object */}
         <ObjectSelector OnObjectSelection={handleObjectSelection} />
       </Box>
       <ReactFlow
-        // nodesDraggable={true}
         fitView="true"
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
+        proOptions={proOptions}
       >
-        <Controls />
-        <MiniMap />
-        <Background variant="dots" gap={12} size={1} />
+        {/* <Controls />
+        <MiniMap /> */}
+        <Background variant="dots" gap={16} size={1}  />
       </ReactFlow>
     </div>
   );

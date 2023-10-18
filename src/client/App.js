@@ -8,6 +8,6 @@ export default class App extends Component {
   componentDidMount() {}
 
   render() {
-    return <div>{/* <Home /> */}</div>;
+    return <div>{ <Home /> }</div>;
   }
 }

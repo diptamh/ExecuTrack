@@ -32,6 +32,7 @@ class ObjectSelector extends Component {
 
   render() {
     return (
+      <div background="#5e5c76">
       <FormControl fullWidth size="small">
         <InputLabel id="object-selector-label">Object</InputLabel>
         <Select
@@ -48,6 +49,7 @@ class ObjectSelector extends Component {
           ))}
         </Select>
       </FormControl>
+      </div>
     );
   }
 }
