@@ -54,7 +54,7 @@ export default function App() {
           label: "2B. Salesforce validates only the foreign keys",
           variant: "info",
         },
-        type: "block",
+        type: "table",
       },
       {
         id: "2D",
@@ -105,10 +105,10 @@ export default function App() {
           variant: "success",
         },
         type: "table",
-      },    
+      },
       {
         id: "9",
-        position: { x: 2400, y: 0 },
+        position: { x: 2400, y: 200 },
         data: {
           label: "9. Executes Assignment Rules",
           variant: "success",
@@ -118,7 +118,7 @@ export default function App() {
       },
       {
         id: "10",
-        position: { x: 2400, y: 400 },
+        position: { x: 2000, y: 400 },
         data: {
           label: "10. Executes auto-response rules",
           variant: "success",
@@ -128,7 +128,7 @@ export default function App() {
       },
       {
         id: "11",
-        position: { x: 2000, y: 400 },
+        position: { x: 1600, y: 400 },
         data: {
           label: "11. Executes workflow rules",
           variant: "success",
@@ -138,17 +138,17 @@ export default function App() {
       },
       {
         id: "12",
-        position: { x: 1600, y: 400 },
+        position: { x: 1200, y: 400 },
         data: {
           label: "12. Executes processes",
           variant: "success",
         },
         type: "table",
       },
-      
+
       {
         id: "14",
-        position: { x: 1200, y: 400 },
+        position: { x: 800, y: 400 },
         data: {
           label: "14. Executes 'after save' record-triggered flow",
           variant: "success",
@@ -158,7 +158,7 @@ export default function App() {
       },
       {
         id: "15",
-        position: { x: 800, y: 400 },
+        position: { x: 400, y: 400 },
         data: {
           label: "15. Executes Entitlement Rules",
           variant: "success",
@@ -166,10 +166,10 @@ export default function App() {
         },
         type: "table",
       },
-      
+
       {
         id: "18",
-        position: { x: 400, y: 400 },
+        position: { x: 0, y: 400 },
         data: {
           label: "18. Executes Criteria Based Sharing rules",
           variant: "success",
@@ -187,6 +187,7 @@ export default function App() {
         type: "smoothstep",
         sourceHandle: "sright",
         targetHandle: "tleft",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -203,6 +204,7 @@ export default function App() {
         type: "smoothstep",
         sourceHandle: "sright",
         targetHandle: "tleft",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -219,6 +221,7 @@ export default function App() {
         type: "smoothstep",
         sourceHandle: "sright",
         targetHandle: "tleft",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -235,6 +238,7 @@ export default function App() {
         type: "smoothstep",
         sourceHandle: "sright",
         targetHandle: "tleft",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -251,6 +255,7 @@ export default function App() {
         type: "smoothstep",
         sourceHandle: "sright",
         targetHandle: "tleft",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -266,7 +271,8 @@ export default function App() {
         target: "9",
         type: "smoothstep",
         sourceHandle: "sright",
-        targetHandle: "tleft",
+        targetHandle: "ttop",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -282,7 +288,8 @@ export default function App() {
         target: "10",
         type: "smoothstep",
         sourceHandle: "sbottom",
-        targetHandle: "ttop",
+        targetHandle: "tright",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#413978",
@@ -299,6 +306,7 @@ export default function App() {
         type: "smoothstep",
         sourceHandle: "sleft",
         targetHandle: "tright",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#12977e",
@@ -315,6 +323,7 @@ export default function App() {
         type: "smoothstep",
         sourceHandle: "sleft",
         targetHandle: "tright",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#12977e",
@@ -329,9 +338,9 @@ export default function App() {
         source: "12",
         target: "14",
         type: "smoothstep",
-        label: "Yes",
         sourceHandle: "sleft",
         targetHandle: "tright",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#12977e",
@@ -346,9 +355,9 @@ export default function App() {
         source: "14",
         target: "15",
         type: "smoothstep",
-        label: "No",
         sourceHandle: "sleft",
         targetHandle: "tright",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#ca2936",
@@ -365,6 +374,7 @@ export default function App() {
         type: "smoothstep",
         sourceHandle: "sleft",
         targetHandle: "tright",
+        animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: "#ca2936",
@@ -474,7 +484,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ width: "100vw", height: "88vh", background:"#1a192b"}}>
+    <div style={{ width: "100vw", height: "88vh", background: "#1a192b" }}>
       <Box width={400}>
         {/* This is used to select the object and get the object from the child object */}
         <ObjectSelector OnObjectSelection={handleObjectSelection} />
@@ -488,7 +498,7 @@ export default function App() {
       >
         {/* <Controls />
         <MiniMap /> */}
-        <Background variant="dots" gap={16} size={1}  />
+        <Background variant="dots" gap={16} size={1} />
       </ReactFlow>
     </div>
   );

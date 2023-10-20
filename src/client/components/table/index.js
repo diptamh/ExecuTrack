@@ -31,6 +31,8 @@ const Node = ({ data, selected }) => {
             boxShadow: 4,
             borderRadius: 3,
             padding: 1,
+            borderColor: "#ff0072",
+            background: "#1a192b",
           }}
           className={data.variant || "info"}
         >
@@ -40,7 +42,7 @@ const Node = ({ data, selected }) => {
               padding: 1,
               fontWeight: "bold",
             }}
-            color="text.secondary"
+            color="White"
             gutterBottom
           >
             {data.label}
@@ -50,7 +52,15 @@ const Node = ({ data, selected }) => {
             <Table aria-label="simple table">
               <TableBody>
                 {rows.map((row) => (
-                  <TableRow key={row} className="success">
+                  <TableRow
+                    key={row}
+                    className="success"
+                    sx={{
+                      color: "white",
+                      background: "#1a192b",
+                      borderColor: "#1a192b",
+                    }}
+                  >
                     {row}
                   </TableRow>
                 ))}
