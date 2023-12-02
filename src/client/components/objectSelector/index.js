@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import APIService from "../../service/APIService.js";
-import axios from "axios";
 
 const theme = createTheme();
 
@@ -39,6 +38,7 @@ class ObjectSelector extends Component {
           background: "#5e5c76",
           borderRadius: 2,
           width: "80%",
+          marginLeft: "10%",
         }}
       >
         <InputLabel id="object-selector-label" sx={{ color: "white" }}>

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ReactFlow, {
-  MiniMap,
-  Controls,
   Background,
   useNodesState,
   useEdgesState,
@@ -496,8 +494,6 @@ export default function App() {
         nodeTypes={nodeTypes}
         proOptions={proOptions}
       >
-        {/* <Controls />
-        <MiniMap /> */}
         <Background variant="dots" gap={16} size={1} />
       </ReactFlow>
     </div>

@@ -2,27 +2,13 @@ class Salesforce {
   objectMap = new Map();
 
   constructor(conn) {
-    // jsforce.Connection
     this.conn = conn;
-
-    // const customObj =await this.conn.tooling.query(
-    //   "SELECT Id,DeveloperName FROM CustomObject"
-    // );
-
-    // customObj.records.forEach((obj) => {
-    //   // this.map.put
-    //   this.objectMap.set(
-    //     obj.DeveloperName.concat("__c"),
-    //     obj.Id.substring(0, 15)
-    //   );
-    // });
   }
 
   async initMap() {
     (
       await this.conn.tooling.query("SELECT Id,DeveloperName FROM CustomObject")
     ).records.forEach((obj) => {
-      // this.map.put
       this.objectMap.set(
         obj.DeveloperName.concat("__c"),
         obj.Id.substring(0, 15)
