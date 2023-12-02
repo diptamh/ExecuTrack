@@ -4,17 +4,27 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AppBar, Card, CardContent, Toolbar, Button } from "@mui/material";
+import { AppBar, Toolbar, Button } from "@mui/material";
 import Flow from "../flow";
 import "./index.css";
+import axios from "axios";
 
 const theme = createTheme();
 
 export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
+    this.state = {
+      renderComponent: false, // Initialize with false by default
+    };
+  }
+  componentDidMount() {
+    axios.get("/api/v1/auth/session").then((res) => {
+      console.log("session", res.data);
+      if (res.data && Object.keys(res.data).length > 0) {
+        this.setState({ renderComponent: true });
+      }
+    });
   }
 
   render() {
@@ -40,19 +50,22 @@ export default class SignIn extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-        <Container component="main" maxWidth="xl">
-          <CssBaseline />
-          <Box
-            sx={{
-              // marginTop: 5,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Flow />
-          </Box>
-        </Container>
+        {this.state.renderComponent ? (
+          <Container component="main" maxWidth="xl">
+            <CssBaseline />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Flow />
+            </Box>
+          </Container>
+        ) : (
+          "Please Login To Continue!! ☻"
+        )}
       </ThemeProvider>
     );
   }
