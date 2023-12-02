@@ -120,6 +120,10 @@ class Salesforce {
     );
   }
 
+  /**
+   *
+   * @TODO: Need to check this with case
+   */
   async getAssignmentRules() {
     return await this.conn.query(
       `SELECT id,Name,SobjectType from AssignmentRule
@@ -131,6 +135,10 @@ class Salesforce {
     );
   }
 
+  /**
+   *
+   * @TODO: Need to check this with case
+   */
   async getAutoResponseRules() {
     return await this.conn.tooling.query(
       `SELECT id,Name,EntityDefinitionId from AutoResponseRule

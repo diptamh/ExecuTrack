@@ -138,7 +138,7 @@ export default function App() {
         id: "12",
         position: { x: 1200, y: 400 },
         data: {
-          label: "12. Executes processes",
+          label: "12. Executes Escalation Rules",
           variant: "success",
         },
         type: "table",

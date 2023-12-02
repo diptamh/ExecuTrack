@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 
 const Node = ({ data, selected }) => {
-  console.log("dataAll->", data);
+  // console.log("dataAll->", data);
   const rows = [];
   for (const dataKey in data.data) {
     rows.push(data.data[dataKey]);
