@@ -1,3 +1,7 @@
+const fs = require("fs");
+const AdmZip = require("adm-zip");
+const parser = require("xml2js").parseString;
+
 class Salesforce {
   objectMap = new Map();
 
@@ -161,7 +165,50 @@ class Salesforce {
     );
   }
 
-  // To do : Escalation Rules 12.
+  async getEscalationRules() {
+    const stream = this.conn.metadata
+      .retrieve({
+        unpackaged: {
+          types: [{ name: "EscalationRules", members: "*" }],
+          version: "50.0",
+        },
+      })
+      .stream();
+    // Pipe the stream to a ZIP file
+    await new Promise((resolve, reject) => {
+      // Fix: Move this fs.createWriteStream to temp folder.
+      const writeStream = fs.createWriteStream(`metadata.zip`);
+      stream.pipe(writeStream);
+      stream.on("end", resolve);
+      stream.on("error", reject);
+    });
+    // Extract the contents of the retrieved ZIP file
+    const zip = new AdmZip(`metadata.zip`);
+    const zipEntries = zip.getEntries();
+
+    var fullName = [];
+    // Log the names of EscalationRules
+    zipEntries.forEach((entry) => {
+      const fileContent = entry.getData().toString("utf8");
+      // Parse the XML content
+      parser(fileContent, (err, result) => {
+        if (err) {
+          console.error("Error parsing XML:", err);
+          return;
+        }
+
+        // Access the fullName value
+        for (const key in result?.EscalationRules?.escalationRule) {
+          if (result?.EscalationRules?.escalationRule[key].active == "true") {
+            fullName.push(
+              result?.EscalationRules?.escalationRule[key].fullName[0]
+            );
+          }
+        }
+      });
+    });
+    return fullName;
+  }
 
   // To do : Figure Out how to get the Executes flow automations in no perticular order 13
 
@@ -206,7 +253,6 @@ class Salesforce {
   // Retrive Sharing Rules -> https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_retrieve.htm
 
   async getSharingRules() {
-    // console.log("getSharingRules->", await this.conn.describe(objectName));
     return await this.conn.describe(this.conn.object);
   }
 }

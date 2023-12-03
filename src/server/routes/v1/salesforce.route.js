@@ -19,15 +19,16 @@ router.post("/automations", async (req, res) => {
     await salesforce.initMap();
 
     const results = await Promise.all([
-      salesforce.getValidationRules(),
-      salesforce.getAllTrigger(),
-      salesforce.getAllFlow(),
-      salesforce.getDuplicateRules(),
-      salesforce.getAssignmentRules(),
-      salesforce.getAutoResponseRules(),
-      salesforce.getWorkflowRules(),
-      salesforce.getEntitlementProcess(),
-      salesforce.getSharingRules(),
+      salesforce.getValidationRules(), // 0
+      salesforce.getAllTrigger(), // 1
+      salesforce.getAllFlow(), // 2
+      salesforce.getDuplicateRules(), // 3
+      salesforce.getAssignmentRules(), // 4
+      salesforce.getAutoResponseRules(), // 5
+      salesforce.getWorkflowRules(), // 6
+      salesforce.getEntitlementProcess(), // 7
+      salesforce.getSharingRules(), // 8
+      salesforce.getEscalationRules(), // 9
     ]);
 
     const validation = results[0];
@@ -39,6 +40,7 @@ router.post("/automations", async (req, res) => {
     const workflowRules = results[6];
     const entitlementProcess = results[7];
     const sharingRules = results[8];
+    const escalationRules = results[9];
 
     const beforeTrigger = {
       records: allTrigger.records.filter(
@@ -83,6 +85,7 @@ router.post("/automations", async (req, res) => {
       //12. Escalation Process
       afterFlow: afterFlow, // 14
       entitlementProcess: entitlementProcess, // 15
+      escalationRules: escalationRules, //16
       // 16. Roll-Up Summary Fields on parent records
       // 17. Roll-Up Summary Fields on grand parent records
       // 18. Sharing Rules

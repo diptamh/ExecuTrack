@@ -29,6 +29,7 @@ export default function App() {
   const [WFdata, setWFdata] = useState([null]);
   const [AFdata, setAFdata] = useState([null]);
   const [EPdata, setEPdata] = useState([null]);
+  const [ESdata, setESdata] = useState([null]);
   const [nodeTypes, setNodeTypes] = useState({
     block: Block,
     diamond: Diamond,
@@ -140,6 +141,7 @@ export default function App() {
         data: {
           label: "12. Executes Escalation Rules",
           variant: "success",
+          data: ESdata,
         },
         type: "table",
       },
@@ -462,6 +464,7 @@ export default function App() {
 
     // Execute After Save Trigger
     const AFdata = automationData.data.afterFlow.records.map((record) => {
+      console.log("record.ApiName", record.ApiName);
       return record.ApiName;
     });
 
@@ -478,6 +481,15 @@ export default function App() {
 
     setEPdata(() => {
       return EPdata;
+    });
+
+    // Execute Escalation Rule
+    const ESdata = automationData.data.escalationRules.map((record) => {
+      return record;
+    });
+
+    setESdata(() => {
+      return ESdata;
     });
   };
 
