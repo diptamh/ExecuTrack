@@ -86,6 +86,7 @@ router.post("/automations", async (req, res) => {
       afterFlow: afterFlow, // 14
       entitlementProcess: entitlementProcess, // 15
       escalationRules: escalationRules, //16
+      sharingRules: sharingRules,
       // 16. Roll-Up Summary Fields on parent records
       // 17. Roll-Up Summary Fields on grand parent records
       // 18. Sharing Rules

@@ -30,6 +30,7 @@ export default function App() {
   const [AFdata, setAFdata] = useState([null]);
   const [EPdata, setEPdata] = useState([null]);
   const [ESdata, setESdata] = useState([null]);
+  const [SRdata, setSRdata] = useState([null]);
   const [nodeTypes, setNodeTypes] = useState({
     block: Block,
     diamond: Diamond,
@@ -173,7 +174,7 @@ export default function App() {
         data: {
           label: "18. Executes Criteria Based Sharing rules",
           variant: "success",
-          // body: "If there are workflow field updates:",
+          data: SRdata,
         },
         type: "table",
       },
@@ -490,6 +491,15 @@ export default function App() {
 
     setESdata(() => {
       return ESdata;
+    });
+
+    // Execute Sharing Rule
+    const SRdata = automationData.data.sharingRules.map((record) => {
+      return record;
+    });
+
+    setSRdata(() => {
+      return SRdata;
     });
   };
 

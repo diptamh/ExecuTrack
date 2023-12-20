@@ -166,46 +166,34 @@ class Salesforce {
   }
 
   async getEscalationRules() {
-    const stream = this.conn.metadata
-      .retrieve({
-        unpackaged: {
-          types: [{ name: "EscalationRules", members: "*" }],
-          version: "50.0",
-        },
-      })
-      .stream();
-    // Pipe the stream to a ZIP file
-    await new Promise((resolve, reject) => {
-      // Fix: Move this fs.createWriteStream to temp folder.
-      const writeStream = fs.createWriteStream(`metadata.zip`);
-      stream.pipe(writeStream);
-      stream.on("end", resolve);
-      stream.on("error", reject);
-    });
-    // Extract the contents of the retrieved ZIP file
-    const zip = new AdmZip(`metadata.zip`);
-    const zipEntries = zip.getEntries();
-
+    const zipEntries = await this.extractMeta();
     var fullName = [];
     // Log the names of EscalationRules
     zipEntries.forEach((entry) => {
-      const fileContent = entry.getData().toString("utf8");
-      // Parse the XML content
-      parser(fileContent, (err, result) => {
-        if (err) {
-          console.error("Error parsing XML:", err);
-          return;
-        }
-
-        // Access the fullName value
-        for (const key in result?.EscalationRules?.escalationRule) {
-          if (result?.EscalationRules?.escalationRule[key].active == "true") {
-            fullName.push(
-              result?.EscalationRules?.escalationRule[key].fullName[0]
-            );
+      if (
+        entry.entryName.endsWith("escalationRules") &&
+        (entry.entryName.split(".")[0].split("/")[2] ===
+          this.objectMap?.get(this.conn.object) ||
+          entry.entryName.split(".")[0].split("/")[2] === this.conn.object)
+      ) {
+        const fileContent = entry.getData().toString("utf8");
+        // Parse the XML content
+        parser(fileContent, (err, result) => {
+          if (err) {
+            console.error("Error parsing XML:", err);
+            return;
           }
-        }
-      });
+
+          // Access the fullName value
+          for (const key in result?.EscalationRules?.escalationRule) {
+            if (result?.EscalationRules?.escalationRule[key].active == "true") {
+              fullName.push(
+                result?.EscalationRules?.escalationRule[key].fullName[0]
+              );
+            }
+          }
+        });
+      }
     });
     return fullName;
   }
@@ -253,7 +241,61 @@ class Salesforce {
   // Retrive Sharing Rules -> https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_retrieve.htm
 
   async getSharingRules() {
-    return await this.conn.describe(this.conn.object);
+    const zipEntries = await this.extractMeta();
+    var fullName = [];
+
+    zipEntries.forEach((entry) => {
+      if (
+        entry.entryName.endsWith("sharingRules") &&
+        (entry.entryName.split(".")[0].split("/")[2] ===
+          this.objectMap?.get(this.conn.object) ||
+          entry.entryName.split(".")[0].split("/")[2] === this.conn.object)
+      ) {
+        const fileContent = entry.getData().toString("utf8");
+        // Parse the XML content
+        parser(fileContent, (err, result) => {
+          if (err) {
+            console.error("Error parsing XML:", err);
+            return;
+          }
+
+          // Access the fullName value
+          for (const key in result?.SharingRules?.sharingOwnerRules) {
+            if (result?.SharingRules?.sharingOwnerRules[key]) {
+              fullName.push(
+                result?.SharingRules?.sharingOwnerRules[key].label[0]
+              );
+            }
+          }
+        });
+      }
+    });
+    return fullName;
+  }
+
+  async extractMeta() {
+    const stream = this.conn.metadata
+      .retrieve({
+        unpackaged: {
+          types: [
+            { name: "EscalationRules", members: "*" },
+            { name: "SharingRules", members: "*" },
+          ],
+          version: "50.0",
+        },
+      })
+      .stream();
+    // Pipe the stream to a ZIP file
+    await new Promise((resolve, reject) => {
+      // Fix: Move this fs.createWriteStream to temp folder.
+      const writeStream = fs.createWriteStream(`metadata.zip`);
+      stream.pipe(writeStream);
+      stream.on("end", resolve);
+      stream.on("error", reject);
+    });
+    // Extract the contents of the retrieved ZIP file
+    const zip = new AdmZip(`metadata.zip`);
+    return zip.getEntries();
   }
 }
 
