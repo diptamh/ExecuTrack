@@ -41,7 +41,7 @@ const Node = ({ data, selected }) => {
         >
           <Typography
             sx={{
-              fontSize: 12,
+              fontSize: 16,
               padding: 1,
               fontWeight: "bold",
             }}
@@ -56,19 +56,32 @@ const Node = ({ data, selected }) => {
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
               <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row}
-                    className="success"
-                    sx={{
-                      color: "white",
-                      background: "#1a192b",
-                      borderColor: "#1a192b",
-                    }}
-                  >
-                    {row}
+                {rows && rows.length > 0 ? (
+                  rows.map((row) => (
+                    <TableRow
+                      key={row}
+                      className="success"
+                      sx={{
+                        color: "black",
+                        fontSize: 16,
+                        borderColor: (theme) =>
+                          theme.palette.mode === "light"
+                            ? theme.palette.grey[200]
+                            : theme.palette.grey[700],
+                        backgroundColor: (theme) =>
+                          theme.palette.mode === "light"
+                            ? theme.palette.grey[200]
+                            : theme.palette.grey[700],
+                      }}
+                    >
+                      {row}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={0}>No data available</TableCell>
                   </TableRow>
-                ))}
+                )}
               </TableBody>
             </Table>
           </TableContainer>

@@ -59,18 +59,8 @@ export default function App() {
 
     setNodes([
       {
-        id: "2B",
-        position: { x: 0, y: 0 },
-        data: {
-          icon: <GrValidate />,
-          label: "Salesforce validates only the foreign keys",
-          variant: "info",
-        },
-        type: "table",
-      },
-      {
         id: "2D",
-        position: { x: 400, y: 0 },
+        position: { x: 0, y: 0 },
         data: {
           icon: <GrValidate />,
           data: VRdata,
@@ -81,7 +71,7 @@ export default function App() {
       },
       {
         id: "3",
-        position: { x: 800, y: 0 },
+        position: { x: 400, y: 0 },
         data: {
           icon: <TiFlowMerge />,
           data: BFdata,
@@ -92,7 +82,7 @@ export default function App() {
       },
       {
         id: "4",
-        position: { x: 1200, y: 0 },
+        position: { x: 800, y: 0 },
         data: {
           icon: <GrTrigger />,
           data: BTdata,
@@ -103,7 +93,7 @@ export default function App() {
       },
       {
         id: "6",
-        position: { x: 1600, y: 0 },
+        position: { x: 1200, y: 0 },
         data: {
           icon: <IoDuplicateOutline />,
           data: DRdata,
@@ -114,7 +104,7 @@ export default function App() {
       },
       {
         id: "8",
-        position: { x: 2000, y: 0 },
+        position: { x: 1600, y: 0 },
         data: {
           icon: <GrTrigger />,
           label: "Executes AFTER APEX Triggers",
@@ -125,7 +115,7 @@ export default function App() {
       },
       {
         id: "9",
-        position: { x: 2400, y: 200 },
+        position: { x: 2000, y: 0 },
         data: {
           icon: <TfiRulerPencil />,
           label: "Executes Assignment Rules",
@@ -205,23 +195,6 @@ export default function App() {
 
     setEdges([
       {
-        id: "2b-2d",
-        source: "2B",
-        target: "2D",
-        type: "smoothstep",
-        sourceHandle: "sright",
-        targetHandle: "tleft",
-        animated: true,
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: "#413978",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#413978",
-        },
-      },
-      {
         id: "2d-3",
         source: "2D",
         target: "3",
@@ -295,7 +268,7 @@ export default function App() {
         target: "9",
         type: "smoothstep",
         sourceHandle: "sright",
-        targetHandle: "ttop",
+        targetHandle: "tleft",
         animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
@@ -312,7 +285,7 @@ export default function App() {
         target: "10",
         type: "smoothstep",
         sourceHandle: "sbottom",
-        targetHandle: "tright",
+        targetHandle: "ttop",
         animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
