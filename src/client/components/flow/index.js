@@ -501,7 +501,7 @@ export default function App() {
 
   return (
     // <div style={{ width: "100vw", height: "88vh", background: "#1a192b" }}>
-    <div style={{ width: "100vw", height: "88vh" }}>
+    <div style={{ width: "100vw", height: "88vh", padding: "1%" }}>
       <Box width={400}>
         {/* This is used to select the object and get the object from the child object */}
         <ObjectSelector OnObjectSelection={handleObjectSelection} />
