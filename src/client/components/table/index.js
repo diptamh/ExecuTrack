@@ -11,7 +11,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-
+import { SiSalesforce } from "react-icons/si";
 const Node = ({ data, selected }) => {
   // console.log("dataAll->", data);
   const rows = [];
@@ -32,7 +32,10 @@ const Node = ({ data, selected }) => {
             borderRadius: 3,
             padding: 1,
             borderColor: "#ff0072",
-            background: "#1a192b",
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[200]
+                : theme.palette.grey[700],
           }}
           className={data.variant || "info"}
         >
@@ -42,12 +45,14 @@ const Node = ({ data, selected }) => {
               padding: 1,
               fontWeight: "bold",
             }}
-            color="White"
+            color="Black"
             gutterBottom
           >
+            {data.icon && (
+              <span style={{ marginRight: "5px" }}>{data.icon}</span>
+            )}
             {data.label}
           </Typography>
-
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
               <TableBody>

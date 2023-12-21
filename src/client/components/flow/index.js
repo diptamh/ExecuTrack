@@ -15,6 +15,17 @@ import ObjectSelector from "../objectSelector/index.js";
 // used to do all the axios calls to get the data from the salesforce
 import APIService from "../../service/APIService.js";
 import "reactflow/dist/style.css";
+import { GrValidate, GrTrigger } from "react-icons/gr";
+import { IoDuplicateOutline } from "react-icons/io5";
+import { MdOutlineAutoMode } from "react-icons/md";
+
+import { TfiRulerPencil } from "react-icons/tfi";
+import { MdPriorityHigh } from "react-icons/md";
+
+import { FcWorkflow } from "react-icons/fc";
+
+import { TiFlowMerge } from "react-icons/ti";
+import { CiShare2 } from "react-icons/ci";
 
 export default function App() {
   const [nodes, setNodes] = useNodesState([]);
@@ -51,7 +62,8 @@ export default function App() {
         id: "2B",
         position: { x: 0, y: 0 },
         data: {
-          label: "2B. Salesforce validates only the foreign keys",
+          icon: <GrValidate />,
+          label: "Salesforce validates only the foreign keys",
           variant: "info",
         },
         type: "table",
@@ -60,8 +72,9 @@ export default function App() {
         id: "2D",
         position: { x: 400, y: 0 },
         data: {
+          icon: <GrValidate />,
           data: VRdata,
-          label: "2D. Run custom validation rules",
+          label: "Run Custom Validation Rules",
           variant: "success",
         },
         type: "table",
@@ -70,8 +83,9 @@ export default function App() {
         id: "3",
         position: { x: 800, y: 0 },
         data: {
+          icon: <TiFlowMerge />,
           data: BFdata,
-          label: "3. Executes 'before Save' record-triggered flow",
+          label: "Executes BEFORE Record-Triggered FLOW",
           variant: "success",
         },
         type: "table",
@@ -80,8 +94,9 @@ export default function App() {
         id: "4",
         position: { x: 1200, y: 0 },
         data: {
+          icon: <GrTrigger />,
           data: BTdata,
-          label: "4. Executes all before triggers",
+          label: "Executes BEFORE APEX Triggers",
           variant: "success",
         },
         type: "table",
@@ -90,8 +105,9 @@ export default function App() {
         id: "6",
         position: { x: 1600, y: 0 },
         data: {
+          icon: <IoDuplicateOutline />,
           data: DRdata,
-          label: "6. Executes duplicate rules",
+          label: "Executes duplicate rules",
           variant: "success",
         },
         type: "table",
@@ -100,7 +116,8 @@ export default function App() {
         id: "8",
         position: { x: 2000, y: 0 },
         data: {
-          label: "8. Executes all after triggers",
+          icon: <GrTrigger />,
+          label: "Executes AFTER APEX Triggers",
           data: ATdata,
           variant: "success",
         },
@@ -110,7 +127,8 @@ export default function App() {
         id: "9",
         position: { x: 2400, y: 200 },
         data: {
-          label: "9. Executes Assignment Rules",
+          icon: <TfiRulerPencil />,
+          label: "Executes Assignment Rules",
           variant: "success",
           data: ARdata,
         },
@@ -120,7 +138,8 @@ export default function App() {
         id: "10",
         position: { x: 2000, y: 400 },
         data: {
-          label: "10. Executes auto-response rules",
+          icon: <MdOutlineAutoMode />,
+          label: "Executes auto-response rules",
           variant: "success",
           data: AResdata,
         },
@@ -130,7 +149,8 @@ export default function App() {
         id: "11",
         position: { x: 1600, y: 400 },
         data: {
-          label: "11. Executes workflow rules",
+          icon: <FcWorkflow />,
+          label: "Executes workflow rules",
           variant: "success",
           data: WFdata,
         },
@@ -140,7 +160,8 @@ export default function App() {
         id: "12",
         position: { x: 1200, y: 400 },
         data: {
-          label: "12. Executes Escalation Rules",
+          icon: <MdPriorityHigh />,
+          label: "Executes Escalation Rules",
           variant: "success",
           data: ESdata,
         },
@@ -151,7 +172,8 @@ export default function App() {
         id: "14",
         position: { x: 800, y: 400 },
         data: {
-          label: "14. Executes 'after save' record-triggered flow",
+          icon: <TiFlowMerge />,
+          label: "Executes AFTER Record-Triggered FLOW",
           variant: "success",
           data: AFdata,
         },
@@ -172,7 +194,8 @@ export default function App() {
         id: "18",
         position: { x: 0, y: 400 },
         data: {
-          label: "18. Executes Criteria Based Sharing rules",
+          icon: <CiShare2 />,
+          label: "Executes Criteria Based Sharing rules",
           variant: "success",
           data: SRdata,
         },
@@ -504,7 +527,8 @@ export default function App() {
   };
 
   return (
-    <div style={{ width: "100vw", height: "88vh", background: "#1a192b" }}>
+    // <div style={{ width: "100vw", height: "88vh", background: "#1a192b" }}>
+    <div style={{ width: "100vw", height: "88vh" }}>
       <Box width={400}>
         {/* This is used to select the object and get the object from the child object */}
         <ObjectSelector OnObjectSelection={handleObjectSelection} />

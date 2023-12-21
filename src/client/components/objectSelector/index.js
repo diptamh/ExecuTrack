@@ -34,14 +34,17 @@ class ObjectSelector extends Component {
       <FormControl
         fullWidth
         sx={{
-          color: "white",
-          background: "#5e5c76",
+          color: "black",
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[200]
+              : theme.palette.grey[700],
           borderRadius: 2,
           width: "80%",
           marginLeft: "10%",
         }}
       >
-        <InputLabel id="object-selector-label" sx={{ color: "white" }}>
+        <InputLabel id="object-selector-label" sx={{ color: "Black" }}>
           Object
         </InputLabel>
         <Select
