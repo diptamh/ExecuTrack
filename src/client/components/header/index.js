@@ -4,39 +4,55 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import LogoutIcon from "@mui/icons-material/Logout";
+import Chip from "@mui/material-next/Chip";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import { FaGithub } from "react-icons/fa";
 import axios from "axios";
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: "#757ce8",
+      main: "#3f50b5",
+      dark: "#002884",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#ff7961",
+      main: "#f44336",
+      dark: "#ba000d",
+      contrastText: "#000",
+    },
+  },
+});
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       authCheck: false,
-      username: "Login",
+      username: "",
     };
   }
   componentDidMount() {
     axios.get("/api/v1/auth/session").then((data) => {
       if (data?.data?.displayName) {
-        console.log(data);
+        console.log("data--->", data);
         this.setState({ authCheck: true });
       }
-      this.setState({ username: data?.data?.displayName || "Login" });
+      this.setState({ username: data?.data?.displayName || "" });
     });
   }
+  handleSignOut = () => {
+    window.location.href = "/api/v1/auth/logout";
+  };
 
   render() {
-    const confirmLogout = async (element) => {
-      // setOpenConfirmLogout(true);
-      console.log("loggout");
-    };
-    // const [authCheck, setAuthCheck] = React.useState(false);
     return (
       <ThemeProvider theme={theme}>
         <AppBar
@@ -45,16 +61,9 @@ class Header extends Component {
           elevation={0}
           sx={{
             position: "relative",
-            borderBottom: (t) => `1px solid ${t.palette.divider}`,
+            borderBottom: (t) => `1px solid ${t.palette.primary.light}`,
           }}
         >
-          <Toolbar
-            variant="dense"
-            sx={{
-              background: (theme) => `${theme.palette.primary.main}`,
-              minHeight: "10px",
-            }}
-          ></Toolbar>
           <Toolbar sx={{ flexWrap: "wrap" }}>
             <Link
               href="/"
@@ -68,16 +77,26 @@ class Header extends Component {
             </Link>
             {this.state.authCheck ? (
               <Button
-                color="secondary"
+                color="inherit"
                 variant="outlined"
                 startIcon={<AccountCircle />}
               >
                 {this.state.username}
               </Button>
-            ) : null}
+            ) : (
+              <Button
+                label="Github"
+                href="https://github.com/diptamh/ExecuTrack"
+                color="inherit"
+                variant="outlined"
+                startIcon={<FaGithub />}
+              >
+                Github
+              </Button>
+            )}
             {this.state.authCheck ? (
               <Tooltip title="Logout">
-                <IconButton onClick={confirmLogout} color="warning">
+                <IconButton onClick={this.handleSignOut} color="inherit">
                   <LogoutIcon />
                 </IconButton>
               </Tooltip>
@@ -86,7 +105,7 @@ class Header extends Component {
           <Toolbar
             variant="dense"
             sx={{
-              background: (theme) => `${theme.palette.secondary.main}`,
+              background: (theme) => `${theme.palette.primary.dark}`,
               minHeight: "10px",
             }}
           ></Toolbar>
