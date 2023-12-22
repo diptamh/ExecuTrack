@@ -48,12 +48,11 @@ class Header extends Component {
       this.setState({ username: data?.data?.displayName || "" });
     });
   }
+  handleSignOut = () => {
+    window.location.href = "/api/v1/auth/logout";
+  };
 
   render() {
-    const confirmLogout = async (element) => {
-      // setOpenConfirmLogout(true);
-      console.log("loggout");
-    };
     return (
       <ThemeProvider theme={theme}>
         <AppBar
@@ -97,7 +96,7 @@ class Header extends Component {
             )}
             {this.state.authCheck ? (
               <Tooltip title="Logout">
-                <IconButton onClick={confirmLogout} color="inherit">
+                <IconButton onClick={this.handleSignOut} color="inherit">
                   <LogoutIcon />
                 </IconButton>
               </Tooltip>

@@ -5,10 +5,8 @@ const router = express.Router();
 
 router.get(
   "/callback",
-  // console.log("callback"),
   passport.authenticate("forcedotcom-prod", { failureRedirect: "/error" }),
   async (req, res) => {
-    console.log('callback');
     res.redirect("/home");
   }
 );
@@ -21,16 +19,24 @@ router.get(
   }
 );
 
-// /api/v1/auth/session
 router.get("/session", (req, res) => {
   res.json(req.user || {});
 });
 
-router.get("/production", passport.authenticate("forcedotcom-prod"), console.log);
+router.get(
+  "/production",
+  passport.authenticate("forcedotcom-prod"),
+  console.log
+);
 router.get(
   "/sandbox",
   passport.authenticate("forcedotcom-sandbox"),
   console.log
 );
+router.get("/logout", function (req, res) {
+  req.session.destroy(function (err) {
+    res.redirect("/");
+  });
+});
 
 module.exports = router;
