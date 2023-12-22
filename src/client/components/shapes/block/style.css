@@ -1,0 +1,38 @@
+.warn {
+    border: 2px solid #eaa149;
+    background: #fbe3c0;
+}
+
+.warn p {
+    border-bottom: 1px solid #eaa149;
+}
+
+
+.info {
+    border: 2px solid #9dcbd5;
+    background: #d1f6ff;
+}
+
+.info p {
+    border-bottom: 1px solid #9dcbd5;
+}
+
+.success {
+    border: 2px solid #66b0a1;
+    background: #e2f2e1;
+}
+
+.success p {
+    border-bottom: 1px solid #66b0a1;
+}
+
+.danger {
+    border: 2px solid #d12121;
+    background: #fbfbfb;
+    color: #d12121;
+}
+.danger p{
+    border: 2px solid #d12121;
+    background: #fbfbfb;
+    color: #d12121;
+}

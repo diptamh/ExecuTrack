@@ -1,0 +1,22 @@
+.diamond {
+  position: relative;
+  height: 200px;
+  width: 200px;
+  line-height: 200px;
+  text-align: center;
+  margin: 10px 40px;
+  
+}
+.diamond:after {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  content: '';
+  height: calc(100% - 0px);  /* -22px is 2 * 10px gap on either side - 2px border on either side */
+  width: calc(100% - 0px);  /* -22px is 2 * 10px gap on either side - 2px border on either side */
+  transform: rotateX(45deg) rotateZ(45deg);
+  z-index: -100;
+  background: #fed8d7;
+  border: 3px solid #e9a1ab;
+  border-radius: 6px;
+}
