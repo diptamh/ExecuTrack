@@ -8,6 +8,7 @@ import { AppBar, Toolbar, Button } from "@mui/material";
 import Flow from "../flow";
 import "./index.css";
 import axios from "axios";
+import Header from "../header";
 
 const theme = createTheme();
 
@@ -30,26 +31,7 @@ export default class SignIn extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <AppBar
-          position="static"
-          color="primary"
-          elevation={0}
-          sx={{
-            position: "relative",
-            borderBottom: (t) => `1px solid ${t.palette.divider}`,
-          }}
-        >
-          <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap>
-              ExecuTrack
-            </Typography>
-            <div className="logout">
-              <Button variant="contained" href="/logout">
-                Logout
-              </Button>
-            </div>
-          </Toolbar>
-        </AppBar>
+        <Header />
         {this.state.renderComponent ? (
           <Container component="main" maxWidth="xl">
             <CssBaseline />

@@ -1,24 +1,13 @@
 import React, { Component } from "react";
-import {
-  Dialog,
-  Button,
-  TextField,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  CardContent,
-  Box,
-  Card,
-  CardHeader,
-} from "@mui/material";
+import { Button, CardContent, Box, Card, CardHeader } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SiSalesforce } from "react-icons/si";
+import Header from "../header";
 
 const theme = createTheme();
 
@@ -38,21 +27,7 @@ class Login extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <AppBar
-          position="static"
-          color="primary"
-          elevation={0}
-          sx={{
-            position: "relative",
-            borderBottom: (t) => `1px solid ${t.palette.divider}`,
-          }}
-        >
-          <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap>
-              ExecuTrack
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <Header />
         <Container component="main" maxWidth="xl">
           <CssBaseline />
           <Box
