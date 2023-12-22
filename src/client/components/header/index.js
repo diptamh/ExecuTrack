@@ -11,7 +11,22 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import axios from "axios";
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: "#757ce8",
+      main: "#3f50b5",
+      dark: "#002884",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#ff7961",
+      main: "#f44336",
+      dark: "#ba000d",
+      contrastText: "#000",
+    },
+  },
+});
 
 class Header extends Component {
   constructor(props) {
@@ -45,16 +60,9 @@ class Header extends Component {
           elevation={0}
           sx={{
             position: "relative",
-            borderBottom: (t) => `1px solid ${t.palette.divider}`,
+            borderBottom: (t) => `1px solid ${t.palette.primary.light}`,
           }}
         >
-          <Toolbar
-            variant="dense"
-            sx={{
-              background: (theme) => `${theme.palette.primary.main}`,
-              minHeight: "10px",
-            }}
-          ></Toolbar>
           <Toolbar sx={{ flexWrap: "wrap" }}>
             <Link
               href="/"
@@ -68,7 +76,7 @@ class Header extends Component {
             </Link>
             {this.state.authCheck ? (
               <Button
-                color="secondary"
+                color="inherit"
                 variant="outlined"
                 startIcon={<AccountCircle />}
               >
@@ -77,7 +85,7 @@ class Header extends Component {
             ) : null}
             {this.state.authCheck ? (
               <Tooltip title="Logout">
-                <IconButton onClick={confirmLogout} color="warning">
+                <IconButton onClick={confirmLogout} color="inherit">
                   <LogoutIcon />
                 </IconButton>
               </Tooltip>
@@ -86,7 +94,7 @@ class Header extends Component {
           <Toolbar
             variant="dense"
             sx={{
-              background: (theme) => `${theme.palette.secondary.main}`,
+              background: (theme) => `${theme.palette.primary.dark}`,
               minHeight: "10px",
             }}
           ></Toolbar>
