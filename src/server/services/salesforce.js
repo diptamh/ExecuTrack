@@ -1,6 +1,7 @@
 const fs = require("fs");
 const AdmZip = require("adm-zip");
 const parser = require("xml2js").parseString;
+const tmp = require("tmp");
 
 class Salesforce {
   objectMap = new Map();
@@ -274,6 +275,9 @@ class Salesforce {
   }
 
   async extractMeta() {
+    // Generate a temporary file path
+    const tmpFilePath = tmp.tmpNameSync({ postfix: ".zip" });
+
     const stream = this.conn.metadata
       .retrieve({
         unpackaged: {
@@ -288,13 +292,13 @@ class Salesforce {
     // Pipe the stream to a ZIP file
     await new Promise((resolve, reject) => {
       // Fix: Move this fs.createWriteStream to temp folder.
-      const writeStream = fs.createWriteStream(`metadata.zip`);
+      const writeStream = fs.createWriteStream(tmpFilePath);
       stream.pipe(writeStream);
       stream.on("end", resolve);
       stream.on("error", reject);
     });
     // Extract the contents of the retrieved ZIP file
-    const zip = new AdmZip(`metadata.zip`);
+    const zip = new AdmZip(tmpFilePath);
     return zip.getEntries();
   }
 }
