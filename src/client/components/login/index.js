@@ -58,18 +58,22 @@ class Login extends Component {
                   textAlign: "center",
                 }}
               >
+                <Typography
+                  variant="body2"
+                  component="div"
+                  sx={{
+                    textAlign: "center",
+                  }}
+                >
+                  ExecuTrack for Salesforce: Uncover the execution order of
+                  automations on a specific object <br />
+                  in your org, streamlining automation management with
+                  precision.
+                  <br />
+                  <br />
+                </Typography>
+
                 <Box>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<SiSalesforce></SiSalesforce>}
-                    sx={{ width: "80%" }}
-                    onClick={() => this.handleLogin("production")}
-                  >
-                    Production Login
-                  </Button>
-                </Box>
-                <Box marginTop={1}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -78,6 +82,28 @@ class Login extends Component {
                     onClick={() => this.handleLogin("sandbox")}
                   >
                     Sandbox Login
+                  </Button>
+                </Box>
+                <Box marginTop={1}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<SiSalesforce></SiSalesforce>}
+                    sx={{ width: "80%" }}
+                    onClick={() => this.handleLogin("production")}
+                  >
+                    Developer Org Login
+                  </Button>
+                </Box>
+                <Box marginTop={1}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<SiSalesforce></SiSalesforce>}
+                    sx={{ width: "80%" }}
+                    onClick={() => this.handleLogin("production")}
+                  >
+                    Production Login
                   </Button>
                 </Box>
               </CardContent>
