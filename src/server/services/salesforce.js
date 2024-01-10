@@ -42,8 +42,8 @@ class Salesforce {
       (object) =>
         object.createable &&
         object.updateable &&
-        object.deletable &&
-        object.custom &&
+        // object.deletable &&
+        // object.custom &&
         object.keyPrefix
     );
   }
