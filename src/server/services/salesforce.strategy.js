@@ -1,6 +1,7 @@
 const passport = require("passport");
 const ForceDotComStrategy = require("passport-forcedotcom").Strategy;
 require("dotenv").config();
+const supabase = require("../services/supabase");
 
 passport.use(
   "forcedotcom-prod",
@@ -44,7 +45,24 @@ passport.use(
   )
 );
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser(async function (user, done) {
+  const instanceUrl = user._raw.urls.rest.split("/services/data")[0];
+  console.log("user--->", user);
+  const supaUser = {
+    user_id: user.id,
+    username: user._raw.username,
+    organization_id: user._raw.organization_id,
+    email: user._raw.email,
+    name: user.displayName,
+    instance_url: instanceUrl,
+    mobile_phone: user._raw.mobile_phone,
+  };
+
+  const { data, error } = await supabase
+    .from("supaUser")
+    .upsert(supaUser, { onConflict: "user_id" })
+    .select();
+
   done(null, user);
 });
 
