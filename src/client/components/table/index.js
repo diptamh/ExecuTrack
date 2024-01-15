@@ -73,7 +73,10 @@ const Node = ({ data, selected }) => {
                             : theme.palette.grey[700],
                       }}
                     >
-                      <Link href={row?.Id} target="_blank">
+                      <Link
+                        href={row?.Id.includes(".com") ? row?.Id : undefined}
+                        target="_blank"
+                      >
                         {row?.data}
                       </Link>
                     </TableRow>
