@@ -50,7 +50,7 @@ class Salesforce {
 
   async getAllTrigger() {
     return await this.conn.tooling.query(
-      `SELECT Name, Status, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
+      `SELECT Id, Name, Status, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
       FROM ApexTrigger
       WHERE (TableEnumOrId = '${
         this.objectMap.has(this.conn.object)
@@ -62,7 +62,7 @@ class Salesforce {
 
   async getAllFlow() {
     return await this.conn.query(
-      `SELECT ApiName,TriggerType,TriggerObjectOrEventId
+      `SELECT Id, ApiName,TriggerType,TriggerObjectOrEventId
       FROM FlowDefinitionView  
       WHERE (TriggerObjectOrEventId  = '${
         this.objectMap.has(this.conn.object)
@@ -74,7 +74,7 @@ class Salesforce {
 
   async getBeforeTrigger() {
     return await this.conn.tooling.query(
-      `SELECT Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
+      `SELECT Id, Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
       FROM ApexTrigger
       WHERE (TableEnumOrId = '${
         this.objectMap.has(this.conn.object)
@@ -88,7 +88,7 @@ class Salesforce {
 
   async getAfterTrigger() {
     return await this.conn.tooling.query(
-      `SELECT Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
+      `SELECT Id, Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
       FROM ApexTrigger
       WHERE (TableEnumOrId = '${
         this.objectMap.has(this.conn.object)
@@ -102,7 +102,7 @@ class Salesforce {
 
   async getBeforeFlow() {
     return await this.conn.query(
-      `SELECT ApiName,TriggerType,TriggerObjectOrEventId
+      `SELECT Id, ApiName,TriggerType,TriggerObjectOrEventId
       FROM FlowDefinitionView  
       WHERE (TriggerObjectOrEventId  = '${
         this.objectMap.has(this.conn.object)
@@ -116,7 +116,7 @@ class Salesforce {
 
   async getDuplicateRules() {
     return await this.conn.query(
-      `SELECT SobjectType, DeveloperName,  MasterLabel, IsActive from DuplicateRule 
+      `SELECT Id, SobjectType, DeveloperName,  MasterLabel, IsActive from DuplicateRule 
       WHERE SobjectType = '${
         this.objectMap.has(this.conn.object)
           ? this.objectMap.get(this.conn.object)
@@ -131,7 +131,7 @@ class Salesforce {
    */
   async getAssignmentRules() {
     return await this.conn.query(
-      `SELECT id,Name,SobjectType from AssignmentRule
+      `SELECT Id,Name,SobjectType from AssignmentRule
       WHERE SobjectType = '${
         this.objectMap.has(this.conn.object)
           ? this.objectMap.get(this.conn.object)
@@ -146,7 +146,7 @@ class Salesforce {
    */
   async getAutoResponseRules() {
     return await this.conn.tooling.query(
-      `SELECT id,Name,EntityDefinitionId from AutoResponseRule
+      `SELECT Id,Name,EntityDefinitionId from AutoResponseRule
       WHERE EntityDefinitionId  = '${
         this.objectMap.has(this.conn.object)
           ? this.objectMap.get(this.conn.object)
@@ -157,7 +157,7 @@ class Salesforce {
 
   async getWorkflowRules() {
     return await this.conn.tooling.query(
-      `SELECT id,Name,TableEnumOrId from WorkflowRule
+      `SELECT Id,Name,TableEnumOrId from WorkflowRule
       WHERE TableEnumOrId  = '${
         this.objectMap.has(this.conn.object)
           ? this.objectMap.get(this.conn.object)
@@ -203,7 +203,7 @@ class Salesforce {
 
   async getAfterFlow() {
     return await this.conn.query(
-      `SELECT ApiName,TriggerType,TriggerObjectOrEventId
+      `SELECT Id,ApiName,TriggerType,TriggerObjectOrEventId
       FROM FlowDefinitionView  
       WHERE (TriggerObjectOrEventId  = '${
         this.objectMap.has(this.conn.object)
@@ -217,7 +217,7 @@ class Salesforce {
 
   async getEntitlementProcess() {
     return await this.conn.query(
-      `SELECT id,Name,SobjectType from SlaProcess
+      `SELECT Id,Name,SobjectType from SlaProcess
       WHERE SobjectType = '${
         this.objectMap.has(this.conn.object)
           ? this.objectMap.get(this.conn.object)
@@ -242,6 +242,7 @@ class Salesforce {
   // Retrive Sharing Rules -> https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_retrieve.htm
 
   async getSharingRules() {
+    console.log("called");
     const zipEntries = await this.extractMeta();
     var fullName = [];
 
@@ -263,6 +264,10 @@ class Salesforce {
           // Access the fullName value
           for (const key in result?.SharingRules?.sharingOwnerRules) {
             if (result?.SharingRules?.sharingOwnerRules[key]) {
+              console.log(
+                "SharingRules--->",
+                result?.SharingRules?.sharingOwnerRules[key]
+              );
               fullName.push(
                 result?.SharingRules?.sharingOwnerRules[key].label[0]
               );

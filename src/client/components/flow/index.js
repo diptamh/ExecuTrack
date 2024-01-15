@@ -392,10 +392,17 @@ export default function App() {
     try {
       setLoading(true);
       const automationData = await APIService.getAllAutomation(selected);
+      const sessionData = await APIService.getSessionData();
+      const instance_url =
+        sessionData._raw.urls.rest.split("/services/data")[0];
 
       // Validation Rule
       const VRdata = automationData.data.validation.records.map((record) => {
-        return record.ValidationName;
+        // const instanceUrl = user._raw.urls.rest.split("/services/data")[0];
+        return {
+          Id: instance_url + "/" + record.Id,
+          data: record.ValidationName,
+        };
       });
       setVRdata(() => {
         return VRdata;
@@ -403,7 +410,7 @@ export default function App() {
 
       // Before Trigger
       const BTdata = automationData.data.beforeTrigger.records.map((record) => {
-        return record.Name;
+        return { Id: instance_url + "/" + record.Id, data: record.Name };
       });
       setBTdata(() => {
         return BTdata;
@@ -411,7 +418,7 @@ export default function App() {
 
       // Before Flow
       const BFdata = automationData.data.beforeFlow.records.map((record) => {
-        return record.ApiName;
+        return { Id: instance_url + "/" + record.Id, data: record.ApiName };
       });
 
       setBFdata(() => {
@@ -420,7 +427,10 @@ export default function App() {
 
       // Duplicate Rule
       const DRdata = automationData.data.duplicateRule.records.map((record) => {
-        return record.DeveloperName;
+        return {
+          Id: instance_url + "/" + record.Id,
+          data: record.DeveloperName,
+        };
       });
       setDRdata(() => {
         return DRdata;
@@ -428,7 +438,7 @@ export default function App() {
 
       // After Trigger
       const ATdata = automationData.data.afterTrigger.records.map((record) => {
-        return record.Name;
+        return { Id: instance_url + "/" + record.Id, data: record.Name };
       });
       setATdata(() => {
         return ATdata;
@@ -437,7 +447,7 @@ export default function App() {
       // Execute Assignment Rule
       const ARdata = automationData.data.assignmentRule.records.map(
         (record) => {
-          return record.Name;
+          return { Id: instance_url + "/" + record.Id, data: record.Name };
         }
       );
       setARdata(() => {
@@ -447,7 +457,7 @@ export default function App() {
       // Execute Auto Response Rule
       const AResdata = automationData.data.autoResponseRule.records.map(
         (record) => {
-          return record.Name;
+          return { Id: instance_url + "/" + record.Id, data: record.Name };
         }
       );
 
@@ -459,7 +469,7 @@ export default function App() {
 
       // Execute Workflow Rule
       const WFdata = automationData.data.workflowRules.records.map((record) => {
-        return record.Name;
+        return { Id: instance_url + "/" + record.Id, data: record.Name };
       });
 
       setWFdata(() => {
@@ -468,8 +478,7 @@ export default function App() {
 
       // Execute After Save Trigger
       const AFdata = automationData.data.afterFlow.records.map((record) => {
-        console.log("record.ApiName", record.ApiName);
-        return record.ApiName;
+        return { Id: instance_url + "/" + record.Id, data: record.ApiName };
       });
 
       setAFdata(() => {
@@ -479,7 +488,7 @@ export default function App() {
       // Execute Entitlement Process
       const EPdata = automationData.data.entitlementProcess.records.map(
         (record) => {
-          return record.Name;
+          return { Id: instance_url + "/" + record.Id, data: record.Name };
         }
       );
 
@@ -489,7 +498,7 @@ export default function App() {
 
       // Execute Escalation Rule
       const ESdata = automationData.data.escalationRules.map((record) => {
-        return record;
+        return { Id: record, data: record };
       });
 
       setESdata(() => {
@@ -498,7 +507,7 @@ export default function App() {
 
       // Execute Sharing Rule
       const SRdata = automationData.data.sharingRules.map((record) => {
-        return record;
+        return { Id: record, data: record };
       });
 
       setSRdata(() => {

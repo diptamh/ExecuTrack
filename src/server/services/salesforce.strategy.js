@@ -47,7 +47,6 @@ passport.use(
 
 passport.serializeUser(async function (user, done) {
   const instanceUrl = user._raw.urls.rest.split("/services/data")[0];
-  console.log("user--->", user);
   const supaUser = {
     user_id: user.id,
     username: user._raw.username,
