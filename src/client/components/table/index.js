@@ -1,5 +1,7 @@
 import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
+import axios from "axios";
+import Link from "@mui/material/Link";
 import {
   Table,
   TableBody,
@@ -11,15 +13,12 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { SiSalesforce } from "react-icons/si";
 const Node = ({ data, selected }) => {
-  // console.log("dataAll->", data);
+  console.log("dataAll->", data);
   const rows = [];
   for (const dataKey in data.data) {
     rows.push(data.data[dataKey]);
   }
-  const isConnectable = true;
-
   return (
     <div className="text-updater-node">
       <div>
@@ -59,7 +58,7 @@ const Node = ({ data, selected }) => {
                 {rows && rows.length > 0 ? (
                   rows.map((row) => (
                     <TableRow
-                      key={row}
+                      key={row?.Id}
                       className="success"
                       sx={{
                         color: "black",
@@ -74,7 +73,12 @@ const Node = ({ data, selected }) => {
                             : theme.palette.grey[700],
                       }}
                     >
-                      {row}
+                      <Link
+                        href={row?.Id.includes(".com") ? row?.Id : undefined}
+                        target="_blank"
+                      >
+                        {row?.data}
+                      </Link>
                     </TableRow>
                   ))
                 ) : (

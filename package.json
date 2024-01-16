@@ -18,6 +18,7 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.1",
     "@mui/material-next": "^6.0.0-alpha.114",
+    "@supabase/supabase-js": "^2.39.3",
     "adm-zip": "^0.5.10",
     "axios": "^1.4.0",
     "babel-polyfill": "^6.26.0",

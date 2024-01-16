@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+// import CircularProgress from "@mui/material/CircularProgress";
+
 import ReactFlow, {
   Background,
   useNodesState,
@@ -6,7 +8,7 @@ import ReactFlow, {
   MarkerType,
 } from "reactflow";
 const proOptions = { hideAttribution: true };
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import Block from "../shapes/block";
 import Diamond from "../shapes/diamond";
 import Table from "../table/index.js";
@@ -42,6 +44,7 @@ export default function App() {
   const [EPdata, setEPdata] = useState([null]);
   const [ESdata, setESdata] = useState([null]);
   const [SRdata, setSRdata] = useState([null]);
+  const [loading, setLoading] = useState(false); // Add loading state
   const [nodeTypes, setNodeTypes] = useState({
     block: Block,
     diamond: Diamond,
@@ -386,122 +389,161 @@ export default function App() {
 
   // This is used to get the selected object from the child component and set it to the state
   const handleObjectSelection = async (selected) => {
-    const automationData = await APIService.getAllAutomation(selected);
+    try {
+      setLoading(true);
+      const automationData = await APIService.getAllAutomation(selected);
+      const sessionData = await APIService.getSessionData();
+      const instance_url =
+        sessionData._raw.urls.rest.split("/services/data")[0];
 
-    // Validation Rule
-    const VRdata = automationData.data.validation.records.map((record) => {
-      return record.ValidationName;
-    });
-    setVRdata(() => {
-      return VRdata;
-    });
+      // Validation Rule
+      const VRdata = automationData.data.validation.records.map((record) => {
+        // const instanceUrl = user._raw.urls.rest.split("/services/data")[0];
+        return {
+          Id: instance_url + "/" + record.Id,
+          data: record.ValidationName,
+        };
+      });
+      setVRdata(() => {
+        return VRdata;
+      });
 
-    // Before Trigger
-    const BTdata = automationData.data.beforeTrigger.records.map((record) => {
-      return record.Name;
-    });
-    setBTdata(() => {
-      return BTdata;
-    });
+      // Before Trigger
+      const BTdata = automationData.data.beforeTrigger.records.map((record) => {
+        return { Id: instance_url + "/" + record.Id, data: record.Name };
+      });
+      setBTdata(() => {
+        return BTdata;
+      });
 
-    // Before Flow
-    const BFdata = automationData.data.beforeFlow.records.map((record) => {
-      return record.ApiName;
-    });
+      // Before Flow
+      const BFdata = automationData.data.beforeFlow.records.map((record) => {
+        return { Id: instance_url + "/" + record.Id, data: record.ApiName };
+      });
 
-    setBFdata(() => {
-      return BFdata;
-    });
+      setBFdata(() => {
+        return BFdata;
+      });
 
-    // Duplicate Rule
-    const DRdata = automationData.data.duplicateRule.records.map((record) => {
-      return record.DeveloperName;
-    });
-    setDRdata(() => {
-      return DRdata;
-    });
+      // Duplicate Rule
+      const DRdata = automationData.data.duplicateRule.records.map((record) => {
+        return {
+          Id: instance_url + "/" + record.Id,
+          data: record.DeveloperName,
+        };
+      });
+      setDRdata(() => {
+        return DRdata;
+      });
 
-    // After Trigger
-    const ATdata = automationData.data.afterTrigger.records.map((record) => {
-      return record.Name;
-    });
-    setATdata(() => {
-      return ATdata;
-    });
+      // After Trigger
+      const ATdata = automationData.data.afterTrigger.records.map((record) => {
+        return { Id: instance_url + "/" + record.Id, data: record.Name };
+      });
+      setATdata(() => {
+        return ATdata;
+      });
 
-    // Execute Assignment Rule
-    const ARdata = automationData.data.assignmentRule.records.map((record) => {
-      return record.Name;
-    });
-    setARdata(() => {
-      return ARdata;
-    });
+      // Execute Assignment Rule
+      const ARdata = automationData.data.assignmentRule.records.map(
+        (record) => {
+          return { Id: instance_url + "/" + record.Id, data: record.Name };
+        }
+      );
+      setARdata(() => {
+        return ARdata;
+      });
 
-    // Execute Auto Response Rule
-    const AResdata = automationData.data.autoResponseRule.records.map(
-      (record) => {
-        return record.Name;
-      }
-    );
+      // Execute Auto Response Rule
+      const AResdata = automationData.data.autoResponseRule.records.map(
+        (record) => {
+          return { Id: instance_url + "/" + record.Id, data: record.Name };
+        }
+      );
 
-    setAResdata(() => {
-      return AResdata;
-    });
+      setAResdata(() => {
+        return AResdata;
+      });
 
-    console.log("All Automation---------->", automationData.data);
+      console.log("All Automation---------->", automationData.data);
 
-    // Execute Workflow Rule
-    const WFdata = automationData.data.workflowRules.records.map((record) => {
-      return record.Name;
-    });
+      // Execute Workflow Rule
+      const WFdata = automationData.data.workflowRules.records.map((record) => {
+        return { Id: instance_url + "/" + record.Id, data: record.Name };
+      });
 
-    setWFdata(() => {
-      return WFdata;
-    });
+      setWFdata(() => {
+        return WFdata;
+      });
 
-    // Execute After Save Trigger
-    const AFdata = automationData.data.afterFlow.records.map((record) => {
-      console.log("record.ApiName", record.ApiName);
-      return record.ApiName;
-    });
+      // Execute After Save Trigger
+      const AFdata = automationData.data.afterFlow.records.map((record) => {
+        return { Id: instance_url + "/" + record.Id, data: record.ApiName };
+      });
 
-    setAFdata(() => {
-      return AFdata;
-    });
+      setAFdata(() => {
+        return AFdata;
+      });
 
-    // Execute Entitlement Process
-    const EPdata = automationData.data.entitlementProcess.records.map(
-      (record) => {
-        return record.Name;
-      }
-    );
+      // Execute Entitlement Process
+      const EPdata = automationData.data.entitlementProcess.records.map(
+        (record) => {
+          return { Id: instance_url + "/" + record.Id, data: record.Name };
+        }
+      );
 
-    setEPdata(() => {
-      return EPdata;
-    });
+      setEPdata(() => {
+        return EPdata;
+      });
 
-    // Execute Escalation Rule
-    const ESdata = automationData.data.escalationRules.map((record) => {
-      return record;
-    });
+      // Execute Escalation Rule
+      const ESdata = automationData.data.escalationRules.map((record) => {
+        return { Id: record, data: record };
+      });
 
-    setESdata(() => {
-      return ESdata;
-    });
+      setESdata(() => {
+        return ESdata;
+      });
 
-    // Execute Sharing Rule
-    const SRdata = automationData.data.sharingRules.map((record) => {
-      return record;
-    });
+      // Execute Sharing Rule
+      const SRdata = automationData.data.sharingRules.map((record) => {
+        return { Id: record, data: record };
+      });
 
-    setSRdata(() => {
-      return SRdata;
-    });
+      setSRdata(() => {
+        return SRdata;
+      });
+    } catch (error) {
+      console.error("Error fetching automation data:", error);
+    } finally {
+      setLoading(false); // Set loading to false when data fetching is complete (success or error)
+    }
   };
 
   return (
     // <div style={{ width: "100vw", height: "88vh", background: "#1a192b" }}>
     <div style={{ width: "100vw", height: "88vh", padding: "1%" }}>
+      {loading && (
+        <>
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: 999,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress color="primary" />
+          </div>
+        </>
+      )}
+      {/* Display loader if loading is true */}
       <Box width={400}>
         {/* This is used to select the object and get the object from the child object */}
         <ObjectSelector OnObjectSelection={handleObjectSelection} />

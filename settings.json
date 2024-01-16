@@ -14,5 +14,17 @@
       "editor.formatOnSave": true,
       "editor.formatOnPaste": true,
       "editor.tabSize": 2,
+    },
+    "go.delveConfig": {
+      "dlvLoadConfig": {
+        "followPointers": true,
+        "maxVariableRecurse": 3,
+        "maxStringLen": 400,
+        "maxArrayValues": 400,
+        "maxStructFields": -1
+      },
+      "apiVersion": 2,
+      "showGlobalVariables": false
     }
+    
   }

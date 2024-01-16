@@ -23,6 +23,11 @@ class APIService extends React.Component {
     return data;
   }
 
+  async getSessionData() {
+    const session = await axios.get("/api/v1/auth/session");
+    return session.data;
+  }
+
   requestHandler = async (method, url, data) => {
     const record = await axios({
       method,
