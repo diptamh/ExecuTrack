@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 const outputDirectory = "dist";
 
@@ -26,6 +27,9 @@ module.exports = {
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         loader: "url-loader",
+        options: {
+          limit: 100000,
+        },
       },
     ],
   },
@@ -45,6 +49,7 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: [outputDirectory],
     }),
+    new Dotenv(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       favicon: "./public/favicon.ico",

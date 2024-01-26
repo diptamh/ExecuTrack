@@ -12,7 +12,7 @@ import Header from "../header";
 
 const theme = createTheme();
 
-export default class SignIn extends React.Component {
+export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +20,7 @@ export default class SignIn extends React.Component {
     };
   }
   componentDidMount() {
+    console.log("Home GET");
     axios.get("/api/v1/auth/session").then((res) => {
       console.log("session", res.data);
       if (res.data && Object.keys(res.data).length > 0) {

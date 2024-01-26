@@ -33,9 +33,11 @@ router.get(
   passport.authenticate("forcedotcom-sandbox"),
   console.log
 );
-router.get("/logout", function (req, res) {
-  req.session.destroy(function (err) {
-    res.redirect("/");
+
+router.post("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.send({ success: true });
   });
 });
 
