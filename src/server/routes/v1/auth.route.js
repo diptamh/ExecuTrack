@@ -34,10 +34,10 @@ router.get(
   console.log
 );
 
-router.post("/logout", (req, res, next) => {
+router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.send({ success: true });
+    res.redirect("/");
   });
 });
 

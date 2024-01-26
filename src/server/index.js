@@ -38,22 +38,6 @@ app.use(errors());
 app.get("/", (req, res) => res.redirect("http://localhost:3000"));
 app.get("*", (req, res) => res.sendFile(path.resolve("dist", "index.html")));
 
-// setup Logout
-app.get("/logout", function (req, res) {
-  // To do - need to redirect to the logout page
-  req.logout();
-  res.redirect("/");
-});
-
-app.post("/auth/forcedotcom/logout", function (req, res) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.send({ success: true });
-  });
-});
-
 // Start the server
 app.listen(process.env.PORT || 8080, () =>
   console.log(`✅ listening on port ${process.env.PORT || 8080}!`)
