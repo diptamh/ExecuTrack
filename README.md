@@ -1,8 +1,8 @@
-# ExecuTrack
+# ExuTrack
 
 ## Overview
 
-ExecuTrack is a powerful tool designed for Salesforce Admins and Developers to streamline automation management. The primary purpose of this application is to provide insights into the execution order of automations in Salesforce. Quickly understand the flow of automations and make informed decisions with precision.
+ExuTrack is a powerful tool designed for Salesforce Admins and Developers to streamline automation management. The primary purpose of this application is to provide insights into the execution order of automations in Salesforce. Quickly understand the flow of automations and make informed decisions with precision.
 
 ## Features
 
@@ -18,8 +18,8 @@ ExecuTrack is a powerful tool designed for Salesforce Admins and Developers to s
 
 ### Local Development
 
-1. Clone the repository: `git clone https://github.com/your-repo/executrack.git`
-2. Navigate to the project directory: `cd executrack`
+1. Clone the repository: `git clone https://github.com/your-repo/ExuTrack.git`
+2. Navigate to the project directory: `cd ExuTrack`
 3. Install Node.js dependencies: `npm install`
 4. Set up the environment variables by creating a `.env` file. Sample environment variables are provided below.
 5. Start the application: `npm start`

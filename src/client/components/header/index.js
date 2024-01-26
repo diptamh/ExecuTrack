@@ -72,7 +72,7 @@ class Header extends Component {
               sx={{ flexGrow: 8, textAlign: "left" }}
             >
               <Typography variant="h6" color="inherit" noWrap>
-                ExecuTrack
+                ExuTrack
               </Typography>
             </Link>
             {this.state.authCheck ? (
@@ -86,7 +86,7 @@ class Header extends Component {
             ) : (
               <Button
                 label="Github"
-                href="https://github.com/diptamh/ExecuTrack"
+                href="https://github.com/diptamh/ExuTrack"
                 color="inherit"
                 variant="outlined"
                 startIcon={<FaGithub />}

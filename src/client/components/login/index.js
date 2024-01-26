@@ -65,8 +65,8 @@ class Login extends Component {
                     textAlign: "center",
                   }}
                 >
-                  ExecuTrack for Salesforce: Uncover the execution order of
-                  automations on a specific object <br />
+                  ExuTrack for Salesforce: Uncover all automations and the
+                  execution order of them on a specific object <br />
                   in your org, streamlining automation management with
                   precision.
                   <br />

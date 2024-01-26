@@ -1,5 +1,5 @@
 {
-  "name": "executrack",
+  "name": "exutrack",
   "version": "1.0.0",
   "description": "Salesforce order of execution tracker",
   "main": "src/server/index.js",
@@ -10,7 +10,7 @@
     "server": "nodemon src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Sandeep Raveesh",
+  "author": "Diptam",
   "license": "ISC",
   "dependencies": {
     "@emotion/react": "^11.10.6",
