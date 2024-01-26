@@ -23,6 +23,7 @@ import { MdOutlineAutoMode } from "react-icons/md";
 
 import { TfiRulerPencil } from "react-icons/tfi";
 import { MdPriorityHigh } from "react-icons/md";
+import { MdAcUnit } from "react-icons/md";
 
 import { FcWorkflow } from "react-icons/fc";
 
@@ -176,7 +177,8 @@ export default function App() {
         id: "15",
         position: { x: 400, y: 400 },
         data: {
-          label: "15. Executes Entitlement Rules",
+          icon: <MdAcUnit />,
+          label: "Executes Entitlement Rules",
           variant: "success",
           data: EPdata,
         },
