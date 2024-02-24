@@ -23,7 +23,6 @@ class Salesforce {
   }
 
   async getValidationRules() {
-    console.log("getValidationRules->", this.conn.object);
     return await this.conn.tooling.query(
       `SELECT Id, ValidationName, Active, Description, NamespacePrefix, 
         ManageableState, CreatedById, CreatedDate, LastModifiedById, 
@@ -219,7 +218,6 @@ class Salesforce {
   async getEntitlementProcess() {
     const zipEntries = await this.extractMeta();
     var fullName = [];
-    console.log(this.conn.object);
     zipEntries.forEach((entry) => {
       if (
         entry.entryName.endsWith("entitlementProcess") &&
@@ -254,7 +252,6 @@ class Salesforce {
   // Retrive Sharing Rules -> https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_retrieve.htm
 
   async getSharingRules() {
-    console.log("called");
     const zipEntries = await this.extractMeta();
     var fullName = [];
 
@@ -276,10 +273,6 @@ class Salesforce {
           // Access the fullName value
           for (const key in result?.SharingRules?.sharingOwnerRules) {
             if (result?.SharingRules?.sharingOwnerRules[key]) {
-              console.log(
-                "SharingRules--->",
-                result?.SharingRules?.sharingOwnerRules[key]
-              );
               fullName.push(
                 result?.SharingRules?.sharingOwnerRules[key].label[0]
               );
