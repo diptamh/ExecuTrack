@@ -488,11 +488,9 @@ export default function App() {
       });
 
       // Execute Entitlement Process
-      const EPdata = automationData.data.entitlementProcess.records.map(
-        (record) => {
-          return { Id: instance_url + "/" + record.Id, data: record.Name };
-        }
-      );
+      const EPdata = automationData.data.entitlementProcess.map((record) => {
+        return { Id: record, data: record };
+      });
 
       setEPdata(() => {
         return EPdata;

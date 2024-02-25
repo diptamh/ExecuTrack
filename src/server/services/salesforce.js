@@ -2,6 +2,7 @@ const fs = require("fs");
 const AdmZip = require("adm-zip");
 const parser = require("xml2js").parseString;
 const tmp = require("tmp");
+const { stringify } = require("querystring");
 
 class Salesforce {
   objectMap = new Map();
@@ -22,7 +23,6 @@ class Salesforce {
   }
 
   async getValidationRules() {
-    console.log("getValidationRules->", this.conn.object);
     return await this.conn.tooling.query(
       `SELECT Id, ValidationName, Active, Description, NamespacePrefix, 
         ManageableState, CreatedById, CreatedDate, LastModifiedById, 
@@ -216,14 +216,24 @@ class Salesforce {
   }
 
   async getEntitlementProcess() {
-    return await this.conn.query(
-      `SELECT Id,Name,SobjectType from SlaProcess
-      WHERE SobjectType = '${
-        this.objectMap.has(this.conn.object)
-          ? this.objectMap.get(this.conn.object)
-          : this.conn.object
-      }' OR SobjectType = '${this.conn.object}'`
-    );
+    const zipEntries = await this.extractMeta();
+    var fullName = [];
+    zipEntries.forEach((entry) => {
+      if (
+        entry.entryName.endsWith("entitlementProcess") &&
+        (this.objectMap?.get(this.conn.object) === "Case" ||
+          this.conn.object === "Case")
+      ) {
+        // Define a regular expression pattern to match the desired substring
+        const pattern = /\/([a-zA-Z\s]+)\./;
+
+        // Use RegExp.prototype.exec() to find the first occurrence of the pattern in the input string
+        const match = pattern.exec(entry.entryName);
+        fullName.push(match[1]);
+      }
+    });
+    console.log(fullName);
+    return fullName;
   }
 
   // async calculateRollupSummary(objectName) {
@@ -242,7 +252,6 @@ class Salesforce {
   // Retrive Sharing Rules -> https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_retrieve.htm
 
   async getSharingRules() {
-    console.log("called");
     const zipEntries = await this.extractMeta();
     var fullName = [];
 
@@ -264,10 +273,6 @@ class Salesforce {
           // Access the fullName value
           for (const key in result?.SharingRules?.sharingOwnerRules) {
             if (result?.SharingRules?.sharingOwnerRules[key]) {
-              console.log(
-                "SharingRules--->",
-                result?.SharingRules?.sharingOwnerRules[key]
-              );
               fullName.push(
                 result?.SharingRules?.sharingOwnerRules[key].label[0]
               );
@@ -289,6 +294,7 @@ class Salesforce {
           types: [
             { name: "EscalationRules", members: "*" },
             { name: "SharingRules", members: "*" },
+            { name: "EntitlementProcess", members: "*" },
           ],
           version: "50.0",
         },
