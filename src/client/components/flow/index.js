@@ -400,10 +400,10 @@ export default function App() {
 
       // Validation Rule
       const VRdata = automationData.data.validation.records.map((record) => {
-        // const instanceUrl = user._raw.urls.rest.split("/services/data")[0];
         return {
           Id: instance_url + "/" + record.Id,
           data: record.ValidationName,
+          active: record.Active,
         };
       });
       setVRdata(() => {
@@ -412,7 +412,11 @@ export default function App() {
 
       // Before Trigger
       const BTdata = automationData.data.beforeTrigger.records.map((record) => {
-        return { Id: instance_url + "/" + record.Id, data: record.Name };
+        return {
+          Id: instance_url + "/" + record.Id,
+          data: record.Name,
+          active: record.Status === "InActive" ? false : true,
+        };
       });
       setBTdata(() => {
         return BTdata;
@@ -420,7 +424,11 @@ export default function App() {
 
       // Before Flow
       const BFdata = automationData.data.beforeFlow.records.map((record) => {
-        return { Id: instance_url + "/" + record.Id, data: record.ApiName };
+        return {
+          Id: instance_url + "/" + record.Id,
+          data: record.ApiName,
+          active: record.IsActive,
+        };
       });
 
       setBFdata(() => {
@@ -432,6 +440,7 @@ export default function App() {
         return {
           Id: instance_url + "/" + record.Id,
           data: record.DeveloperName,
+          active: record.IsActive,
         };
       });
       setDRdata(() => {
@@ -440,7 +449,11 @@ export default function App() {
 
       // After Trigger
       const ATdata = automationData.data.afterTrigger.records.map((record) => {
-        return { Id: instance_url + "/" + record.Id, data: record.Name };
+        return {
+          Id: instance_url + "/" + record.Id,
+          data: record.Name,
+          active: record.Status === "InActive" ? false : true,
+        };
       });
       setATdata(() => {
         return ATdata;
@@ -449,7 +462,11 @@ export default function App() {
       // Execute Assignment Rule
       const ARdata = automationData.data.assignmentRule.records.map(
         (record) => {
-          return { Id: instance_url + "/" + record.Id, data: record.Name };
+          return {
+            Id: instance_url + "/" + record.Id,
+            data: record.Name,
+            active: record.Active,
+          };
         }
       );
       setARdata(() => {
@@ -459,7 +476,11 @@ export default function App() {
       // Execute Auto Response Rule
       const AResdata = automationData.data.autoResponseRule.records.map(
         (record) => {
-          return { Id: instance_url + "/" + record.Id, data: record.Name };
+          return {
+            Id: instance_url + "/" + record.Id,
+            data: record.Name,
+            active: record.Active,
+          };
         }
       );
 
@@ -467,11 +488,13 @@ export default function App() {
         return AResdata;
       });
 
-      console.log("All Automation---------->", automationData.data);
-
       // Execute Workflow Rule
       const WFdata = automationData.data.workflowRules.records.map((record) => {
-        return { Id: instance_url + "/" + record.Id, data: record.Name };
+        return {
+          Id: instance_url + "/" + record.Id,
+          data: record.Name,
+          active: null,
+        };
       });
 
       setWFdata(() => {
@@ -480,7 +503,11 @@ export default function App() {
 
       // Execute After Save Trigger
       const AFdata = automationData.data.afterFlow.records.map((record) => {
-        return { Id: instance_url + "/" + record.Id, data: record.ApiName };
+        return {
+          Id: instance_url + "/" + record.Id,
+          data: record.ApiName,
+          active: record.IsActive,
+        };
       });
 
       setAFdata(() => {
@@ -489,7 +516,7 @@ export default function App() {
 
       // Execute Entitlement Process
       const EPdata = automationData.data.entitlementProcess.map((record) => {
-        return { Id: record, data: record };
+        return { Id: record, data: record, active: null };
       });
 
       setEPdata(() => {
@@ -498,7 +525,7 @@ export default function App() {
 
       // Execute Escalation Rule
       const ESdata = automationData.data.escalationRules.map((record) => {
-        return { Id: record, data: record };
+        return { Id: record, data: record, active: null };
       });
 
       setESdata(() => {
@@ -507,7 +534,7 @@ export default function App() {
 
       // Execute Sharing Rule
       const SRdata = automationData.data.sharingRules.map((record) => {
-        return { Id: record, data: record };
+        return { Id: record, data: record, active: null };
       });
 
       setSRdata(() => {

@@ -14,11 +14,11 @@ import {
   Box,
 } from "@mui/material";
 const Node = ({ data, selected }) => {
-  console.log("dataAll->", data);
   const rows = [];
   for (const dataKey in data.data) {
     rows.push(data.data[dataKey]);
   }
+  // console.log("rows======", rows);
   return (
     <div className="text-updater-node">
       <div>
@@ -76,6 +76,15 @@ const Node = ({ data, selected }) => {
                       <Link
                         href={row?.Id.includes(".com") ? row?.Id : undefined}
                         target="_blank"
+                        style={{
+                          "text-decoration": "none",
+                          color:
+                            row?.active === null
+                              ? "grey"
+                              : row?.active
+                              ? "green"
+                              : "red",
+                        }}
                       >
                         {row?.data}
                       </Link>
