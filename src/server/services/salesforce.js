@@ -62,7 +62,7 @@ class Salesforce {
 
   async getAllFlow() {
     return await this.conn.query(
-      `SELECT Id, ApiName,TriggerType,TriggerObjectOrEventId
+      `SELECT Id, ApiName,TriggerType,TriggerObjectOrEventId,IsActive
       FROM FlowDefinitionView  
       WHERE (TriggerObjectOrEventId  = '${
         this.objectMap.has(this.conn.object)
@@ -74,7 +74,7 @@ class Salesforce {
 
   async getBeforeTrigger() {
     return await this.conn.tooling.query(
-      `SELECT Id, Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
+      `SELECT Id, Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete,Status
       FROM ApexTrigger
       WHERE (TableEnumOrId = '${
         this.objectMap.has(this.conn.object)
@@ -82,13 +82,13 @@ class Salesforce {
           : this.conn.object
       }' OR TableEnumOrId = '${
         this.conn.object
-      }')  AND Status = 'Active'  AND (UsageBeforeDelete = true OR UsageBeforeUpdate = true OR UsageBeforeInsert = true)`
+      }')  AND (UsageBeforeDelete = true OR UsageBeforeUpdate = true OR UsageBeforeInsert = true)`
     );
   }
 
   async getAfterTrigger() {
     return await this.conn.tooling.query(
-      `SELECT Id, Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete
+      `SELECT Id, Name, UsageBeforeDelete, UsageBeforeUpdate, UsageBeforeInsert, UsageAfterDelete, UsageAfterUpdate, UsageAfterInsert, UsageAfterUndelete, Status
       FROM ApexTrigger
       WHERE (TableEnumOrId = '${
         this.objectMap.has(this.conn.object)
@@ -102,7 +102,7 @@ class Salesforce {
 
   async getBeforeFlow() {
     return await this.conn.query(
-      `SELECT Id, ApiName,TriggerType,TriggerObjectOrEventId
+      `SELECT Id, ApiName,TriggerType,TriggerObjectOrEventId,IsActive
       FROM FlowDefinitionView  
       WHERE (TriggerObjectOrEventId  = '${
         this.objectMap.has(this.conn.object)
@@ -131,7 +131,7 @@ class Salesforce {
    */
   async getAssignmentRules() {
     return await this.conn.query(
-      `SELECT Id,Name,SobjectType from AssignmentRule
+      `SELECT Id,Name,SobjectType,Active from AssignmentRule
       WHERE SobjectType = '${
         this.objectMap.has(this.conn.object)
           ? this.objectMap.get(this.conn.object)
@@ -146,7 +146,7 @@ class Salesforce {
    */
   async getAutoResponseRules() {
     return await this.conn.tooling.query(
-      `SELECT Id,Name,EntityDefinitionId from AutoResponseRule
+      `SELECT Id,Name,EntityDefinitionId,Active from AutoResponseRule
       WHERE EntityDefinitionId  = '${
         this.objectMap.has(this.conn.object)
           ? this.objectMap.get(this.conn.object)
@@ -203,7 +203,7 @@ class Salesforce {
 
   async getAfterFlow() {
     return await this.conn.query(
-      `SELECT Id,ApiName,TriggerType,TriggerObjectOrEventId
+      `SELECT Id,ApiName,TriggerType,TriggerObjectOrEventId,IsActive
       FROM FlowDefinitionView  
       WHERE (TriggerObjectOrEventId  = '${
         this.objectMap.has(this.conn.object)
