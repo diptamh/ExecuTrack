@@ -1,5 +1,4 @@
 const express = require("express");
-const { celebrate, Joi, Segments } = require("celebrate");
 const jsforce = require("jsforce");
 const Salesforce = require("../../services/salesforce");
 const router = express.Router();
@@ -26,9 +25,10 @@ router.post("/automations", async (req, res) => {
       salesforce.getAssignmentRules(), // 4
       salesforce.getAutoResponseRules(), // 5
       salesforce.getWorkflowRules(), // 6
-      salesforce.getEntitlementProcess(), // 7
-      salesforce.getSharingRules(), // 8
-      salesforce.getEscalationRules(), // 9
+      // salesforce.getEntitlementProcess(), // 7
+      // salesforce.getSharingRules(), // 8
+      // salesforce.getEscalationRules(), // 9
+      salesforce.extractPackage(), //10
     ]);
 
     const validation = results[0];
@@ -38,9 +38,10 @@ router.post("/automations", async (req, res) => {
     const assignmentRule = results[4];
     const autoResponseRule = results[5];
     const workflowRules = results[6];
-    const entitlementProcess = results[7];
-    const sharingRules = results[8];
-    const escalationRules = results[9];
+    // console.log("results--->", results[7]);
+    const [escalationRules, entitlementProcess, sharingRules] = results[7];
+    // const sharingRules = results[8];
+    // const escalationRules = results[9];
 
     const beforeTrigger = {
       records: allTrigger.records.filter(
