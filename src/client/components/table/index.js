@@ -18,7 +18,6 @@ const Node = ({ data, selected }) => {
   for (const dataKey in data.data) {
     rows.push(data.data[dataKey]);
   }
-  // console.log("rows======", rows);
   return (
     <div className="text-updater-node">
       <div>

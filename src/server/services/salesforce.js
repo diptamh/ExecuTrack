@@ -1,8 +1,5 @@
-const fs = require("fs");
 const AdmZip = require("adm-zip");
 const parser = require("xml2js").parseString;
-const tmp = require("tmp");
-const { stringify } = require("querystring");
 
 class Salesforce {
   objectMap = new Map();
@@ -166,10 +163,64 @@ class Salesforce {
     );
   }
 
-  async getEscalationRules() {
-    const zipEntries = await this.extractMeta();
-    var fullName = [];
-    // Log the names of EscalationRules
+  // To do : Figure Out how to get the Executes flow automations in no perticular order 13
+
+  async getAfterFlow() {
+    return await this.conn.query(
+      `SELECT Id,ApiName,TriggerType,TriggerObjectOrEventId,IsActive
+      FROM FlowDefinitionView  
+      WHERE (TriggerObjectOrEventId  = '${
+        this.objectMap.has(this.conn.object)
+          ? this.objectMap.get(this.conn.object)
+          : this.conn.object
+      }' OR TriggerObjectOrEventId  = '${
+        this.conn.object
+      }') AND TriggerType = 'RecordAfterSave'`
+    );
+  }
+
+  // async calculateRollupSummary(objectName) {
+  //   return await this.conn.query(
+  //     `SELECT id,Name,SobjectType from RollupSummaryField
+  //     WHERE SobjectType = '${
+  //       this.objectMap.has(objectName)
+  //         ? this.objectMap.get(objectName)
+  //         : objectName
+  //     }' OR SobjectType = '${objectName}'`
+  //   );
+  // }
+
+  // To do : Figure Oyut how to get the Roll up Summary Fields in no perticular order 17
+
+  // Retrive Sharing Rules -> https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_retrieve.htm
+
+  async extractPackage() {
+    let retrieveRes = await this.conn.metadata.retrieve({
+      unpackaged: {
+        types: [
+          { name: "EscalationRules", members: "*" },
+          { name: "SharingRules", members: "*" },
+          { name: "EntitlementProcess", members: "*" },
+        ],
+        version: "57.0",
+      },
+    });
+    while (true) {
+      if (retrieveRes.done === true || retrieveRes.done === "true") break;
+      await this.sleep(5000);
+      console.log("checking...");
+      retrieveRes = await this.conn.metadata.checkRetrieveStatus(
+        retrieveRes.id
+      );
+      console.log("check done");
+    }
+
+    const zip = new AdmZip(Buffer.from(retrieveRes.zipFile, "base64"));
+    const zipEntries = zip.getEntries();
+
+    let escalationRules = [],
+      entitlementProcess = [],
+      sharingRules = [];
     zipEntries.forEach((entry) => {
       if (
         entry.entryName.endsWith("escalationRules") &&
@@ -188,75 +239,23 @@ class Salesforce {
           // Access the fullName value
           for (const key in result?.EscalationRules?.escalationRule) {
             if (result?.EscalationRules?.escalationRule[key].active == "true") {
-              fullName.push(
+              escalationRules.push(
                 result?.EscalationRules?.escalationRule[key].fullName[0]
               );
             }
           }
         });
-      }
-    });
-    return fullName;
-  }
-
-  // To do : Figure Out how to get the Executes flow automations in no perticular order 13
-
-  async getAfterFlow() {
-    return await this.conn.query(
-      `SELECT Id,ApiName,TriggerType,TriggerObjectOrEventId,IsActive
-      FROM FlowDefinitionView  
-      WHERE (TriggerObjectOrEventId  = '${
-        this.objectMap.has(this.conn.object)
-          ? this.objectMap.get(this.conn.object)
-          : this.conn.object
-      }' OR TriggerObjectOrEventId  = '${
-        this.conn.object
-      }') AND TriggerType = 'RecordAfterSave'`
-    );
-  }
-
-  async getEntitlementProcess() {
-    const zipEntries = await this.extractMeta();
-    var fullName = [];
-    zipEntries.forEach((entry) => {
-      if (
+      } else if (
         entry.entryName.endsWith("entitlementProcess") &&
         (this.objectMap?.get(this.conn.object) === "Case" ||
           this.conn.object === "Case")
       ) {
         // Define a regular expression pattern to match the desired substring
-        const pattern = /\/([a-zA-Z\s]+)\./;
-
+        const pattern = /entitlementProcesses\/(.*?)\.entitlementProcess/;
         // Use RegExp.prototype.exec() to find the first occurrence of the pattern in the input string
         const match = pattern.exec(entry.entryName);
-        fullName.push(match[1]);
-      }
-    });
-    console.log(fullName);
-    return fullName;
-  }
-
-  // async calculateRollupSummary(objectName) {
-  //   return await this.conn.query(
-  //     `SELECT id,Name,SobjectType from RollupSummaryField
-  //     WHERE SobjectType = '${
-  //       this.objectMap.has(objectName)
-  //         ? this.objectMap.get(objectName)
-  //         : objectName
-  //     }' OR SobjectType = '${objectName}'`
-  //   );
-  // }
-
-  // To do : Figure Oyut how to get the Roll up Summary Fields in no perticular order 17
-
-  // Retrive Sharing Rules -> https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_retrieve.htm
-
-  async getSharingRules() {
-    const zipEntries = await this.extractMeta();
-    var fullName = [];
-
-    zipEntries.forEach((entry) => {
-      if (
+        entitlementProcess.push(match[1]);
+      } else if (
         entry.entryName.endsWith("sharingRules") &&
         (entry.entryName.split(".")[0].split("/")[2] ===
           this.objectMap?.get(this.conn.object) ||
@@ -273,7 +272,7 @@ class Salesforce {
           // Access the fullName value
           for (const key in result?.SharingRules?.sharingOwnerRules) {
             if (result?.SharingRules?.sharingOwnerRules[key]) {
-              fullName.push(
+              sharingRules.push(
                 result?.SharingRules?.sharingOwnerRules[key].label[0]
               );
             }
@@ -281,36 +280,11 @@ class Salesforce {
         });
       }
     });
-    return fullName;
+    return [escalationRules, entitlementProcess, sharingRules];
   }
 
-  async extractMeta() {
-    // Generate a temporary file path
-    const tmpFilePath = tmp.tmpNameSync({ postfix: ".zip" });
-
-    const stream = this.conn.metadata
-      .retrieve({
-        unpackaged: {
-          types: [
-            { name: "EscalationRules", members: "*" },
-            { name: "SharingRules", members: "*" },
-            { name: "EntitlementProcess", members: "*" },
-          ],
-          version: "50.0",
-        },
-      })
-      .stream();
-    // Pipe the stream to a ZIP file
-    await new Promise((resolve, reject) => {
-      // Fix: Move this fs.createWriteStream to temp folder.
-      const writeStream = fs.createWriteStream(tmpFilePath);
-      stream.pipe(writeStream);
-      stream.on("end", resolve);
-      stream.on("error", reject);
-    });
-    // Extract the contents of the retrieved ZIP file
-    const zip = new AdmZip(tmpFilePath);
-    return zip.getEntries();
+  async sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 
