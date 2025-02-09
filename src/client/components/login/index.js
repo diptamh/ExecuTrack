@@ -1,118 +1,128 @@
-import React, { Component } from "react";
-import { Button, CardContent, Box, Card, CardHeader } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React from "react";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Container,
+  Stack,
+  Divider,
+  Paper,
+} from "@mui/material";
 import { SiSalesforce } from "react-icons/si";
 import Header from "../header";
+import { styled } from "@mui/material/styles";
 
-const theme = createTheme();
+const StyledLoginButton = styled(Button)(({ theme }) => ({
+  width: "100%",
+  padding: "12px",
+  marginBottom: theme.spacing(1.5),
+  fontSize: "1rem",
+  transition: "transform 0.2s",
+  "&:hover": {
+    transform: "translateY(-2px)",
+  },
+}));
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-  }
+const LoginCard = styled(Card)(({ theme }) => ({
+  maxWidth: 450,
+  width: "100%",
+  padding: theme.spacing(3),
+  boxShadow: theme.shadows[8],
+  borderRadius: theme.spacing(2),
+}));
 
-  handleLogin = (type) => {
-    if (type == "production") {
-      window.location.href = "api/v1/auth/production";
-    } else if (type == "sandbox") {
-      window.location.href = "api/v1/auth/sandbox";
-    }
+const LoginContainer = styled(Container)({
+  minHeight: "calc(100vh - 64px)", // Adjust based on your header height
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "40px 16px",
+});
+
+const Login = () => {
+  const handleLogin = (type) => {
+    window.location.href = `api/v1/auth/${type}`;
   };
 
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <Header />
-        <Container component="main" maxWidth="xl">
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Card>
-              <CardHeader
-                title="Login"
-                subheader="Login using your Salesforce credentials"
-                titleTypographyProps={{ align: "center", variant: "h6" }}
-                subheaderTypographyProps={{
-                  align: "center",
-                }}
-                sx={{
-                  backgroundColor: (theme) =>
-                    theme.palette.mode === "light"
-                      ? theme.palette.grey[200]
-                      : theme.palette.grey[700],
-                }}
-              />
-              <CardContent
-                sx={{
-                  textAlign: "center",
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  component="div"
-                  sx={{
-                    textAlign: "center",
-                  }}
-                >
-                  ExuTrack for Salesforce: Uncover all automations and the
-                  execution order of them on a specific object <br />
-                  in your org, streamlining automation management with
-                  precision.
-                  <br />
-                  <br />
-                </Typography>
+  return (
+    <>
+      <Header />
+      <LoginContainer maxWidth="sm">
+        <LoginCard>
+          <CardContent>
+            <Box textAlign="center" mb={4}>
+              <Typography variant="h4" component="h1" gutterBottom>
+                Welcome to ExuTrack
+              </Typography>
+              <Typography variant="subtitle1" color="text.secondary">
+                Connect with your Salesforce organization
+              </Typography>
+            </Box>
 
-                <Box>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<SiSalesforce></SiSalesforce>}
-                    sx={{ width: "80%" }}
-                    onClick={() => this.handleLogin("sandbox")}
-                  >
-                    Sandbox Login
-                  </Button>
-                </Box>
-                <Box marginTop={1}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<SiSalesforce></SiSalesforce>}
-                    sx={{ width: "80%" }}
-                    onClick={() => this.handleLogin("production")}
-                  >
-                    Developer Org Login
-                  </Button>
-                </Box>
-                <Box marginTop={1}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<SiSalesforce></SiSalesforce>}
-                    sx={{ width: "80%" }}
-                    onClick={() => this.handleLogin("production")}
-                  >
-                    Production Login
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Box>
-        </Container>
-      </ThemeProvider>
-    );
-  }
-}
+            <Paper
+              elevation={0}
+              sx={{
+                bgcolor: "grey.50",
+                p: 2,
+                mb: 3,
+                borderRadius: 2,
+              }}
+            >
+              <Typography variant="body2" textAlign="center">
+                ExuTrack for Salesforce: Uncover all automations and their
+                execution order on specific objects in your org, streamlining
+                automation management with precision.
+              </Typography>
+            </Paper>
+
+            <Stack spacing={2}>
+              <StyledLoginButton
+                variant="contained"
+                color="primary"
+                startIcon={<SiSalesforce />}
+                onClick={() => handleLogin("sandbox")}
+              >
+                Sandbox Login
+              </StyledLoginButton>
+
+              <StyledLoginButton
+                variant="contained"
+                color="primary"
+                startIcon={<SiSalesforce />}
+                onClick={() => handleLogin("production")}
+              >
+                Developer Org Login
+              </StyledLoginButton>
+
+              <Divider sx={{ my: 1 }}>
+                <Typography variant="caption" color="text.secondary">
+                  OR
+                </Typography>
+              </Divider>
+
+              <StyledLoginButton
+                variant="outlined"
+                color="primary"
+                startIcon={<SiSalesforce />}
+                onClick={() => handleLogin("production")}
+              >
+                Production Login
+              </StyledLoginButton>
+            </Stack>
+
+            <Box mt={3} textAlign="center">
+              <Typography variant="caption" color="text.secondary">
+                By logging in, you agree to the terms of service and privacy
+                policy
+              </Typography>
+            </Box>
+          </CardContent>
+        </LoginCard>
+      </LoginContainer>
+    </>
+  );
+};
 
 export default Login;

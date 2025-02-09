@@ -56,15 +56,19 @@ class Header extends Component {
     return (
       <ThemeProvider theme={theme}>
         <AppBar
-          position="static"
+          position="fixed" // Change from static to fixed
           color="primary"
           elevation={0}
           sx={{
-            position: "relative",
-            borderBottom: (t) => `1px solid ${t.palette.primary.light}`,
+            width: "100%",
+            margin: 0,
+            padding: 0,
+            borderBottom: (t) => `1px solid ${t.palette.primary.dark}`,
           }}
         >
-          <Toolbar sx={{ flexWrap: "wrap" }}>
+          <Toolbar sx={{ flexWrap: "wrap", px: 2 }}>
+            {" "}
+            {/* Add horizontal padding */}
             <Link
               href="/"
               color="inherit"
@@ -105,11 +109,14 @@ class Header extends Component {
           <Toolbar
             variant="dense"
             sx={{
-              background: (theme) => `${theme.palette.primary.dark}`,
-              minHeight: "10px",
+              background: (theme) => theme.palette.primary.dark,
+              minHeight: "4px", // Reduce height of bottom bar
+              padding: 0,
             }}
-          ></Toolbar>
+          />
         </AppBar>
+        {/* Add toolbar placeholder to prevent content from hiding under fixed header */}
+        <Toolbar />
       </ThemeProvider>
     );
   }

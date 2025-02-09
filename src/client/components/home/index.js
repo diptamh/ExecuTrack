@@ -30,23 +30,43 @@ export default class Home extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <Header />
-        {this.state.renderComponent ? (
-          <Container component="main" maxWidth="xl">
-            <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+            margin: 0,
+            padding: 0,
+            overflow: "hidden", // Prevent scrolling on the main container
+          }}
+        >
+          <Header />
+          {this.state.renderComponent ? (
             <Box
+              component="main"
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                flexGrow: 1,
+                height: "calc(100vh - 64px)", // Adjust based on header height
+                overflow: "auto", // Allow scrolling in the main content area
+                mt: "64px", // Add margin top equal to header height
               }}
             >
               <Flow />
             </Box>
-          </Container>
-        ) : (
-          "Please Login To Continue!! ☻"
-        )}
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "calc(100vh - 64px)",
+                mt: "64px",
+              }}
+            >
+              <Typography>Please Login To Continue!! ☻</Typography>
+            </Box>
+          )}
+        </Box>
       </ThemeProvider>
     );
   }

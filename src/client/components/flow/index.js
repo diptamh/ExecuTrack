@@ -535,42 +535,48 @@ export default function App() {
   };
 
   return (
-    // <div style={{ width: "100vw", height: "88vh", background: "#1a192b" }}>
-    <div style={{ width: "100vw", height: "88vh", padding: "1%" }}>
+    <Box
+      sx={{
+        width: "100%",
+        height: "100%",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       {loading && (
-        <>
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              zIndex: 999,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <CircularProgress color="primary" />
-          </div>
-        </>
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            bgcolor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 999,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress color="primary" />
+        </Box>
       )}
-      {/* Display loader if loading is true */}
-      <Box width={400}>
-        {/* This is used to select the object and get the object from the child object */}
+      <Box sx={{ width: 400, m: 2 }}>
         <ObjectSelector OnObjectSelection={handleObjectSelection} />
       </Box>
-      <ReactFlow
-        fitView="true"
-        nodes={nodes}
-        edges={edges}
-        nodeTypes={nodeTypes}
-        proOptions={proOptions}
-      >
-        <Background variant="dots" gap={16} size={1} />
-      </ReactFlow>
-    </div>
+      <Box sx={{ height: "calc(100% - 80px)" }}>
+        {" "}
+        {/* Adjust height to account for ObjectSelector */}
+        <ReactFlow
+          fitView
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeTypes}
+          proOptions={proOptions}
+        >
+          <Background variant="dots" gap={16} size={1} />
+        </ReactFlow>
+      </Box>
+    </Box>
   );
 }
