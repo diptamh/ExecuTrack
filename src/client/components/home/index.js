@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AppBar, Toolbar, Button } from "@mui/material";
+import { AppBar, Toolbar, Button, Stack } from "@mui/material";
 import Flow from "../flow";
 import "./index.css";
 import axios from "axios";
@@ -34,10 +34,10 @@ export default class Home extends React.Component {
           sx={{
             display: "flex",
             flexDirection: "column",
-            minHeight: "100vh",
+            height: "100vh",
             margin: 0,
             padding: 0,
-            overflow: "hidden", // Prevent scrolling on the main container
+            overflow: "hidden",
           }}
         >
           <Header />
@@ -46,9 +46,9 @@ export default class Home extends React.Component {
               component="main"
               sx={{
                 flexGrow: 1,
-                height: "calc(100vh - 64px)", // Adjust based on header height
-                overflow: "auto", // Allow scrolling in the main content area
-                mt: "64px", // Add margin top equal to header height
+                height: "calc(100vh - 64px)",
+                overflow: "auto",
+                mt: "64px",
               }}
             >
               <Flow />
@@ -56,14 +56,35 @@ export default class Home extends React.Component {
           ) : (
             <Box
               sx={{
+                position: "fixed",
+                top: "64px",
+                left: 0,
+                right: 0,
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "center",
-                height: "calc(100vh - 64px)",
-                mt: "64px",
+                bgcolor: "background.paper",
+                py: 4,
+                zIndex: 1,
+                boxShadow: 1,
               }}
             >
-              <Typography>Please Login To Continue!! ☻</Typography>
+              <Typography variant="h4" gutterBottom color="primary">
+                Welcome to ExuTrack
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                Please sign in with your Salesforce credentials to explore your
+                organization's automations.
+              </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                href="/"
+                size="large"
+                sx={{ minWidth: 200 }}
+              >
+                Go to Login
+              </Button>
             </Box>
           )}
         </Box>
