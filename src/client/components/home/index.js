@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,12 +13,10 @@ import Header from "../header";
 const theme = createTheme();
 
 export default class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      renderComponent: false, // Initialize with false by default
-    };
-  }
+  state = {
+    renderComponent: false,
+  };
+
   componentDidMount() {
     console.log("Home GET");
     axios.get("/api/v1/auth/session").then((res) => {

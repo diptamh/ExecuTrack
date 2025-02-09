@@ -1,20 +1,10 @@
-import React, { memo, useState } from "react";
-
+import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
-import { Card, CardContent, Typography, Box } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import "./style.css";
 
 const Node = ({ data, selected }) => {
-  // const [variant, setVariant] = useState(data.body);
-  function getVariant(variant = "info") {
-    if (selected) {
-      return "outlined";
-    }
-    return "elevation";
-  }
-  console.log("type ->", typeof data.body);
   const body = data.body?.split(",");
-  console.log("body->", body);
 
   return (
     <div>
@@ -31,7 +21,6 @@ const Node = ({ data, selected }) => {
         <Typography
           sx={{
             fontSize: 12,
-
             padding: 1,
             fontWeight: "bold",
           }}
@@ -40,14 +29,17 @@ const Node = ({ data, selected }) => {
         >
           {data.label}
         </Typography>
-        <Typography variant="caption" display="block" gutterBottom>
-          {body?.map((item) => (
-            <Typography variant="caption" display="block" gutterBottom>
-              * {item}
-              <br />
-            </Typography>
-          ))}
-        </Typography>
+        {body?.map((item, index) => (
+          <Typography
+            key={index}
+            variant="caption"
+            display="block"
+            gutterBottom
+          >
+            * {item}
+            <br />
+          </Typography>
+        ))}
       </Box>
       <Handle type="source" position={Position.Right} id="sright" />
       <Handle type="target" position={Position.Right} id="tright" />

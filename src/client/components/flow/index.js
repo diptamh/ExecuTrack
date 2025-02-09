@@ -1,34 +1,27 @@
 import React, { useEffect, useState } from "react";
-// import CircularProgress from "@mui/material/CircularProgress";
-
 import ReactFlow, {
   Background,
   useNodesState,
   useEdgesState,
   MarkerType,
 } from "reactflow";
-const proOptions = { hideAttribution: true };
 import { Box, CircularProgress } from "@mui/material";
 import Block from "../shapes/block";
 import Diamond from "../shapes/diamond";
 import Table from "../table/index.js";
-// used to select the object and get the object from the child object
 import ObjectSelector from "../objectSelector/index.js";
-// used to do all the axios calls to get the data from the salesforce
 import APIService from "../../service/APIService.js";
 import "reactflow/dist/style.css";
+// Import only the icons that are used
 import { GrValidate, GrTrigger } from "react-icons/gr";
 import { IoDuplicateOutline } from "react-icons/io5";
-import { MdOutlineAutoMode } from "react-icons/md";
-
+import { MdOutlineAutoMode, MdPriorityHigh, MdAcUnit } from "react-icons/md";
 import { TfiRulerPencil } from "react-icons/tfi";
-import { MdPriorityHigh } from "react-icons/md";
-import { MdAcUnit } from "react-icons/md";
-
 import { FcWorkflow } from "react-icons/fc";
-
 import { TiFlowMerge } from "react-icons/ti";
 import { CiShare2 } from "react-icons/ci";
+
+const proOptions = { hideAttribution: true };
 
 export default function App() {
   const [nodes, setNodes] = useNodesState([]);
@@ -46,21 +39,15 @@ export default function App() {
   const [ESdata, setESdata] = useState([null]);
   const [SRdata, setSRdata] = useState([null]);
   const [loading, setLoading] = useState(false); // Add loading state
-  const [nodeTypes, setNodeTypes] = useState({
+
+  // Remove redundant setNodeTypes call in useEffect
+  const nodeTypes = {
     block: Block,
     diamond: Diamond,
     table: Table,
-  });
+  };
 
   useEffect(() => {
-    setNodeTypes(() => {
-      return {
-        block: Block,
-        diamond: Diamond,
-        table: Table,
-      };
-    });
-
     setNodes([
       {
         id: "2D",

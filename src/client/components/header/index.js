@@ -32,22 +32,22 @@ const theme = createTheme({
 });
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      authCheck: false,
-      username: "",
-    };
-  }
+  state = {
+    authCheck: false,
+    username: "",
+  };
+
   componentDidMount() {
     axios.get("/api/v1/auth/session").then((data) => {
       if (data?.data?.displayName) {
-        console.log("data--->", data);
-        this.setState({ authCheck: true });
+        this.setState({
+          authCheck: true,
+          username: data.data.displayName,
+        });
       }
-      this.setState({ username: data?.data?.displayName || "" });
     });
   }
+
   handleSignOut = () => {
     window.location.href = "/api/v1/auth/logout";
   };
