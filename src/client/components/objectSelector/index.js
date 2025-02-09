@@ -19,8 +19,8 @@ const styles = {
         ? theme.palette.grey[200]
         : theme.palette.grey[700],
     borderRadius: 2,
-    width: "80%",
-    marginLeft: "10%",
+    width: "100%", // Changed from 80%
+    margin: 0, // Remove margin
   },
   loadingContainer: {
     display: "flex",

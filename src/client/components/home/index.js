@@ -9,6 +9,7 @@ import Flow from "../flow";
 import "./index.css";
 import axios from "axios";
 import Header from "../header";
+import { ReactFlowProvider } from "reactflow"; // Add this import
 
 const theme = createTheme();
 
@@ -47,11 +48,14 @@ export default class Home extends React.Component {
               sx={{
                 flexGrow: 1,
                 height: "calc(100vh - 64px)",
-                overflow: "auto",
-                mt: "64px",
+                position: "relative",
+                overflow: "hidden",
+                mt: 0, // Remove margin top
               }}
             >
-              <Flow />
+              <ReactFlowProvider>
+                <Flow />
+              </ReactFlowProvider>
             </Box>
           ) : (
             <Box

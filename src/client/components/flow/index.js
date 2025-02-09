@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import ReactFlow, {
   Background,
   useNodesState,
   useEdgesState,
   MarkerType,
+  useReactFlow,
 } from "reactflow";
-import { Box, CircularProgress } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Paper,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
+import { ZoomIn, ZoomOut, CenterFocusStrong } from "@mui/icons-material";
 import Block from "../shapes/block";
 import Diamond from "../shapes/diamond";
 import Table from "../table/index.js";
@@ -534,6 +542,22 @@ export default function App() {
     }
   };
 
+  // Get ReactFlow instance methods
+  const { zoomIn, zoomOut, fitView } = useReactFlow();
+
+  // Zoom handlers
+  const handleZoomIn = () => {
+    zoomIn();
+  };
+
+  const handleZoomOut = () => {
+    zoomOut();
+  };
+
+  const handleCenterView = useCallback(() => {
+    fitView({ duration: 800, padding: 0.1 });
+  }, [fitView]);
+
   return (
     <Box
       sx={{
@@ -541,8 +565,11 @@ export default function App() {
         height: "100%",
         position: "relative",
         overflow: "hidden",
+        bgcolor: "#f5f5f5",
+        pt: 0,
       }}
     >
+      {/* Loading overlay */}
       {loading && (
         <Box
           sx={{
@@ -551,30 +578,119 @@ export default function App() {
             left: 0,
             right: 0,
             bottom: 0,
-            bgcolor: "rgba(0, 0, 0, 0.5)",
+            bgcolor: "rgba(255, 255, 255, 0.8)", // Lighter overlay
+            backdropFilter: "blur(4px)", // Blur effect
             zIndex: 999,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <CircularProgress color="primary" />
+          <Paper
+            elevation={4}
+            sx={{
+              p: 3,
+              borderRadius: 2,
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <CircularProgress color="primary" />
+            <span>Loading automation data...</span>
+          </Paper>
         </Box>
       )}
-      <Box sx={{ width: 400, m: 2 }}>
+
+      {/* Object Selector - Adjusted position */}
+      <Paper
+        elevation={3}
+        sx={{
+          position: "absolute",
+          top: 4, // Reduced from 8 to 4
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 2,
+          width: "min(400px, 90%)",
+          borderRadius: 2,
+          overflow: "hidden",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        }}
+      >
         <ObjectSelector OnObjectSelection={handleObjectSelection} />
-      </Box>
-      <Box sx={{ height: "calc(100% - 80px)" }}>
-        {" "}
-        {/* Adjust height to account for ObjectSelector */}
+      </Paper>
+
+      {/* Controls - Updated with handlers */}
+      <Paper
+        elevation={2}
+        sx={{
+          position: "absolute",
+          right: 16,
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 2,
+          borderRadius: 2,
+          display: "flex",
+          flexDirection: "column",
+          p: 0.5,
+          gap: 0.5,
+          bgcolor: "background.paper",
+        }}
+      >
+        <Tooltip title="Zoom In" placement="left">
+          <IconButton size="small" onClick={handleZoomIn}>
+            <ZoomIn />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Zoom Out" placement="left">
+          <IconButton size="small" onClick={handleZoomOut}>
+            <ZoomOut />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Center View" placement="left">
+          <IconButton size="small" onClick={handleCenterView}>
+            <CenterFocusStrong />
+          </IconButton>
+        </Tooltip>
+      </Paper>
+
+      {/* Flow Canvas - Adjusted padding */}
+      <Box
+        sx={{
+          height: "100%",
+          pt: "48px", // Reduced from 64px to 48px
+          ".react-flow__node": {
+            transition: "transform 0.2s, box-shadow 0.2s",
+            "&:hover": {
+              transform: "translateY(-2px)",
+              boxShadow: 3,
+            },
+          },
+          ".react-flow__edge": {
+            transition: "stroke-width 0.2s",
+            "&:hover": {
+              strokeWidth: 3,
+            },
+          },
+        }}
+      >
         <ReactFlow
           fitView
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
           proOptions={proOptions}
+          defaultViewport={{ zoom: 1 }}
+          minZoom={0.2}
+          maxZoom={4}
         >
-          <Background variant="dots" gap={16} size={1} />
+          <Background
+            variant="dots"
+            gap={16}
+            size={1}
+            color="#91919a"
+            style={{ opacity: 0.4 }}
+          />
         </ReactFlow>
       </Box>
     </Box>
